@@ -15,6 +15,8 @@ axios.interceptors.request.use((config) => {  // axios请求拦截器
   return config;
 });
 axios.interceptors.response.use((config) => {  // axios响应拦截器
+ // 获取toke对比，相同的话return，不同更新token
+
  
   NProgress.done(); // 响应时关闭进度条
   return config;
