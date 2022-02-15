@@ -38,24 +38,26 @@ function useRestLog(loginFormRef) {
 }
 function userLogin(loginFormRef, state){
   const login = () => {
-    // loginFormRef.value.validate(async (valid) => { // 获取表单校验的值
-    //   if(!valid) return; // 没有校验通过就退出
-    //   const params={
-    //     userName: state.loginForm.username,
-    //     userPwd: state.loginForm.password,
-    //   };
-    //   const res = await axios.post("/user/login", params);
-    //   if(res.data.code === 0){
-    //     ElMessage.success("登陆成功");
-    //     window.sessionStorage.setItem("token", res.data.myToken); //
-    //     router.push("/");
-    //   }else{
-    //     ElMessage.error("登陆失败");
-    //   }
-    // });
-    ElMessage.success("登陆成功");
-      window.sessionStorage.setItem("token", "abcdefg"); //测试
-      router.push("/");
+    loginFormRef.value.validate(async (valid) => { // 获取表单校验的值
+      if(!valid) return; // 没有校验通过就退出
+      const params={
+        account: state.loginForm.username,
+        password: state.loginForm.password,
+      };
+      const res = await axios.post("/open/user/login", params);
+      console.log(res)
+      if(res.data.code === 200){
+        ElMessage.success(res.message);
+        window.sessionStorage.setItem("token", res.data.data.token); //
+        router.push("/");
+        
+      }else{
+        ElMessage.error("登陆失败");
+      }
+    });
+    // ElMessage.success("登陆成功");
+    //   window.sessionStorage.setItem("token", "abcdefg"); //测试
+    //   router.push("/");
   };
   return {
     login,
