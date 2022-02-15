@@ -1,10 +1,14 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+// import { MessageBox, Message } from 'element-ui'
+import { ElMessage } from 'element-plus';
+import router from '../router'
+import NProgress from "nprogress"; //页面请求进度条
+import "nprogress/nprogress.css";
 
 // create an axios instance
 const service = axios.create({
     // 内网穿透接口
-    baseURL: "http://31v444t816.wicp.vip/api", // url = base url + request url
+    baseURL:  import.meta.env.VITE_APP_URL, // url = base url + request url
     // withCredentials: true, // send cookies when cross-domain requests
     timeout: 5000 // request timeout，超过7秒提示超时
 })
@@ -13,15 +17,23 @@ const service = axios.create({
 service.interceptors.request.use(
     config => {
         // do something before request is sent
-
         // if (store.getters.token) {
-        if (localStorage.getItem('token')) {
+        // if (localStorage.getItem('token')) {
+        //     // let each request carry token
+        //     // ['X-Token'] is a custom headers key
+        //     // please modify it according to the actual situation
+        //     // 修改请求头, 将Token放入请求头
+        //     // config.headers['X-Token'] = getToken()
+        //     config.headers['token'] = localStorage.getItem('token')
+        // }
+
+        if ( window.sessionStorage.getItem('token')) {
             // let each request carry token
             // ['X-Token'] is a custom headers key
             // please modify it according to the actual situation
             // 修改请求头, 将Token放入请求头
             // config.headers['X-Token'] = getToken()
-            config.headers['token'] = localStorage.getItem('token')
+            config.headers['token'] = window.sessionStorage.getItem('token')
         }
         return config
     },
@@ -46,47 +58,46 @@ service.interceptors.response.use(
      */
     response => {
         const res = response.data
-
-        if(res.code !== 200){
-
-            router.push("/login");
-
-            
-        }
-
-        // if the custom code is not 20000, it is judged as an error.
-        if (res.code !== 20000) {
-            Message({
-                message: res.message || 'Error',
-                type: 'error',
-                duration: 5 * 1000
-            })
-
-            // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-            if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-                // to re-login
-                MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-                    confirmButtonText: 'Re-Login',
-                    cancelButtonText: 'Cancel',
-                    type: 'warning'
-                }).then(() => {
-                    // store.dispatch('user/resetToken').then(() => {
-                    location.reload()
-                    // })
-                })
+            if (res.code < 0) { // 
+                ElMessage.error(res.message);
+                router.push("/login");
+                return;
             }
-            return Promise.reject(new Error(res.message || 'Error'))
-        } else {
-            return res
-        }
+
+            if (res.code !== 200) {
+                ElMessage.error(res.message);
+                return;
+            }
+            ElMessage.success(res.message);
+        // if the custom code is not 20000, it is judged as an error.
+        // if (res.code !== 200) {
+        //     Message({
+        //         message: res.message || 'Error',
+        //         type: 'error',
+        //         duration: 5 * 1000
+        //     })
+
+        //     50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
+        //     if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+        //         // to re-login
+        //         MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
+        //             confirmButtonText: 'Re-Login',
+        //             cancelButtonText: 'Cancel',
+        //             type: 'warning'
+        //         }).then(() => {
+        //             store.dispatch('user/resetToken').then(() => {
+        //             location.reload() // 页面刷新
+        //             })
+        //         })
+        //     }
+        //     return Promise.reject(new Error(res.message || 'Error'))
+        // } else {
+        //     return res
+        // }
     },
     error => {
         console.log('err' + error) // for debug
-        Message({
-            message: error.message,
-            type: 'error',
-            duration: 5 * 1000
-        })
+        ElMessage.error(error.message);
         return Promise.reject(error)
     }
 )

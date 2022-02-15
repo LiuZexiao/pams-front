@@ -26,6 +26,7 @@
 <script>
 import { reactive, toRefs, ref } from "vue";
 import axios from "axios";
+import { logins } from '../api/user.js'
 import router from "../router";
 import { ElMessage } from 'element-plus';
 function useRestLog(loginFormRef) {
@@ -44,17 +45,42 @@ function userLogin(loginFormRef, state){
         account: state.loginForm.username,
         password: state.loginForm.password,
       };
-      const res = await axios.post("/open/user/login", params);
-      console.log(res)
-      if(res.data.code === 200){
-        ElMessage.success(res.message);
-        window.sessionStorage.setItem("token", res.data.data.token); //
-        router.push("/");
+
+    
+    //  const { data : res } = awai logins(params);
+
+        console.log( logins(params));
+        if (res.code === 200) {
+            window.sessionStorage.setItem("token", res.data.data.token);
+            router.push("/");
+        } else {
+            ElMessage.error(res.message);
+        }
+      
+      // logins(params).then(function(res) {
+      //   console.log(res);
+      //   if (res.code === 200) {
+      //       window.sessionStorage.setItem("token", res.data.data.token);
+      //       router.push("/");
+      //   } else {
+      //       ElMessage.error(res.message);
+      //   }
+      // });
+
+
+      // const res = await axios.post("/open/user/login", params);
+      // console.log(res)
+
+      // if(res.data.code === 200){
+      //   ElMessage.success(res.message);
+      //   window.sessionStorage.setItem("token", res.data.data.token); //
+      //   router.push("/");
         
-      }else{
-        ElMessage.error("登陆失败");
-      }
+      // }else{
+      //   ElMessage.error("登陆失败");
+      // }
     });
+    
     // ElMessage.success("登陆成功");
     //   window.sessionStorage.setItem("token", "abcdefg"); //测试
     //   router.push("/");

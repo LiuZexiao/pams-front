@@ -180,6 +180,10 @@ export default {
 </script>
 
 <style>
+body{
+  margin: 0;
+}
+
 .el-header,
 .el-footer {
   background-color: rgb(221, 24, 27);
