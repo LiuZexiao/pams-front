@@ -45,17 +45,15 @@ function userLogin(loginFormRef, state){
         account: state.loginForm.username,
         password: state.loginForm.password,
       };
+      const { data:res } =  logins( this.params );
 
-    
-    //  const { data : res } = awai logins(params);
-
-        console.log( logins(params));
-        if (res.code === 200) {
-            window.sessionStorage.setItem("token", res.data.data.token);
-            router.push("/");
-        } else {
-            ElMessage.error(res.message);
-        }
+        // console.log(logins(params));
+        // if (res.code === 200) {
+        //     window.sessionStorage.setItem("token", res.data.data.token);
+        //     router.push("/");
+        // } else {
+        //     ElMessage.error(res.message);
+        // }
       
       // logins(params).then(function(res) {
       //   console.log(res);
