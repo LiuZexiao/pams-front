@@ -47,13 +47,13 @@ function userLogin(loginFormRef, state){
       };
       const { data:res } =  logins( this.params );
 
-        // console.log(logins(params));
-        // if (res.code === 200) {
-        //     window.sessionStorage.setItem("token", res.data.data.token);
-        //     router.push("/");
-        // } else {
-        //     ElMessage.error(res.message);
-        // }
+        console.log(logins(params));
+        if (res.code === 200) {
+            window.sessionStorage.setItem("token", res.data.data.token);
+            router.push("/");
+        } else {
+            ElMessage.error(res.message);
+        }
       
       // logins(params).then(function(res) {
       //   console.log(res);
