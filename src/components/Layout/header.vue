@@ -46,15 +46,6 @@ body {
   margin: 0;
 }
 
-.el-header,
-.el-footer {
-  background-color: rgb(221, 24, 27);
-  color: var(--el-text-color-primary);
-  /* text-align: center; */
-  line-height: 60px;
-  position: relative; /** */
-}
-
 .header-div img {
   vertical-align: middle;
   width: 45px;
