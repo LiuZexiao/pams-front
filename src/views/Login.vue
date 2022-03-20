@@ -45,9 +45,11 @@ function userLogin(loginFormRef, state){
         account: state.loginForm.username,
         password: state.loginForm.password,
       };
-      const { data:res } =  logins( this.params );
+      const res  = await logins( params );
 
         console.log(logins(params));
+        console.log(res);
+        // console.log(res.code);
         if (res.code === 200) {
             window.sessionStorage.setItem("token", res.data.data.token);
             router.push("/");
