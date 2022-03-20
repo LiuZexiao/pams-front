@@ -1,39 +1,40 @@
 <template>
   <el-container>
-    <el-header>
-      <div class="header-div">
-        <!-- <img class="header-logo"
-             src="../../assets/dh1024.png"
-             alt="logo" />
-        <span>
-          <router-link to="/">党务系统</router-link>
-        </span> -->
-      </div>
-      <div class="header-menu">
-        <el-dropdown>
-          <span class="el-dropdown-link">
-            <el-avatar
-                src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-            />
-          </span>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item>个人中心</el-dropdown-item>
-              <el-dropdown-item>账号信息</el-dropdown-item>
-              <el-dropdown-item divided>
-                <el-link :underline="false"
-                         style="font-size: 10px;"
-                         @click="loginout">
-                  <switch-button width="17px" style="vertical-align: middle;"/>
-                  退出
-                </el-link>
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </div>
+    <Header />
+<!--    <el-header>-->
+<!--      <div class="header-div">-->
+<!--        &lt;!&ndash; <img class="header-logo"-->
+<!--             src="../../assets/dh1024.png"-->
+<!--             alt="logo" />-->
+<!--        <span>-->
+<!--          <router-link to="/">党务系统</router-link>-->
+<!--        </span> &ndash;&gt;-->
+<!--      </div>-->
+<!--      <div class="header-menu">-->
+<!--        <el-dropdown>-->
+<!--          <span class="el-dropdown-link">-->
+<!--            <el-avatar-->
+<!--                src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"-->
+<!--            />-->
+<!--          </span>-->
+<!--          <template #dropdown>-->
+<!--            <el-dropdown-menu>-->
+<!--              <el-dropdown-item>个人中心</el-dropdown-item>-->
+<!--              <el-dropdown-item>账号中心</el-dropdown-item>-->
+<!--              <el-dropdown-item divided>-->
+<!--                <el-link :underline="false"-->
+<!--                         style="font-size: 10px;"-->
+<!--                         @click="loginout">-->
+<!--                  <switch-button width="17px" style="vertical-align: middle;"/>-->
+<!--                  退出-->
+<!--                </el-link>-->
+<!--              </el-dropdown-item>-->
+<!--            </el-dropdown-menu>-->
+<!--          </template>-->
+<!--        </el-dropdown>-->
+<!--      </div>-->
 
-    </el-header>
+<!--    </el-header>-->
     <el-container>
       <el-aside width="200px">
         <el-menu :default-active="activePath"
@@ -42,8 +43,22 @@
                  text-color="#fff"
                  active-text-color="#ffd04b"
                  router>
-          <!-- 一级菜单 -->
+          <!-- 一级菜单 无子菜单 -->
+          <el-menu-item v-for="item in menusData"
+                        v-show="!item.children"
+                       :index="item.path"
+                       :key="item.id"
+                        @click="saveNavPath(item.path)">
+            <template #title>
+              <!-- <el-icon> 菜单图标
+                <add-location />
+              </el-icon> -->
+              <span>{{ item.title }}</span>
+            </template>
+          </el-menu-item>
+          <!-- 一级菜单 有子菜单 -->
           <el-sub-menu v-for="item in menusData"
+                       v-show="item.children"
                        :index="item.id"
                        :key="item.id">
             <template #title>
@@ -78,6 +93,7 @@
 import {onMounted, reactive, toRefs} from "vue";
 import axios from "axios";
 import router from "../../router";
+import Header from "./header.vue"
 
 function useLoadMenuData(state) {
   axios.get("/menus").then((res) => {
@@ -87,28 +103,19 @@ function useLoadMenuData(state) {
 
 export default {
   name: "layout",
+  components: {
+    Header
+  },
   setup() {
     const state = reactive({
       menusData: [//菜单数据
         {
           id: "1",
-          title: "个人管理",
-          path: "/login", // 在组件中用不到
-          children: [
-            {
-              id: "2",
-              title: "个人中心",
-              path: "/user/home",
-            },
-            {
-              id: "3",
-              title: "个人信息管理",
-              path: "/user/userinfo",
-            }
-          ],
+          title: "仪表盘",
+          path: "/dashboard", // 在组件中用不到
         },
         {
-          id: "4",
+          id: "2",
           title: "通知公告管理",
           path: "",
           children: [
@@ -197,6 +204,7 @@ export default {
       saveNavPath,
     };
   },
+
 };
 </script>
 
@@ -243,51 +251,51 @@ body > .el-container {
   line-height: 320px;
 }
 
-.header-div img {
-  vertical-align: middle;
-  width: 45px;
-  height: 45px;
+/*.header-div img {*/
+/*  vertical-align: middle;*/
+/*  width: 45px;*/
+/*  height: 45px;*/
 
-  /*position: absolute; */
+/*  !*position: absolute; *!*/
 
-  /*  transform: translate(-50%, -50%); */
-}
+/*  !*  transform: translate(-50%, -50%); *!*/
+/*}*/
 
-.header-div {
-  top: 50%;
-  left: 20%;
-  position: absolute;
-  transform: translate(-50%, -50%);
+/*.header-div {*/
+/*  top: 50%;*/
+/*  left: 20%;*/
+/*  position: absolute;*/
+/*  transform: translate(-50%, -50%);*/
 
-  color: #e9eef3;
-  /* weight: 500; */
-  font-size: 20px;
-  /* position: absolute; */
-}
+/*  color: #e9eef3;*/
+/*  !* weight: 500; *!*/
+/*  font-size: 20px;*/
+/*  !* position: absolute; *!*/
+/*}*/
 
-.header-menu {
-  top: 50%;
-  right: 10%;
-  position: absolute;
-  transform: translate(-50%, -50%);
+/*.header-menu {*/
+/*  top: 50%;*/
+/*  right: 10%;*/
+/*  position: absolute;*/
+/*  transform: translate(-50%, -50%);*/
 
-  color: #e9eef3;
-  /* weight: 500; */
-  font-size: 10px;
-  /* position: absolute; */
+/*  color: #e9eef3;*/
+/*  !* weight: 500; *!*/
+/*  font-size: 10px;*/
+/*  !* position: absolute; *!*/
 
-  display: flex;
-}
+/*  display: flex;*/
+/*}*/
 
-.header-menu img {
-  vertical-align: middle;
-  width: 45px;
-  height: 45px;
+/*.header-menu img {*/
+/*  vertical-align: middle;*/
+/*  width: 45px;*/
+/*  height: 45px;*/
 
-  /*position: absolute; */
+/*  !*position: absolute; *!*/
 
-  /*  transform: translate(-50%, -50%); */
-}
+/*  !*  transform: translate(-50%, -50%); *!*/
+/*}*/
 
 a {
   text-decoration: none;

@@ -1,13 +1,13 @@
 <template>
-  UserList
+
 </template>
 
 <script>
 export default {
-
+  name: "menu"
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
