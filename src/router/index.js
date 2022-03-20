@@ -1,31 +1,62 @@
 // import { createRouter, createWebHashHistory } from "vue-router";
 import { createRouter, createWebHistory  } from "vue-router";
 import Layout from "../components/Layout/index.vue";
+import Header from "../components/Layout/header.vue"
+
 const routes = [
   {
     path: "/",
-    redirect: "/main",
+    component: () => import("../views/Home.vue"),
   },
   {
     path: "/login",
-    name: "Login",
+    name: "登录",
     component: () => import("../views/Login.vue"),
   },
   {
-    path: "/first",
-    name: "首页",
-    component: () => import("../views/First.vue"),
+    path: "/owner",
+    name: "用户管理",
+    component: Header,
+    children: [
+      {
+        path: "/owner/info",
+        name: "个人信息",
+        component: () => import("../views/owner/Info.vue"),
+      },
+      {
+        path: "/owner/account",
+        name: "账号中心",
+        component: () => import("../views/owner/Account.vue"),
+      },
+    ],
   },
   {
     path: "/main",
+    name: "仪表盘",
     component: Layout,
-    redirect: "/user/home",
     children: [
-      // {
-      //   path: "/home",
-      //   name: "个人系统首页",
-      //   component: () => import("../views/user/Home.vue"), //
-      // },
+      {
+        path: "/dashboard",
+        name: "仪表盘",
+        component: () => import("../views/dashboard/Dashboard.vue"),
+      },
+    ],
+  },
+  {
+    path: "/event",
+    name: "新闻活动",
+    component: Layout,
+    children: [
+      {
+        path: "/event/information",
+        name: "新闻信息",
+        component: () => import("../views/event/Information.vue"),
+      },
+      {
+        path: "/event/activity",
+        name: "党务活动",
+        component: () => import("../views/event/Activity.vue"),
+      },
     ],
   },
   {
@@ -34,55 +65,36 @@ const routes = [
     component: Layout,
     children: [
       {
-        path: "home",
+        path: "/user/list",
         name: "个人中心",
-        component: () => import("../views/user/Home.vue"), //
+        component: () => import("../views/user/List.vue"),
       },
       {
-        path: "userinfo",
+        path: "/user/template",
         name: "个人信息管理",
-        component: () => import("../views/user/Userinfo.vue"), 
+        component: () => import("../views/user/Template.vue"),
       },
     ],
   },
   {
-    path: "/announcement",
-    name: "通知公告管理",
-    component: Layout,
-    children: [
-      {
-        path: "ann-manage",
-        name: "通知公告管理",
-        component: () => import("../views/announcement/AnnManage.vue"), 
-      },
-    ],
-  },
-  {
-    path: "/communist",
+    path: "/affair",
     name: "党务管理",
     component: Layout,
     children: [
       {
-        path: "communist-data",
-        name: "入党材料管理",
-        component: () => import("../views/communist/CommunistData.vue"), 
-      },
-    ],
-  },
-  {
-    path: "/organization",
-    name: "党组织管理",
-    component: Layout,
-    children: [
-      {
-        path: "org-manage",
-        name: "组织架构管理",
-        component: () => import("../views/organization/OrgManage.vue"), 
+        path: "/affair/userStage",
+        name: "阶段信息",
+        component: () => import("../views/affair/UserStage.vue"),
       },
       {
-        path: "user-manage",
-        name: "组织成员管理",
-        component: () => import("../views/organization/UserManage.vue"), 
+        path: "/affair/applicationRecord",
+        name: "记录审核",
+        component: () => import("../views/affair/ApplicationRecord.vue"),
+      },
+      {
+        path: "/affair/stage",
+        name: "流程管理",
+        component: () => import("../views/affair/Stage.vue"),
       },
     ],
   },
@@ -92,44 +104,27 @@ const routes = [
     component: Layout,
     children: [
       {
-        path: "sys-log",
-        name: "系统操作日志",
-        component: () => import("../views/system/SysLog.vue"), 
+        path: "/system/account",
+        name: "账号管理",
+        component: () => import("../views/system/Account.vue"),
       },
       {
-        path: "sys-organization",
-        name: "组织成员管理",
-        component: () => import("../views/organization/OrgManage.vue"), 
+        path: "/system/department",
+        name: "部门管理",
+        component: () => import("../views/system/Department.vue"),
       },
       {
-        path: "sys-role",
-        name: "系统权限管理",
-        component: () => import("../views/system/SysLog.vue"), 
+        path: "/system/role",
+        name: "角色管理",
+        component: () => import("../views/system/Role.vue"),
       },
       {
-        path: "sys-user",
-        name: "系统用户管理",
-        component: () => import("../views/system/SysUser.vue"), 
+        path: "/system/permit",
+        name: "权限管理",
+        component: () => import("../views/system/Permit.vue"),
       },
     ],
   },
-  // {
-  //   path: "/user",
-  //   name: "用户管理",
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: "/user-list",
-  //       name: "UserList",
-  //       component: () => import("../views/UserList.vue"),
-  //     },
-  //     {
-  //       path: "/user-setting",
-  //       name: "UserSetting",
-  //       component: () => import("../views/UserSetting.vue"),
-  //     },
-  //   ],
-  // },
   {
     path: '/:pathMatch(.*)*', 
     name: 'NotFound', 

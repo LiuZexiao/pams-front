@@ -1,13 +1,13 @@
 <template>
-    UserSetting
+  账号管理
 </template>
 
 <script>
 export default {
-
+  name: "Account"
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
