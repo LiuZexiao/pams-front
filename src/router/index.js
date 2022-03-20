@@ -15,7 +15,7 @@ const routes = [
   },
   {
     path: "/owner",
-    name: "用户管理",
+    name: "个人管理",
     component: Header,
     children: [
       {
@@ -71,7 +71,7 @@ const routes = [
       },
       {
         path: "/user/template",
-        name: "个人信息管理",
+        name: "模板管理",
         component: () => import("../views/user/Template.vue"),
       },
     ],
