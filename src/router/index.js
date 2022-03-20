@@ -1,6 +1,6 @@
 // import { createRouter, createWebHashHistory } from "vue-router";
 import { createRouter, createWebHistory  } from "vue-router";
-import Layout from "../components/Layout/index.vue";
+import Layout from "../components/Layout/menu.vue";
 import Header from "../components/Layout/header.vue"
 
 const routes = [
@@ -31,7 +31,7 @@ const routes = [
     ],
   },
   {
-    path: "/main",
+    path: "/dashboard",
     name: "仪表盘",
     component: Layout,
     children: [
@@ -66,7 +66,7 @@ const routes = [
     children: [
       {
         path: "/user/list",
-        name: "个人中心",
+        name: "用户列表",
         component: () => import("../views/user/List.vue"),
       },
       {
