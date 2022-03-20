@@ -9,15 +9,30 @@
           <router-link to="/">党务系统</router-link>
         </span> -->
       </div>
-      <div class="header-dr">
-        <div>
-            <el-link :underline="false"
-                 @click="loginout">
-          <switch-button width="17px" style="vertical-align: middle;"/> 退出
-        </el-link>
-        </div>
-        
+      <div class="header-menu">
+        <el-dropdown>
+          <span class="el-dropdown-link">
+            <el-avatar
+                src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+            />
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item>个人中心</el-dropdown-item>
+              <el-dropdown-item>账号信息</el-dropdown-item>
+              <el-dropdown-item divided>
+                <el-link :underline="false"
+                         style="font-size: 10px;"
+                         @click="loginout">
+                  <switch-button width="17px" style="vertical-align: middle;"/>
+                  退出
+                </el-link>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
+
     </el-header>
     <el-container>
       <el-aside width="200px">
@@ -60,14 +75,16 @@
 </template>
 
 <script>
-import { onMounted, reactive, toRefs } from "vue";
+import {onMounted, reactive, toRefs} from "vue";
 import axios from "axios";
 import router from "../../router";
+
 function useLoadMenuData(state) {
   axios.get("/menus").then((res) => {
     state.menusData = res.data;
   });
 }
+
 export default {
   name: "layout",
   setup() {
@@ -93,7 +110,7 @@ export default {
         {
           id: "4",
           title: "通知公告管理",
-          path: "", 
+          path: "",
           children: [
             {
               id: "5",
@@ -105,7 +122,7 @@ export default {
         {
           id: "6",
           title: "党务管理",
-          path: "", 
+          path: "",
           children: [
             {
               id: "7",
@@ -117,7 +134,7 @@ export default {
         {
           id: "8",
           title: "党组织管理",
-          path: "", 
+          path: "",
           children: [
             {
               id: "9",
@@ -126,10 +143,10 @@ export default {
             },
           ],
         },
-         {
+        {
           id: "10",
           title: "系统管理",
-          path: "", 
+          path: "",
           children: [
             {
               id: "11",
@@ -158,18 +175,22 @@ export default {
     });
     onMounted(() => {
       // useLoadMenuData(state); //读取菜单
-      state.activePath = window.sessionStorage.getItem("activePath");;
+      state.activePath = window.sessionStorage.getItem("activePath");
+      ;
     });
+
     // 保存链接的激活状态
-    function saveNavPath(activePath){
-      window.sessionStorage.setItem("activePath",activePath);
+    function saveNavPath(activePath) {
+      window.sessionStorage.setItem("activePath", activePath);
       state.activePath = activePath;
     }
+
     // 用户退出
     function logoout() {
       window.sessionStorage.clear();
       router.push("/login");
     }
+
     return {
       ...toRefs(state),
       logoout,
@@ -180,7 +201,7 @@ export default {
 </script>
 
 <style>
-body{
+body {
   margin: 0;
 }
 
@@ -244,7 +265,7 @@ body > .el-container {
   /* position: absolute; */
 }
 
-.header-dr {
+.header-menu {
   top: 50%;
   right: 10%;
   position: absolute;
@@ -254,6 +275,18 @@ body > .el-container {
   /* weight: 500; */
   font-size: 10px;
   /* position: absolute; */
+
+  display: flex;
+}
+
+.header-menu img {
+  vertical-align: middle;
+  width: 45px;
+  height: 45px;
+
+  /*position: absolute; */
+
+  /*  transform: translate(-50%, -50%); */
 }
 
 a {
@@ -261,7 +294,4 @@ a {
   color: #e9eef3;
 }
 
-.el-link.el-link--default {
-  color: #fff;
-}
 </style>
