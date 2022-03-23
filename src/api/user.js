@@ -5,6 +5,6 @@ export function logins(data) {
     return request({
         url: '/open/user/login',
         method: 'post',
-        data
+        data,
     })
 }

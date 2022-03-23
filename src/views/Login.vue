@@ -1,4 +1,4 @@
-<template>
+0<template>
   <div class="login_box">
     <el-form
       class="login_form"
@@ -39,46 +39,35 @@ function useRestLog(loginFormRef) {
 }
 function userLogin(loginFormRef, state){
   const login = () => {
-    loginFormRef.value.validate(async (valid) => { // 获取表单校验的值
+    loginFormRef.value.validate(async (valid) => { // 获取表单校验的值async
       if(!valid) return; // 没有校验通过就退出
       const params={
         account: state.loginForm.username,
         password: state.loginForm.password,
       };
-      const res  = await logins( params );
 
-        console.log(logins(params));
-        console.log(res);
-        // console.log(res.code);
-        if (res.code === 200) {
-            window.sessionStorage.setItem("token", res.data.data.token);
-            router.push("/");
-        } else {
-            ElMessage.error(res.message);
-        }
+      const res  = await logins(params);
+      if (res.code === 200) {
+          window.sessionStorage.setItem("token", res.data.token);
+          router.push("/user/list");
+      } else {
+          ElMessage.error(res.message);
+      }
       
       // logins(params).then(function(res) {
       //   console.log(res);
-      //   if (res.code === 200) {
-      //       window.sessionStorage.setItem("token", res.data.data.token);
-      //       router.push("/");
-      //   } else {
-      //       ElMessage.error(res.message);
-      //   }
+        // if (res.code === 200) {
+        //     window.sessionStorage.setItem("token", res.data.data.token);
+        //     router.push("/");
+        // } else {
+        //     ElMessage.error(res.message);
+        // }
       // });
 
 
       // const res = await axios.post("/open/user/login", params);
       // console.log(res)
 
-      // if(res.data.code === 200){
-      //   ElMessage.success(res.message);
-      //   window.sessionStorage.setItem("token", res.data.data.token); //
-      //   router.push("/");
-        
-      // }else{
-      //   ElMessage.error("登陆失败");
-      // }
     });
     
     // ElMessage.success("登陆成功");
@@ -143,3 +132,4 @@ export default {
   box-sizing: border-box;
 }
 </style>
+

@@ -7,7 +7,7 @@ import "nprogress/nprogress.css";
 
 // create an axios instance
 const service = axios.create({
-    // 内网穿透接口
+    // 后台接口地址
     baseURL:  import.meta.env.VITE_APP_URL, // url = base url + request url
     // withCredentials: true, // send cookies when cross-domain requests
     timeout: 5000 // request timeout，超过7秒提示超时
@@ -58,17 +58,18 @@ service.interceptors.response.use(
      */
     response => {
         const res = response.data
-            if (res.code < 0) { // 
-                ElMessage.error(res.message);
-                router.push("/login");
-                return;
-            }
+        if (res.code < 0) { // 
+            ElMessage.error(res.message);
+            router.push("/login");
+            return;
+        }
 
-            if (res.code !== 200) {
-                ElMessage.error(res.message);
-                return;
-            }
-            ElMessage.success(res.message);
+        if (res.code !== 200) {
+            ElMessage.error(res.message);
+            return;
+        }
+        ElMessage.success(res.message);
+        return res
         // if the custom code is not 20000, it is judged as an error.
         // if (res.code !== 200) {
         //     Message({
