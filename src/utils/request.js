@@ -10,7 +10,7 @@ const service = axios.create({
     // 后台接口地址
     baseURL:  import.meta.env.VITE_APP_URL, // url = base url + request url
     // withCredentials: true, // send cookies when cross-domain requests
-    timeout: 5000 // request timeout，超过7秒提示超时
+    timeout: 10000 // request timeout，超过7秒提示超时
 })
 
 // request interceptor

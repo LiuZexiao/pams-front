@@ -1,13 +1,14 @@
 <template>
   <Nav />
   <el-container>
-    <el-aside width="200px">
+    <el-aside width="200px" >
       <el-menu :default-active="activePath"
                class="el-menu-vertical-demo"
                background-color="rgb(226, 35, 33)"
                text-color="#fff"
                active-text-color="#ffd04b"
-               router>
+               router
+               >
         <!-- 一级菜单 无子菜单 -->
         <el-menu-item v-for="item in menusData"
                       v-show="!item.children"
@@ -199,7 +200,7 @@ body {
 
 .el-header,
 .el-footer {
-  background-color: rgb(221, 24, 27);
+  /* background-color: rgb(221, 24, 27); */
   color: var(--el-text-color-primary);
   /* text-align: center; */
   line-height: 60px;
@@ -211,7 +212,7 @@ body {
   color: var(--el-text-color-primary);
   text-align: center;
   line-height: 200px;
-  margin-left: 10%;
+  margin-left: 2%;
 }
 
 .el-main {
@@ -219,7 +220,8 @@ body {
   color: var(--el-text-color-primary);
   text-align: center;
   line-height: 160px;
-  margin-right: 10%;
+  margin-right: 2%;
+  --el-header-height: 0px;
 }
 
 body > .el-container {

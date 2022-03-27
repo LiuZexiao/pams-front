@@ -3,7 +3,7 @@
   <HelloWorld msg="Hello Vue 3 + Vite" /> -->
   <!-- <test></test> -->
   <div>
-    <router-view></router-view> 
+    <router-view></router-view>
   </div>
 </template>
 
@@ -25,4 +25,5 @@
   color: #2c3e50;
   margin-top: 60px;
 } */
+
 </style>
