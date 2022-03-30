@@ -63,11 +63,17 @@ const routes = [
     path: "/user",
     name: "用户管理",
     component: Layout,
+    meta:{
+      title: '用户管理',
+    },
     children: [
       {
         path: "/user/list",
         name: "用户列表",
         component: () => import("../views/user/List.vue"),
+        meta:{
+          title: '用户列表',
+        },
       },
       {
         path: "/user/template",

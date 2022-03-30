@@ -3,7 +3,8 @@
   <el-card shadow="never" class="box-card">
     <template #header>
       <div class="card-header" style="text-align: left;line-height: 0px;">
-        <span>用户列表</span>
+       <BreadCrumb></BreadCrumb>
+        <!-- <span>用户列表</span> -->
       </div>
     </template>
     <el-row :gutter="24" style="text-align: left;line-height: 10px;">
@@ -58,6 +59,7 @@
 import { reactive, onMounted, toRefs } from "vue";
 import { userInfo } from "../..//api/user.js";
 import UserSearch from "./UserSearch.vue"
+import BreadCrumb from "../BreadCrumb.vue"
 function loadData(state) {
   const params = {
     // "clazz": "",
@@ -152,6 +154,7 @@ export default {
   name: "list",
   components: {
     UserSearch,
+    BreadCrumb,
   },
   setup() {
     const state = reactive({

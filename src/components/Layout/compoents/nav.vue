@@ -8,7 +8,7 @@
                  src="../../../assets/dh1024.png"
                  alt="logo" />
             <span>
-              <router-link to="/"> 党务系统</router-link>
+              <router-link to="/dashboard"> 党务系统</router-link>
             </span>
           </div>
           <div class="header-menu">
