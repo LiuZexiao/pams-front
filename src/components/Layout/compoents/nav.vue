@@ -1,5 +1,5 @@
 <template>
-  <el-header style=" --el-header-padding: 0 0;">
+  <el-header style=" --el-header-padding: 0 0;margin-bottom: 14px;">
     <div class="top">
       <div class="center">
         <div class="info">
