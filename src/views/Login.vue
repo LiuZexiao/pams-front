@@ -1,25 +1,25 @@
 0<template>
   <div class="login_box">
-    <el-form
-      class="login_form"
-      :model="loginForm"
-      :rules="loginFormRules"
-      ref="loginFormRef"
-    >
-      <el-form-item prop="username">
-        <el-input
-          v-model="loginForm.username"
-          prefix-icon="user-filled"
-        ></el-input>
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input v-model="loginForm.password" prefix-icon="lock" type="password"> </el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="login">登录</el-button>
-        <el-button type="info" @click="resetLoginForm">重置</el-button>
-      </el-form-item>
-    </el-form>
+    <el-card class="login_card">
+      <div style="text-align: center;width: 100%;">
+        <h2>党务系统登录</h2>
+      </div>
+      <el-form class="login_form" :model="loginForm" :rules="loginFormRules" ref="loginFormRef" label-width="66px">
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="loginForm.username" prefix-icon="user-filled" />
+        </el-form-item>
+        <el-form-item label="密 码" prop="password">
+          <el-input v-model="loginForm.password" prefix-icon="lock" type="password" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="login">登录</el-button>
+          <el-button @click="resetLoginForm">重置</el-button>
+        </el-form-item>
+      </el-form>
+      <div style="text-align: right; width: 100%;">
+        <el-link href="https://element.eleme.io" target="_blank">忘记密码</el-link>
+      </div>
+    </el-card>
   </div>
 </template>
 
@@ -119,12 +119,24 @@ export default {
 </script>
 
 <style>
+body {
+  background: #de2910;
+  background-image: url("../assets/login-bg.jpg");
+  background-repeat:repeat-x;
+}
+
 .login_box {
-  width: 450px;
+  display: flex;
+  justify-content: center;
+  margin-top: 220px;
+}
+
+.login_card {
+  text-align: center;
+  width: 460px;
   height: 300px;
-  background-color: #fff;
-  border-radius: 3px;
-  margin: 0 auto;
+  background-color: rgba(0,0,0,0);
+  border: rgba(0,0,0,0);
 }
 .login_form {
   width: 100%;
