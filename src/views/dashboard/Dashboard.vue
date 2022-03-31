@@ -26,7 +26,7 @@
 
         </template>
         <div>个人信息</div>
-        
+
       </el-card>
     </el-col>
     <!-- 新闻公告 -->
@@ -64,22 +64,12 @@
     <template #header>
       <div class="card-header"
            style="text-align: left;line-height: 0px;">
+        <el-icon>
+          <aim />
+        </el-icon>
+        入党流程
       </div>
     </template>
-    <el-row :gutter="24"
-            style="text-align: left;line-height: 10px;">
-      <el-col :span="6"></el-col>
-      <el-col :span="6">
-        <el-input placeholder="请输入搜索内容"></el-input>
-      </el-col>
-      <el-col :span="12">
-        <el-button type="primary"
-                   @click="search()"> 搜索 </el-button>
-        <el-button type="primary"
-                   @click="userSearch()"> 高级搜索 </el-button>
-      </el-col>
-    </el-row>
-
   </el-card>
 
 </template>
@@ -91,11 +81,11 @@ export default {
   setup() {
     const state = reactive({
       usereData: {
-        "realName": "liu",
-        "clazz": "",
-        "number": "",//学号
-        "phone": "",//手机号
-        "beActivistDate": ""//成为积极分子的时间
+        realName: "liu",
+        clazz: "",
+        number: "", //学号
+        phone: "", //手机号
+        beActivistDate: "", //成为积极分子的时间
       },
     });
     return {
