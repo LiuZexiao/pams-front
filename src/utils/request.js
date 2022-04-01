@@ -68,7 +68,6 @@ service.interceptors.response.use(
             ElMessage.error(res.message);
             return;
         }
-        ElMessage.success(res.message);
         return res
         // if the custom code is not 20000, it is judged as an error.
         // if (res.code !== 200) {
