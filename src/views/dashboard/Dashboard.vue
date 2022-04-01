@@ -121,7 +121,10 @@
         入党流程
       </div>
     </template>
-    <join-process></join-process>
+    <div class="big-box" style=" height: 500px;margin-left: 200px; ">
+       <join-process></join-process>
+    </div>
+   
   </el-card>
 
 </template>
