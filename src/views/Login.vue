@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import {reactive, toRefs, ref} from "vue";
+import {reactive, toRefs, ref, onMounted} from "vue";
 import {ElMessage} from 'element-plus';
 import countDown from "../assets/js/countDown.js";
 import {logins} from '../api/user.js'
@@ -110,6 +110,11 @@ export default {
         verCode: ""
       },
     });
+    onMounted(() => {
+      if (window.sessionStorage.getItem("token")) {
+        window.location.href = "/dashboard"
+      }
+    })
     const { state: countDownState, start: startTimeout } = countDown(60)
 
     const getVerCode = async () => {
