@@ -110,7 +110,8 @@
 
   <!-- 入党流程 -->
   <el-card shadow="hover"
-           class="box-card ">
+           class="box-card "
+           style="margin-top: 20px">
     <template #header>
       <div class="card-header"
            style="text-align: left;line-height: 0px;">
@@ -120,6 +121,7 @@
         入党流程
       </div>
     </template>
+    <join-process></join-process>
   </el-card>
 
 </template>
@@ -128,6 +130,7 @@
 import { reactive, onMounted, toRefs } from "vue";
 import { myInfor } from "../..//api/user.js";
 import { informationManage } from "../..//api/information.js";
+import JoinProcess from "./JoinProcess.vue";
 
 function loadData(state) {
   // 我的主页获取个人信息，有数据时可解除注释
@@ -152,43 +155,43 @@ function loadData(state) {
 }
 
 export default {
-  name: "Dashbroad",
-  setup() {
-    const state = reactive({
-      usereData: {
-        realName: "liu",
-        clazz: "20计科专本01班",
-        number: "Z2020120100", //学号
-        phone: "13900000000", //手机号
-        beActivistDate: "2022-02-06", //成为积极分子的时间
-      },
-      informationData: [
-        {
-          title: "0401测试", //新闻标题
-          release_time: "2022-04-01", //发布时间
-          resource: "www.baidu.com", //跳转链接
-        },
-        {
-          title: "0401测试", //新闻标题
-          release_time: "2022-04-01", //发布时间
-          resource: "www.baidu.com", //跳转链接
-        },
-        {
-          title: "0401测试", //新闻标题
-          release_time: "2022-04-01", //发布时间
-          resource: "www.baidu.com", //跳转链接
-        },
-      ],
-    });
-
-    onMounted(() => {
-      // 加载页面时执行
-      loadData(state);
-    });
-    return {
-      ...toRefs(state), //toRefs将对象中的内容转换为响应式数据
-    };
-  },
+    name: "Dashbroad",
+    setup() {
+        const state = reactive({
+            usereData: {
+                realName: "liu",
+                clazz: "20计科专本01班",
+                number: "Z2020120100",
+                phone: "13900000000",
+                beActivistDate: "2022-02-06", //成为积极分子的时间
+            },
+            informationData: [
+                {
+                    title: "0401测试",
+                    release_time: "2022-04-01",
+                    resource: "www.baidu.com", //跳转链接
+                },
+                {
+                    title: "0401测试",
+                    release_time: "2022-04-01",
+                    resource: "www.baidu.com", //跳转链接
+                },
+                {
+                    title: "0401测试",
+                    release_time: "2022-04-01",
+                    resource: "www.baidu.com", //跳转链接
+                },
+            ],
+        });
+        onMounted(() => {
+            // 加载页面时执行
+            loadData(state);
+        });
+        return {
+            ...toRefs(state), //toRefs将对象中的内容转换为响应式数据
+        };
+    },
+    components: { JoinProcess }
 };
 </script>
 
