@@ -1,19 +1,40 @@
 <template>
   <Nav />
   <el-container>
-    <el-aside width="200px" >
+
+    <el-aside width="200px">
+      <div class="header-menu">
+        <div style="margin-top: 20px; margin-bottom:20px;line-height: 0px;">
+          <span class="el-dropdown-link">
+            <a href="/owner/info"
+               target="_blank">
+              <el-avatar :size="80" style="margin-bottom:5px;"
+                         src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+            </a>
+          </span>
+          <div style="  -webkit-text-size-adjust: 100%;
+                        -webkit-tap-highlight-color: rgba(0,0,0,0);
+                        font-size: 14px;
+                        line-height: 1.42857143;
+                        font-family: Helvetica Neue,Helvetica,microsoft yahei,arial,STHeiTi,sans-serif;
+                        -webkit-box-direction: normal;
+                        box-sizing: border-box;
+                        font-weight: 700;
+                        color: white;">{{ realName }}</div>
+        </div>
+      </div>
+
       <el-menu :default-active="activePath"
                class="el-menu-vertical-demo"
                background-color="rgb(226, 35, 33)"
                text-color="#fff"
                active-text-color="#ffd04b"
-               router
-               >
+               router>
         <!-- 一级菜单 无子菜单 -->
         <el-menu-item v-for="item in menusData"
                       v-show="!item.children"
-                     :index="item.path"
-                     :key="item.id"
+                      :index="item.path"
+                      :key="item.id"
                       @click="saveNavPath(item.path)">
           <template #title>
             <!-- <el-icon> 菜单图标
@@ -55,15 +76,23 @@
 </template>
 
 <script>
-import {onMounted, reactive, toRefs} from "vue";
+import { onMounted, reactive, toRefs } from "vue";
 import axios from "axios";
 import router from "../../router";
+import { myInfor } from "../..//api/user.js";
 import Nav from "./compoents/nav.vue";
 
 function useLoadMenuData(state) {
   axios.get("/menus").then((res) => {
     state.menusData = res.data;
   });
+}
+
+function userName(state){
+  myInfor().then(function (res) {
+    state.realName = res.data.realName;
+  })
+  
 }
 
 export default {
@@ -73,10 +102,12 @@ export default {
   },
   setup() {
     const state = reactive({
-      menusData: [//菜单数据
+      realName: "liu",
+      menusData: [
+        //菜单数据
         {
           id: "1",
-          title: "仪表盘",
+          title: "我的首页",
           path: "/dashboard", // 在组件中用不到
         },
         {
@@ -167,8 +198,8 @@ export default {
     });
     onMounted(() => {
       // useLoadMenuData(state); //读取菜单
+      userName(state); // 获取当前姓名
       state.activePath = window.sessionStorage.getItem("activePath");
-      ;
     });
 
     // 保存链接的激活状态
@@ -189,7 +220,6 @@ export default {
       saveNavPath,
     };
   },
-
 };
 </script>
 
@@ -212,7 +242,7 @@ body {
   color: var(--el-text-color-primary);
   text-align: center;
   line-height: 200px;
-  margin-left: 2%;
+  margin-left: 8%;
 }
 
 .el-main {
@@ -220,7 +250,7 @@ body {
   color: var(--el-text-color-primary);
   text-align: center;
   line-height: 160px;
-  margin-right: 2%;
+  margin-right: 8%;
   --el-header-height: 0px;
 }
 
@@ -287,5 +317,4 @@ a {
   text-decoration: none;
   color: #e9eef3;
 }
-
 </style>

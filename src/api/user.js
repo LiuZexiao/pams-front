@@ -19,3 +19,10 @@ export function userInfo(data) {
         data,
     })
 }
+
+export function myInfor(){
+    return request({
+        url: '/owner/user/info',
+        method: 'get',
+    })
+}
