@@ -95,22 +95,20 @@
       <el-table-column fixed prop="number" label="学号" width="120"/>
       <el-table-column prop="realName" label="姓名" width="80"/>
       <el-table-column prop="college" label="学院" width="220"/>
-      <el-table-column prop="clazz" label="班级" width="130"/>
+      <el-table-column prop="clazz" label="班级" width="140"/>
       <el-table-column prop="gender" label="性别" width="80"/>
       <el-table-column prop="age" label="年龄" width="80"/>
       <el-table-column prop="applyDate" label="申请入党时间" width="180"/>
       <el-table-column prop="stage.stage.name" label="当前阶段" width="120"/>
       <el-table-column prop="state" label="信息状态" width="120"/>
-      <el-table-column fixed="right" label="操作" width="260">
+      <el-table-column fixed="right" label="操作" width="200">
         <template #default="scope">
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button size="small" @click="showEdit(scope.$index, MODE.EDIT)">编辑</el-button>
           <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-        background
-        layout="sizes, prev, pager, next, jumper, ->, total"
+    <el-pagination background layout="sizes, prev, pager, next, jumper, ->, total"
         :total="total"
         :page-size="params.size"
         v-model:current-page="params.page"
@@ -125,24 +123,33 @@
     />
   </el-card>
   <UserSearch :centerDialogVisible="centerDialogVisible" @onCloseDialog="closeDialogVisivle"></UserSearch>
-
+  <Edit :visible="editVisible" :row="data" :mode="mode" @onClose="closeEdit" @onSave="handleEdit"/>
 </template>
 
 <script>
 import { reactive, onMounted, toRefs } from "vue";
-import { userInfo } from "../../api/userInfo.js";
+import { userInfo, modify } from "../../api/userInfo.js";
 import UserSearch from "./UserSearch.vue"
 import BreadCrumb from "../BreadCrumb.vue"
+import Edit from "./components/Edit.vue"
+import {ElMessage} from "element-plus";
 
 export default {
   name: "list",
   components: {
     UserSearch,
     BreadCrumb,
+    Edit,
   },
   setup() {
+    const MODE = {
+      EDIT: "modify",
+      ADD: "add"
+    }
     const state = reactive({
       tableData: [],
+      data: {},
+      mode: null,
       params: {
         clazz: null,
         college: null,
@@ -161,6 +168,7 @@ export default {
       },
       total: 0,
       centerDialogVisible: false,
+      editVisible: false,
     }); // reactive 响应式对象声明
 
     onMounted(() => {
@@ -246,15 +254,49 @@ export default {
       return state.tableData;
     }
 
-    const handleEdit = (index, row) => {
+    /**
+     * 处理编辑事件
+     */
+    const handleEdit = (row) => {
+      console.log("handleEdit:" + JSON.stringify(row))
+      modify(row, row.id).then(res => {
+        if (res.code === 200) {
+          state.mode = null
+          state.data = {}
+          state.editVisible = false
+          ElMessage.success(res.message)
+        } else {
+          ElMessage.error(res.message)
+        }
+      })
+    }
 
+    /**
+     * 显示编辑框
+     */
+    const showEdit = (index, mode) => {
+      state.mode = mode
+      state.data = state.tableData[index]
+      state.editVisible = true
+      console.log("showEdit:" + state.data)
+    }
+
+    /**
+     * 关闭编辑框
+     * @param visible
+     */
+    const closeEdit = (visible) => {
+      state.editVisible = visible
     }
 
     return {
+      MODE,
       ...toRefs(state), //toRefs将对象中的内容转换为响应式数据
       userSearch,
       loadData,
       handleEdit,
+      showEdit,
+      closeEdit,
       closeDialogVisivle,
     };
   },

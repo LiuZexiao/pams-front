@@ -42,8 +42,6 @@
 </template>
 
 <script>
-import {onMounted, reactive, toRefs} from "vue";
-
 export default {
   name: "nav",
   setup() {
