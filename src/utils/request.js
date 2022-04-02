@@ -27,13 +27,13 @@ service.interceptors.request.use(
         //     config.headers['token'] = localStorage.getItem('token')
         // }
 
-        if ( window.sessionStorage.getItem('token')) {
+        if (localStorage.getItem('token')) {
             // let each request carry token
             // ['X-Token'] is a custom headers key
             // please modify it according to the actual situation
             // 修改请求头, 将Token放入请求头
             // config.headers['X-Token'] = getToken()
-            config.headers['token'] = window.sessionStorage.getItem('token')
+            config.headers['token'] = localStorage.getItem('token')
         }
         return config
     },
@@ -68,7 +68,6 @@ service.interceptors.response.use(
             ElMessage.error(res.message);
             return;
         }
-        ElMessage.success(res.message);
         return res
         // if the custom code is not 20000, it is judged as an error.
         // if (res.code !== 200) {
