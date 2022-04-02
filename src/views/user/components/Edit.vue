@@ -39,8 +39,11 @@
                      value="艺术学院" />
         </el-select>
       </el-form-item>
-      <el-form-item label="学号">
+      <el-form-item label="班级">
         <el-input v-model="row.clazz" />
+      </el-form-item>
+      <el-form-item label="学号">
+        <el-input v-model="row.number" />
       </el-form-item>
       <el-form-item label="性别">
         <el-select v-model="row.gender"
@@ -84,7 +87,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="英语水平">
-        <el-select v-model="row.education"
+        <el-select v-model="row.englishLevel"
                    placeholder="请选择">
           <el-option label="CET_4"
                      value="CET_4" />
@@ -97,7 +100,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="计算机水平">
-        <el-select v-model="row.education"
+        <el-select v-model="row.computerLevel"
                    placeholder="请选择">
           <el-option label="计算机一级"
                      value="ONE" />
