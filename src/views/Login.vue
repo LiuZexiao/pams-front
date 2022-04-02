@@ -67,7 +67,7 @@ function userLogin(loginFormRef, state) {
 
       const res = await logins(params);
       if (res.code === 200) {
-        window.sessionStorage.setItem("token", res.data.token);
+        localStorage.setItem("token", res.data.token);
         window.location.href = "/user/list"
       } else {
         ElMessage.error(res.message);
@@ -111,7 +111,7 @@ export default {
       },
     });
     onMounted(() => {
-      if (window.sessionStorage.getItem("token")) {
+      if (localStorage.getItem("token")) {
         window.location.href = "/dashboard"
       }
     })

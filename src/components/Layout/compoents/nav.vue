@@ -4,9 +4,7 @@
       <div class="center">
         <div class="info">
           <div class="header-div">
-            <img class="header-logo"
-                 src="../../../assets/dh1024.png"
-                 alt="logo" />
+            <img class="header-logo" src="../../../assets/dh1024.png" alt="logo" />
             <span>
               <router-link to="/dashboard"> 党务系统</router-link>
             </span>
@@ -14,28 +12,21 @@
           <div class="header-menu">
             <el-dropdown>
               <span class="el-dropdown-link">
-                <a href="/owner/info"
-                   target="_blank">
-                  <el-avatar :size="50"
-                             src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+                <a href="/owner/info" target="_blank">
+                  <el-avatar :size="50" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
                 </a>
               </span>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <a href="/owner/info"
-                     target="_blank">
+                  <a href="/owner/info" target="_blank">
                     <el-dropdown-item>个人中心</el-dropdown-item>
                   </a>
-                  <a href="/owner/account"
-                     target="_blank">
+                  <a href="/owner/account" target="_blank">
                     <el-dropdown-item>账号中心</el-dropdown-item>
                   </a>
                   <el-dropdown-item divided>
-                    <el-link :underline="false"
-                             style="font-size: 10px;"
-                             @click="loginout">
-                      <switch-button width="17px"
-                                     style="vertical-align: middle;" />
+                    <el-link :underline="false" style="font-size: 10px;" @click="logout">
+                      <switch-button width="17px" style="vertical-align: middle;" />
                       退出
                     </el-link>
                   </el-dropdown-item>
@@ -51,8 +42,20 @@
 </template>
 
 <script>
+import {onMounted, reactive, toRefs} from "vue";
+
 export default {
   name: "nav",
+  setup() {
+    const logout = () => {
+      localStorage.clear()
+      window.location.href = "/login"
+    }
+
+    return {
+      logout,
+    };
+  },
 };
 </script>
 

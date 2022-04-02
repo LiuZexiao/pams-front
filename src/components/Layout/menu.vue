@@ -199,24 +199,17 @@ export default {
     onMounted(() => {
       // useLoadMenuData(state); //读取菜单
       userName(state); // 获取当前姓名
-      state.activePath = window.sessionStorage.getItem("activePath");
+      state.activePath = localStorage.getItem("activePath");
     });
 
     // 保存链接的激活状态
     function saveNavPath(activePath) {
-      window.sessionStorage.setItem("activePath", activePath);
+      localStorage.setItem("activePath", activePath);
       state.activePath = activePath;
-    }
-
-    // 用户退出
-    function logoout() {
-      window.sessionStorage.clear();
-      router.push("/login");
     }
 
     return {
       ...toRefs(state),
-      logoout,
       saveNavPath,
     };
   },
