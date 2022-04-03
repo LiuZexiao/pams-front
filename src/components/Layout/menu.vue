@@ -72,6 +72,7 @@
     </el-aside>
 
     <el-main>
+      <BreadCrumb></BreadCrumb>
       <router-view></router-view>
     </el-main>
   </el-container>
@@ -83,6 +84,7 @@ import axios from "axios";
 import router from "../../router";
 import { userInfo } from "../../api/userInfo.js";
 import Nav from "./compoents/nav.vue";
+import BreadCrumb from "../BreadCrumb.vue"
 
 function useLoadMenuData(state) {
   axios.get("/menus").then((res) => {
@@ -100,6 +102,7 @@ export default {
   name: "layout",
   components: {
     Nav,
+    BreadCrumb,
   },
   setup() {
     const state = reactive({

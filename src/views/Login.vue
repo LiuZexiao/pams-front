@@ -123,7 +123,7 @@ export default {
         ElMessage.error("请输入账号")
         return
       }
-      let res = null;
+      let res = {};
       if (regEmail.test(account)) {
         res = await emailVerCode(account)
       } else if (regMobile.test(account)) {

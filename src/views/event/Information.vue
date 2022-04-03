@@ -1,5 +1,4 @@
 <template>
- <BreadCrumb></BreadCrumb><br/>
   新闻信息（一部分是爬取的、一部分由系统管理）
   AnnManage.vue通知公告管理
   1)	通知公告发布。通知公告发布功能中可以创建党组织公告和党组织通知两种信息，
@@ -10,11 +9,9 @@
 </template>
 
 <script>
-import BreadCrumb from "../BreadCrumb.vue"
 export default {
   name: "News",
   components: {
-    BreadCrumb,
   },
 }
 </script>
