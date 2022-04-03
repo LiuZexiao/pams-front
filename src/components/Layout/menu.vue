@@ -84,7 +84,7 @@ import axios from "axios";
 import router from "../../router";
 import { userInfo } from "../../api/userInfo.js";
 import Nav from "./compoents/nav.vue";
-import BreadCrumb from "./compoents/BreadCrumb.vue"
+import BreadCrumb from "../BreadCrumb.vue"
 
 function useLoadMenuData(state) {
   axios.get("/menus").then((res) => {

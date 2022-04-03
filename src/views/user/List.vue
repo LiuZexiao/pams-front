@@ -159,7 +159,7 @@
 <script>
 import { reactive, onMounted, toRefs } from "vue";
 import { fetchData, modify, defaultUserInfo, add, remove } from "../../api/userInfo.js";
-import UserSearch from "./UserSearch.vue"
+import UserSearch from "./components/UserSearch.vue"
 import Edit from "./components/Edit.vue"
 import { ElMessage } from "element-plus";
 import { InfoFilled } from '@element-plus/icons-vue'
