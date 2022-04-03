@@ -1,7 +1,8 @@
 // import { createRouter, createWebHashHistory } from "vue-router";
 import { createRouter, createWebHistory  } from "vue-router";
 import Layout from "../components/Layout/menu.vue";
-import Header from "../components/Layout/header.vue"
+import Header from "../components/Layout/header.vue";
+import Account from "../views/owner/Account.vue";
 
 const routes = [
   {
@@ -26,7 +27,30 @@ const routes = [
       {
         path: "/owner/account",
         name: "账号中心",
-        component: () => import("../views/owner/Account.vue"),
+        component: Account,
+        children: [
+          {
+            path: "/owner/account/updateAccount",
+            name: "更新账号信息",
+            component: () => import("../views/owner/components/UpdateAccount.vue"),
+          },
+          {
+            path: "/owner/account/updatePassword",
+            name: "更新密码",
+            component: () => import("../views/owner/components/UpdatePassword.vue"),
+          },
+          {
+            path: "/owner/account/updateEmail",
+            name: "更新邮箱",
+            component: () => import("../views/owner/components/UpdateEmail.vue"),
+          },
+          {
+            path: "/owner/account/updatePhone",
+            name: "更新手机",
+            component: () => import("../views/owner/components/UpdatePhone.vue"),
+          }
+          
+        ],
       },
     ],
   },

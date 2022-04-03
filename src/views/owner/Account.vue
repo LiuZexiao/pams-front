@@ -16,47 +16,43 @@
       <el-card shadow="hover"
                class="box-card "
                style="margin-top: 6% ">
-        <el-menu default-active="1"
-                 class="el-menu-vertical-demo">
-          <el-menu-item index="1">
+        <el-menu :default-active="activePath"
+                 class="el-menu-vertical-demo"
+                 router>
+          <el-menu-item index="/owner/account/updateAccount" @click="saveNavPath('/owner/account/updateAccount')">
             <template #title>
               <el-icon>
-                <location />
-              </el-icon>
-              <el-icon>
-                <avatar />
+                <user-filled />
               </el-icon>
               <span>账号信息</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="2">
+          <el-menu-item index="/owner/account/updatePassword" @click="saveNavPath('/owner/account/updatePassword')">
             <el-icon>
               <key />
             </el-icon>
             <span>修改密码</span>
           </el-menu-item>
-          <el-menu-item index="3">
+          <el-menu-item index="/owner/account/updateEmail" @click="saveNavPath('/owner/account/updateEmail')">
             <el-icon>
               <document />
             </el-icon>
             <span>绑定邮件</span>
           </el-menu-item>
-          <el-menu-item index="4">
+          <el-menu-item index="/owner/account/updatePhone" @click="saveNavPath('/owner/account/updatePhone')">
             <el-icon>
               <setting />
             </el-icon>
             <span>绑定手机</span>
           </el-menu-item>
         </el-menu>
-
       </el-card>
     </el-col>
     <!--具体信息 -->
     <el-col :span="16">
-
       <el-card shadow="hover"
                style="height: 210px">
-
+        <router-view></router-view>
       </el-card>
     </el-col>
   </el-row>
@@ -88,15 +84,23 @@ export default {
         stage: {
           userInfoId: 1,
         },
+        activePath: "",// 存储当前点击的菜单路径
+        
       },
     });
     onMounted(() => {
       // 加载页面时执行
       loadData(state);
     });
+    // 保存链接的激活状态
+    function saveNavPath(activePath) {
+      localStorage.setItem("activePath", activePath);
+      state.activePath = activePath;
+    }
 
     return {
       ...toRefs(state), //toRefs将对象中的内容转换为响应式数据
+      saveNavPath
     };
   },
 };
