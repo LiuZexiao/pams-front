@@ -7,7 +7,7 @@
              v-for="item,key in proData"
              :key="key"
              >
-      <template >
+      <!-- <template v-slot="description" >
         <table width="100%"
                border="0"
                cellspacing="0"
@@ -34,6 +34,7 @@
           </tr>
         </table>
       </template>
+       -->
     </el-step>
   </el-steps>
 </template>
@@ -118,6 +119,13 @@ export default {
           score: null,
         },
       ],
+      approvalProcessProject:[
+           {id:'0',label: "方案制定"},
+           { id:'1',label: "割接方案会审"},
+           { id:'2',label: "割接审批"},
+           { id:'3',label: "审批成功"},
+       ],
+       description: ''
     });
     return {
       ...toRefs(state), //toRefs将对象中的内容转换为响应式数据
@@ -127,6 +135,40 @@ export default {
 </script>
 
 <style>
+ .stepComponent{
+      background-color:#DFEBFF;
+      width: 100%-20px;
+      padding: 10px 10px 10px 10px;
+      margin: 10px 10px 10px 10px;
+  }
+  .stepsTitle{
+      margin: 10px 0px  10px  10px ;
+  }
+  .approvalProcess{
+      color: #9EADC4;
+      font-size: 14px;
+      /* width: 100%; */
+      background:#DFEBFF;
+      margin-left:20px;
+      margin-right:0px;
+      margin-top:10px;
+  }
+  .processing_content{
+    background-color: #D9E5F9;
+  }
+  .processing_content_detail{
+     margin-left: 10px;
+     margin-top: 3.5px;
+     margin-bottom: 3.5px;
+	   width:150px;
+     display:inline-block;
+  }
+  .step-row{
+     min-width:500px;
+     margin-bottom:12px;
+     margin-top:12px;
+  }
+
 </style>
 
 

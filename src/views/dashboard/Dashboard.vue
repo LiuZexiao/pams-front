@@ -107,7 +107,6 @@
       </el-card>
     </el-col>
   </el-row>
-
   <!-- 入党流程 -->
   <el-card shadow="hover"
            class="box-card "
