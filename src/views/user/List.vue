@@ -1,13 +1,6 @@
 <template>
   <!-- 用户列表（导入、导出、添加、删除、修改、个性化查询、入党流程图） -->
   <el-card shadow="never" class="box-card">
-    <template #header>
-      <div class="card-header" style="text-align: left;line-height: 0px;">
-        <BreadCrumb></BreadCrumb>
-        <!-- <span>用户列表</span> -->
-      </div>
-    </template>
-
     <!-- 搜索、添加、导入导出 BEGIN -->
     <el-row :gutter="24" style="text-align: left;line-height: 10px;margin-bottom: 10px">
       <el-col :span="4">
@@ -167,7 +160,6 @@
 import { reactive, onMounted, toRefs } from "vue";
 import { fetchData, modify, defaultUserInfo, add, remove } from "../../api/userInfo.js";
 import UserSearch from "./UserSearch.vue"
-import BreadCrumb from "../BreadCrumb.vue"
 import Edit from "./components/Edit.vue"
 import { ElMessage } from "element-plus";
 import { InfoFilled } from '@element-plus/icons-vue'
@@ -176,7 +168,6 @@ export default {
   name: "list",
   components: {
     UserSearch,
-    BreadCrumb,
     Edit,
   },
   setup() {

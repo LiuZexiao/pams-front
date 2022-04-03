@@ -1,5 +1,4 @@
 <template>
-  <BreadCrumb></BreadCrumb>
   部门管理
 
   组织架构管理 “组织架构管理”功能，可以新建下级党组织，以及查询维护党组织结构关系。 组织架构管理能够对党组织机构信息进行管理，当初始化组织机构不存在时，则需要添加相应的组织机构信息。
@@ -7,11 +6,9 @@
 </template>
 
 <script>
-import BreadCrumb from "../BreadCrumb.vue"
 export default {
   name: "Department",
    components: {
-    BreadCrumb,
   },
 };
 </script>
