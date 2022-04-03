@@ -151,7 +151,6 @@
   </el-card>
 
   <!-- 组件 BEGIN -->
-  <UserSearch :centerDialogVisible="centerDialogVisible" @onCloseDialog="closeDialogVisivle"></UserSearch>
   <UserInfoEdit :visible="editVisible" :row="data" :mode="mode" @onClose="closeEdit" @onSave="handleEdit"/>
   <UserInfoExport :visible="exportVisible" @onClose="closeExport"/>
   <!-- 组件 END -->
@@ -160,7 +159,6 @@
 <script>
 import { reactive, onMounted, toRefs } from "vue";
 import { fetchData, modify, defaultUserInfo, add, remove } from "../../api/userInfo.js";
-import UserSearch from "./components/UserSearch.vue"
 import UserInfoEdit from "./components/UserInfoEdit.vue"
 import UserInfoExport from "./components/UserInfoExport.vue"
 import { ElMessage } from "element-plus";
@@ -169,7 +167,6 @@ import { InfoFilled } from '@element-plus/icons-vue'
 export default {
   name: "list",
   components: {
-    UserSearch,
     UserInfoEdit,
     UserInfoExport,
   },
@@ -199,7 +196,6 @@ export default {
         state: null
       },
       total: 0,
-      centerDialogVisible: false,
       editVisible: false,
       exportVisible: false,
       advancedSearch: false,
@@ -210,14 +206,7 @@ export default {
       loadData(state);
     });
 
-    const userSearch = () => {
-      state.centerDialogVisible = true;
-    }
-
-    const closeDialogVisivle = (visible) => {
-      state.centerDialogVisible = visible;
-    }
-
+    /* 加载用户列表数据 */
     const loadData = () => {
       if (state.params.state === "") {
         state.params.state = null
@@ -238,9 +227,7 @@ export default {
       return state.tableData;
     }
 
-    /**
-     * 处理编辑事件
-     */
+    /* 处理编辑事件 */
     const handleEdit = async (row) => {
       let res = {};
       if (state.mode === MODE.EDIT) {
@@ -260,23 +247,7 @@ export default {
       }
     }
 
-    /**
-     * 处理删除事件
-     */
-    const handleDelete = (rowId) => {
-      remove(rowId).then(res => {
-        if (res.code === 200) {
-          ElMessage.success(res.message)
-          loadData()
-        } else {
-          ElMessage.error(res.message)
-        }
-      })
-    }
-
-    /**
-     * 显示编辑框
-     */
+    /* 显示编辑框 */
     const showEdit = (index, mode) => {
       state.mode = mode
       state.data = index != null ? state.tableData[index] : defaultUserInfo
@@ -284,10 +255,7 @@ export default {
       console.log("showEdit:" + state.data)
     }
 
-    /**
-     * 关闭编辑框
-     * @param visible
-     */
+    /* 关闭编辑框 */
     const closeEdit = (visible) => {
       state.editVisible = visible
     }
@@ -302,10 +270,32 @@ export default {
       state.exportVisible = visible
     }
 
+    /* 处理删除事件 */
+    const handleDelete = (rowId) => {
+      remove(rowId).then(res => {
+        if (res.code === 200) {
+          ElMessage.success(res.message)
+          loadData()
+        } else {
+          ElMessage.error(res.message)
+        }
+      })
+    }
+
+    /* 打开导出窗口 */
+    const showExport = () => {
+      state.exportVisible = true
+    }
+
+    /* 关闭导出窗口 */
+    const closeExport = (visible) => {
+      state.exportVisible = visible
+    }
+
+
     return {
       MODE,
       ...toRefs(state), //toRefs将对象中的内容转换为响应式数据
-      userSearch,
       loadData,
       handleEdit,
       handleDelete,
@@ -313,7 +303,6 @@ export default {
       showEdit,
       closeExport,
       closeEdit,
-      closeDialogVisivle,
     };
   },
 };
