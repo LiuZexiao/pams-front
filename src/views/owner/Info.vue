@@ -145,7 +145,6 @@
 import { reactive, onMounted, toRefs } from "vue";
 import { informationManage } from "../..//api/information.js";
 import { myInfor } from "../..//api/user.js";
-import Edit from "../user/components/Edit.vue";
 import JoinProcess from "../user/components/JoinProcess.vue";
 
 function loadData(state) {
@@ -172,7 +171,7 @@ function loadData(state) {
 
 export default {
   name: "Info",
-  components: { JoinProcess, Edit },
+  components: { JoinProcess },
   setup() {
     const state = reactive({
       editVisible: false,
