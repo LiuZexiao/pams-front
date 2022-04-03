@@ -130,7 +130,6 @@
 
 <script>
 import { reactive, onMounted, toRefs } from "vue";
-import { myInfor } from "../..//api/user.js";
 import { informationManage } from "../..//api/information.js";
 import JoinProcess from "./JoinProcess.vue";
 

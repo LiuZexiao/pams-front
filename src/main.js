@@ -25,6 +25,7 @@ import * as Icons from "@element-plus/icons"; //
 // });
 const app = createApp(App);
 app.use(ElementPlus);
+app.use(Icons);
 app.use(router);
 app.mount("#app");
 
