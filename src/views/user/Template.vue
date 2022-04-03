@@ -108,7 +108,7 @@ import { reactive, onMounted, toRefs } from "vue";
 import TemplateEdit from "./components/TemplateEdit.vue"
 import { ElMessage } from "element-plus";
 import { InfoFilled } from '@element-plus/icons-vue'
-import { fetchList, remove, add, modify, download, defaultTemplate } from "../../api/tableTemplate";
+import { fetchListByPage, remove, add, modify, download, defaultTemplate } from "../../api/tableTemplate";
 
 export default {
   name: "Template",
@@ -148,7 +148,7 @@ export default {
      * 加载数据
      */
     const loadData = () => {
-      fetchList(state.params).then(res => {
+      fetchListByPage(state.params).then(res => {
         const data = res.data
         state.tableData = data.content;
         state.total =data.totalElements
