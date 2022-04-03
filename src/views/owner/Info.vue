@@ -4,7 +4,8 @@
   奖惩信息（奖惩列表）
 
   个人信息管理。 个人信息管理功能可以查询用户自身相关的信息， 以及对基本信息和部分党员信息进行补充， 信息一旦提交普通用户无法修改， 但可通过管理员进行修改。 -->
-   <el-row :gutter="15" style="margin: 2% 8% 0 8%">
+  <el-row :gutter="15"
+          style="margin: 2% 8% 0 8%">
     <!-- 个人信息 -->
     <el-col :span="14">
       <el-card shadow="hover"
@@ -22,9 +23,12 @@
               </div>
             </el-col>
             <el-col :span="4">
-              <router-link to="/owner/info"
+              
+              <router-link to=""
+                          @click="showEdit()"
                            style="display:block; text-align: right;font-size: 13px;line-height: 13px; color: #a48888;">
                 更多</router-link>
+                <!-- @click="showEdit()" -->
             </el-col>
           </el-row>
 
@@ -113,7 +117,7 @@
   <!-- 入党流程 -->
   <el-card shadow="hover"
            class="box-card "
-          style="margin: 2%  8% 0 8%">
+           style="margin: 2%  8% 0 8%">
     <template #header>
       <div class="card-header"
            style="text-align: left;line-height: 0px;">
@@ -123,20 +127,25 @@
         入党流程
       </div>
     </template>
-    <div class="big-box" style=" height: auto; ">
+    <div class="big-box"
+         style=" height: auto; ">
       <!-- margin-left: 200px; -->
-       <join-process :userInfoId="usereData.stage.userInfoId"></join-process>
+      <join-process :userInfoId="usereData.stage.userInfoId"></join-process>
     </div>
-   
+
   </el-card>
 
-
+  <Edit :visible="editVisible"
+        :row="usereData"
+        @onClose="closeEdit"
+        @onSave="handleEdit" /> 
 </template>
 
 <script>
 import { reactive, onMounted, toRefs } from "vue";
 import { informationManage } from "../..//api/information.js";
-
+import { myInfor } from "../..//api/user.js";
+import Edit from "../user/components/Edit.vue";
 import JoinProcess from "../user/components/JoinProcess.vue";
 
 function loadData(state) {
@@ -145,7 +154,6 @@ function loadData(state) {
   //      state.usereData = res.data;
   //      console.log(res);
   //   });
-
   // 我的主页获取新闻信息，有数据时可解除注释
   // const params = {
   //   page: 1,
@@ -158,52 +166,94 @@ function loadData(state) {
   //   console.log(res);
   //   state.informationData == res.data.content;
   // });
-  
-  
+
   return state;
 }
 
 export default {
-    name: "Info",
-    setup() {
-        const state = reactive({
-            usereData: {
-                realName: "liu",
-                clazz: "20计科专本01班",
-                number: "Z2020120100",
-                phone: "13900000000",
-                beActivistDate: "2022-02-06", //成为积极分子的时间
-                stage:{
-                  userInfoId: 1
-                }
-            },
-            informationData: [
-                {
-                    title: "0401测试",
-                    release_time: "2022-04-01",
-                    resource: "www.baidu.com", //跳转链接
-                },
-                {
-                    title: "0401测试",
-                    release_time: "2022-04-01",
-                    resource: "www.baidu.com", //跳转链接
-                },
-                {
-                    title: "0401测试",
-                    release_time: "2022-04-01",
-                    resource: "www.baidu.com", //跳转链接
-                },
-            ],
-        });
-        onMounted(() => {
-            // 加载页面时执行
-            loadData(state);
-        });
-        return {
-            ...toRefs(state), //toRefs将对象中的内容转换为响应式数据
-        };
-    },
-    components: { JoinProcess }
+  name: "Info",
+  components: { JoinProcess, Edit },
+  setup() {
+    const state = reactive({
+      editVisible: false,
+      usereData: {
+        realName: "liu",
+        clazz: "20计科专本01班",
+        number: "Z2020120100",
+        phone: "13900000000",
+        beActivistDate: "2022-02-06", //成为积极分子的时间
+        stage: {
+          userInfoId: 1,
+        },
+      },
+      informationData: [
+        {
+          title: "0401测试",
+          release_time: "2022-04-01",
+          resource: "www.baidu.com", //跳转链接
+        },
+        {
+          title: "0401测试",
+          release_time: "2022-04-01",
+          resource: "www.baidu.com", //跳转链接
+        },
+        {
+          title: "0401测试",
+          release_time: "2022-04-01",
+          resource: "www.baidu.com", //跳转链接
+        },
+      ],
+    });
+    onMounted(() => {
+      // 加载页面时执行
+      loadData(state);
+    });
+     /**
+     * 处理编辑事件
+     */
+    const handleEdit = async (row) => {
+      let res = {};
+      if (state.mode === MODE.EDIT) {
+        res = await modify(row, row.id)
+      } else {
+        res = await add(row, null)
+      }
+      if (res.code === 200) {
+        state.mode = null
+        state.data = defaultUserInfo
+        state.editVisible = false
+        loadData()
+        ElMessage.success(res.message)
+      } else {
+        loadData()
+        ElMessage.error(res.message)
+      }
+    }
+    /**
+     * 显示编辑框
+     */
+    const showEdit = () => {
+      // state.mode = mode
+      // state.data = index != null ? state.tableData[index] : defaultUserInfo
+      state.editVisible = true
+      // console.log("showEdit:" + state.data)
+    }
+
+    /**
+     * 关闭编辑框
+     * @param visible
+     */
+    const closeEdit = (visible) => {
+      state.editVisible = visible
+    }
+
+    return {
+      ...toRefs(state), //toRefs将对象中的内容转换为响应式数据
+       handleEdit,
+      showEdit,
+      closeEdit,
+    };
+  },
 };
 </script>
 
