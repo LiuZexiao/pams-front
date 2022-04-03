@@ -1,12 +1,22 @@
-
 import request from "../utils/request";
+
+/**
+ * 获取个人信息
+ * @returns {AxiosPromise}
+ */
+export function userInfo(){
+    return request({
+        url: '/owner/user/info',
+        method: 'get',
+    })
+}
 
 /**
  * 查询用户信息（分页+多条件）
  * @param data
  * @returns {AxiosPromise}
  */
-export function userInfo(data) {
+export function fetchData(data) {
     return request({
         url: '/user/info/page',
         method: 'post',
@@ -43,3 +53,39 @@ export function modify(data, id) {
     })
 }
 
+
+
+// userInfo
+export let defaultUserInfo = {
+    "age": null,
+    "applyDate": null,
+    "beActivistDate": null,
+    "beDevTargetDate": null,
+    "birthday": null,
+    "clazz": null,
+    "college": null,
+    "computerLevel": null,
+    "correctionDate": null,
+    "devTargetTrainedDate": null,
+    "education": null,
+    "email": null,
+    "englishLevel": null,
+    "gender": null,
+    "hometown": null,
+    "id": null,
+    "idNumber": null,
+    "intermediateQualifyingDate": null,
+    "job": null,
+    "joinedDate": null,
+    "mobilePhone": null,
+    "number": null,
+    "primaryQualifyingDate": null,
+    "qq": null,
+    "realName": null,
+    "recommendedActivistsDate": null,
+    "recommendedDevTargetDate": null,
+    "remark": null,
+    "state": null,
+    "userId": null,
+    "wx": null
+}

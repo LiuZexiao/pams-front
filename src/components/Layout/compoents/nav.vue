@@ -37,7 +37,6 @@
         </div>
       </div>
     </div>
-
   </el-header>
 </template>
 
@@ -113,7 +112,7 @@ body {
   -webkit-box-flex: 0;
   flex-grow: 0;
   flex-shrink: 0;
-  z-index: 9999 !important;
+  /*z-index: 9999 !important;*/
   position: relative;
   box-sizing: border-box;
   display: flex;

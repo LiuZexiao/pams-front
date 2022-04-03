@@ -3,8 +3,9 @@
   <el-container>
 
     <el-aside width="200px">
-      <div class="header-menu">
-        <div style="margin-top: 20px; margin-bottom:20px;line-height: 0px;">
+      <el-scrollbar height="850px">
+        <div class="header-menu">
+          <div style="margin-top: 20px; margin-bottom:20px;line-height: 0px;">
           <span class="el-dropdown-link">
             <a href="/owner/info"
                target="_blank">
@@ -12,7 +13,7 @@
                          src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
             </a>
           </span>
-          <div style="  -webkit-text-size-adjust: 100%;
+            <div style="  -webkit-text-size-adjust: 100%;
                         -webkit-tap-highlight-color: rgba(0,0,0,0);
                         font-size: 14px;
                         line-height: 1.42857143;
@@ -21,52 +22,53 @@
                         box-sizing: border-box;
                         font-weight: 700;
                         color: white;">{{ realName }}</div>
+          </div>
         </div>
-      </div>
-
-      <el-menu :default-active="activePath"
-               class="el-menu-vertical-demo"
-               background-color="rgb(226, 35, 33)"
-               text-color="#fff"
-               active-text-color="#ffd04b"
-               router>
-        <!-- 一级菜单 无子菜单 -->
-        <el-menu-item v-for="item in menusData"
-                      v-show="!item.children"
-                      :index="item.path"
-                      :key="item.id"
-                      @click="saveNavPath(item.path)">
-          <template #title>
-            <!-- <el-icon> 菜单图标
-              <add-location />
-            </el-icon> -->
-            <span>{{ item.title }}</span>
-          </template>
-        </el-menu-item>
-        <!-- 一级菜单 有子菜单 -->
-        <el-sub-menu v-for="item in menusData"
-                     v-show="item.children"
-                     :index="item.id"
-                     :key="item.id">
-          <template #title>
-            <!-- <el-icon> 菜单图标
-              <add-location />
-            </el-icon> -->
-            <span>{{ item.title }}</span>
-          </template>
-          <el-menu-item v-for="subItem in item.children"
-                        :index="subItem.path"
-                        :key="subItem.id"
-                        @click="saveNavPath(subItem.path)">
-            <!-- <el-menu-item
-            v-for="subItem in item.children"
-            :index="'/'+subItem.path"
-            :key="subItem.id"
-          > -->
-            {{ subItem.title }}
+        <el-menu :default-active="activePath"
+                 class="el-menu-vertical-demo"
+                 background-color="rgb(226, 35, 33)"
+                 text-color="#fff"
+                 active-text-color="#ffd04b"
+                 router>
+          <!-- 一级菜单 无子菜单 -->
+          <el-menu-item v-for="item in menusData"
+                        v-show="!item.children"
+                        :index="item.path"
+                        :key="item.id"
+                        @click="saveNavPath(item.path)">
+            <template #title>
+              <!-- <el-icon> 菜单图标
+                <add-location />
+              </el-icon> -->
+              <span>{{ item.title }}</span>
+            </template>
           </el-menu-item>
-        </el-sub-menu>
-      </el-menu>
+          <!-- 一级菜单 有子菜单 -->
+          <el-sub-menu v-for="item in menusData"
+                       v-show="item.children"
+                       :index="item.id"
+                       :key="item.id">
+            <template #title>
+              <!-- <el-icon> 菜单图标
+                <add-location />
+              </el-icon> -->
+              <span>{{ item.title }}</span>
+            </template>
+            <el-menu-item v-for="subItem in item.children"
+                          :index="subItem.path"
+                          :key="subItem.id"
+                          @click="saveNavPath(subItem.path)">
+              <!-- <el-menu-item
+              v-for="subItem in item.children"
+              :index="'/'+subItem.path"
+              :key="subItem.id"
+            > -->
+              {{ subItem.title }}
+            </el-menu-item>
+          </el-sub-menu>
+        </el-menu>
+      </el-scrollbar>
+
     </el-aside>
 
     <el-main>
@@ -79,7 +81,7 @@
 import { onMounted, reactive, toRefs } from "vue";
 import axios from "axios";
 import router from "../../router";
-import { myInfor } from "../..//api/user.js";
+import { userInfo } from "../../api/userInfo.js";
 import Nav from "./compoents/nav.vue";
 
 function useLoadMenuData(state) {
@@ -89,10 +91,9 @@ function useLoadMenuData(state) {
 }
 
 function userName(state){
-  myInfor().then(function (res) {
+  userInfo().then(function (res) {
     state.realName = res.data.realName;
   })
-  
 }
 
 export default {
