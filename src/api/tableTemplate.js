@@ -1,4 +1,5 @@
 import request from '../utils/request'
+import requestFile from '../utils/requestFile'
 
 /**
  * 获取模板数据
@@ -57,7 +58,7 @@ export function remove(id) {
  * @returns {AxiosPromise}
  */
 export function download(id) {
-    return request({
+    return requestFile({
         url: '/table/template/' + id + "/download",
         method: 'get',
     })

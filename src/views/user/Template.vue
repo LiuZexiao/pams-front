@@ -187,12 +187,13 @@ export default {
     }
 
     function convertRes2Blob(response) {
+      console.log("------------------------------------2" +　JSON.stringify(response))
       // 提取文件名
       const fileName = response.headers['content-disposition'].match(
           /filename\*=(.*)/
       )[1]
       // 将二进制流转为blob
-      const blob = new Blob([response.data], { type: 'application/octet-stream' })
+      const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' })
       if (typeof window.navigator.msSaveBlob !== 'undefined') {
         // 兼容IE，window.navigator.msSaveBlob：以本地方式保存文件
         window.navigator.msSaveBlob(blob, decodeURI(filename))
@@ -203,10 +204,8 @@ export default {
         const tempLink = document.createElement('a')
         tempLink.style.display = 'none'
         tempLink.href = blobURL
-        console.log("------------------------------------2" +　decodeURI("2%E6%B5%8B%E8%AF%95%E6%A8%A1%E6%9D%BF2.xlsx"))
         const name = decodeURI(fileName)
         tempLink.setAttribute('download', name)
-        console.log("------------------------------------3" +　fileName)
         // 兼容：某些浏览器不支持HTML5的download属性
         if (typeof tempLink.download === 'undefined') {
           tempLink.setAttribute('target', '_blank')
