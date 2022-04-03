@@ -152,7 +152,7 @@
 
   <!-- 组件 BEGIN -->
   <UserSearch :centerDialogVisible="centerDialogVisible" @onCloseDialog="closeDialogVisivle"></UserSearch>
-  <Edit :visible="editVisible" :row="data" :mode="mode" @onClose="closeEdit" @onSave="handleEdit"/>
+  <UserInfoEdit :visible="editVisible" :row="data" :mode="mode" @onClose="closeEdit" @onSave="handleEdit"/>
   <!-- 组件 END -->
 </template>
 
@@ -160,7 +160,7 @@
 import { reactive, onMounted, toRefs } from "vue";
 import { fetchData, modify, defaultUserInfo, add, remove } from "../../api/userInfo.js";
 import UserSearch from "./components/UserSearch.vue"
-import Edit from "./components/Edit.vue"
+import UserInfoEdit from "./components/UserInfoEdit.vue"
 import { ElMessage } from "element-plus";
 import { InfoFilled } from '@element-plus/icons-vue'
 
@@ -168,7 +168,7 @@ export default {
   name: "list",
   components: {
     UserSearch,
-    Edit,
+    UserInfoEdit,
   },
   setup() {
     const MODE = {

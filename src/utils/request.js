@@ -26,7 +26,6 @@ service.interceptors.request.use(
         //     // config.headers['X-Token'] = getToken()
         //     config.headers['token'] = localStorage.getItem('token')
         // }
-
         if (localStorage.getItem('token')) {
             // let each request carry token
             // ['X-Token'] is a custom headers key
@@ -57,6 +56,11 @@ service.interceptors.response.use(
      * You can also judge the status by HTTP Status Code
      */
     response => {
+        // 处理文件
+        if (!response.data?.code) {
+            return response
+        }
+
         const res = response.data
         if (res.code < 0) { // 
             ElMessage.error(res.message);

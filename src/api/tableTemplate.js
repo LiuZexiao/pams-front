@@ -62,3 +62,20 @@ export function download(id) {
         method: 'get',
     })
 }
+
+export function getDownloadUrl(id) {
+    return import.meta.env.VITE_APP_URL + '/table/template/' + id + "/download"
+}
+
+export const defaultTemplate = {
+    "columns": [],
+    "deleted": null,
+    "department": {
+        "id": null,
+        "level": null,
+        "name": null,
+        "parentId": null
+    },
+    "id": null,
+    "name": null
+}
