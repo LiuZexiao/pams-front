@@ -99,3 +99,33 @@ export const defaultUserInfo = {
     "userId": null,
     "wx": null
 }
+
+export const userInfoKey = [
+    { key: "job", value: "职务"},
+    { key: "realName", value: "姓名"},
+    { key: "college", value: "学院"},
+    { key: "clazz", value: "班级"},
+    { key: "number", value: "学号"},
+    { key: "gender", value: "性别"},
+    { key: "age", value: "年龄"},
+    { key: "hometown", value: "籍贯"},
+    { key: "birthday", value: "出生日期"},
+    { key: "idNumber", value: "身份证号"},
+    { key: "englishLevel", value: "英语水平"},
+    { key: "computerLevel", value: "计算机水平"},
+    { key: "applyDate", value: "入党申请日期"},
+    { key: "qq", value: "QQ"},
+    { key: "wx", value: "微信"},
+    { key: "mobilePhone", value: "手机号"},
+    { key: "email", value: "邮箱"},
+    { key: "primaryQualifyingDate", value: "初级党课合格日期"},
+    { key: "recommendedActivistsDate", value: "推优积极分子日期"},
+    { key: "beActivistDate", value: "成为积极分子日期"},
+    { key: "intermediateQualifyingDate", value: "中级党课合格日期"},
+    { key: "recommendedDevTargetDate", value: "推优发展对象日期"},
+    { key: "beDevTargetDate", value: "成为发展对象日期"},
+    { key: "joinedDate", value: "入党日期"},
+    { key: "correctionDate", value: "转正日期"},
+    { key: "state", value: "信息状态"},
+    { key: "remark", value: "备注"},
+]
