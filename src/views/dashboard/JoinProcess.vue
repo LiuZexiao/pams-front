@@ -7,7 +7,7 @@
              v-for="item,key in proData"
              :key="key"
              >
-      <template v-slot>
+      <!-- <template v-slot="description" >
         <table width="100%"
                border="0"
                cellspacing="0"
@@ -34,6 +34,7 @@
           </tr>
         </table>
       </template>
+       -->
     </el-step>
   </el-steps>
 </template>
@@ -124,6 +125,7 @@ export default {
            { id:'2',label: "割接审批"},
            { id:'3',label: "审批成功"},
        ],
+       description: ''
     });
     return {
       ...toRefs(state), //toRefs将对象中的内容转换为响应式数据

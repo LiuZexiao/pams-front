@@ -1,9 +1,50 @@
 <template>
+  <div class="stepComponent">
+    <div class="stepsTitle">
+      <div style="float:left;width:2px;height:20px; background:#219AFF;"></div>
+      审批流程及意见
+    </div>
+    <div class="approvalProcess">
+      <el-steps :active="active"
+                finish-status="success"
+                direction="vertical">
+        <el-step :title="item.label"
+                 v-for="item,key in approvalProcessProject"
+                 :key="key">
+         <template v-slot="description" >
+             <div class="step-row" v-for="item,key in approvalProcessProject"  :key="key">
+               <table width="100%" border="0" cellspacing="0" cellpadding="0" class="processing_content">
+                         <tr>
+                            <td style="color:#98A6BE">
+                            	<div class="processing_content_detail" style="float:left;width:70%"><span >申请人&nbsp;&nbsp;<span style="color:#219AFF">圆领{{}}</span>&nbsp;&nbsp;提交了割接方案</span></div> 
+                              <div class="processing_content_detail" style="float:right;"><span ><i class="el-icon-time"></i>&nbsp;&nbsp;昨天12:24</span> </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                            	<div class="processing_content_detail" style="float:left;width:70%">
+                                <div style="float:left;width: 2px;height: 20px; background:#C7D4E9;margin-left:10px;margin-right:10px"></div> 
+                                <span style="color:#919FB8">同意，建议通过</span></div> 
+                            </td>
+                          </tr>
+                </table>
+           </div>
+         </template>
 
+
+        </el-step>
+      </el-steps>
+      <el-button style="margin-top: 12px;"
+                 @click="next">下一步</el-button>
+
+    </div>
+
+  </div>
 
 </template>
 
 <script>
+
 export default {
   components: {},
   props: ["data", "defaultActive"],
@@ -64,3 +105,4 @@ export default {
   margin-top: 12px;
 }
 </style>
+
