@@ -8,33 +8,49 @@
       </div>
     </template>
 
-    <!-- 添加、导入导出 BEGIN -->
+    <!-- 搜索、添加、导入导出 BEGIN -->
     <el-row :gutter="24" style="text-align: left;line-height: 10px;margin-bottom: 10px">
-      <el-col :span="9"></el-col>
-      <el-col :span="8"></el-col>
-      <el-col :span="2">
-        <el-button style="width: 100px;" @click="showEdit(null, MODE.ADD)"><el-icon><plus /></el-icon>&nbsp;添加</el-button>
-      </el-col>
-      <el-col :span="2">
-        <el-button type="primary" style="width: 100px;"><el-icon><bottom-left /></el-icon>&nbsp;导入</el-button>
-      </el-col>
-      <el-col :span="2">
-        <el-button type="info" style="width: 100px;"><el-icon><download /></el-icon>&nbsp;导出</el-button>
-      </el-col>
-      <el-col :span="1"></el-col>
-    </el-row>
-    <!-- 添加、导入导出END -->
-
-    <!-- 搜索 BEGIN -->
-    <el-row :gutter="24" style="text-align: left;line-height: 10px;">
       <el-col :span="4">
         <el-input placeholder="请输入搜索内容" v-model="params.search" />
+      </el-col>
+      <el-col :span="2">
+        <el-button type="primary" style="width: 60px;" @click="loadData">搜索</el-button>
+      </el-col>
+      <el-col :span="2">
+        <el-button style="width: 60px;" @click="advancedSearch = !advancedSearch">
+          更多
+          <el-icon v-if="advancedSearch"><arrow-down /></el-icon>
+          <el-icon v-if="!advancedSearch"><arrow-left /></el-icon>
+        </el-button>
+      </el-col>
+      <el-col :span="10"></el-col>
+      <el-col :span="2">
+        <el-button style="width: 60px;" @click="showEdit(null, MODE.ADD)"><el-icon><plus /></el-icon>&nbsp;添加</el-button>
+      </el-col>
+      <el-col :span="2">
+        <el-button type="primary" style="width: 60px;"><el-icon><bottom-left /></el-icon>&nbsp;导入</el-button>
+      </el-col>
+      <el-col :span="2">
+        <el-button type="info" style="width: 60px;"><el-icon><download /></el-icon>&nbsp;导出</el-button>
+      </el-col>
+    </el-row>
+    <!-- 搜索、添加、导入导出END -->
+
+    <!-- 高级搜索 BEGIN -->
+    <el-row v-show="advancedSearch" :gutter="24" style="text-align: left;line-height: 10px;">
+      <el-col :span="4">
+        <el-select v-model="params.state" clearable placeholder="请选择状态">
+          <el-option label="待审核" value="UNDER_REVIEW" />
+          <el-option label="审核中" value="REVIEWING" />
+          <el-option label="通过" value="PASSED" />
+          <el-option label="不通过" value="FAIL" />
+        </el-select>
       </el-col>
       <el-col :span="4">
         <el-input placeholder="请输入班级" v-model="params.clazz"/>
       </el-col>
       <el-col :span="4">
-        <el-select placeholder="请选择院系" v-model="params.college">
+        <el-select placeholder="请选择院系" clearable v-model="params.college">
           <el-option label="请选择" value="" />
           <el-option label="机电学院" value="机电学院" />
           <el-option label="汽车工程学院" value="汽车工程学院" />
@@ -49,7 +65,7 @@
         </el-select>
       </el-col>
       <el-col :span="4">
-        <el-select placeholder="选择党组织" v-model="params.departmentId">
+        <el-select placeholder="选择党组织" clearable v-model="params.departmentId">
           <el-option label="请选择" value="" />
           <el-option label="机电学院" value="机电学院" />
           <el-option label="汽车工程学院" value="汽车工程学院" />
@@ -64,25 +80,29 @@
         </el-select>
       </el-col>
       <el-col :span="4">
-        <el-select placeholder="入党阶段" v-model="params.stageId">
-          <el-option label="请选择" value="" />
-          <el-option label="机电学院" value="机电学院" />
-          <el-option label="汽车工程学院" value="汽车工程学院" />
-          <el-option label="土木与建筑工程学院" value="土木与建筑工程学院" />
-          <el-option label="计算机与通信工程学院" value="计算机与通信工程学院" />
-          <el-option label="公益慈善管理学院o" value="公益慈善管理学院" />
-          <el-option label="国际酒店与饮食文化学院" value="国际酒店与饮食文化学院" />
-          <el-option label="工商税务管理学院" value="工商税务管理学院" />
-          <el-option label="商学院" value="商学院" />
-          <el-option label="外国语学院" value="外国语学院" />
-          <el-option label="艺术学院" value="艺术学院" />
+        <el-select placeholder="选择性别" clearable v-model="params.gender">
+          <el-option label="男" value="MALE" />
+          <el-option label="女" value="FEMALE" />
+          <el-option label="未知" value="OTHER" />
         </el-select>
       </el-col>
-      <el-col :span="4">
-        <el-button type="primary" @click="loadData"> 搜索</el-button>
-      </el-col>
+<!--      <el-col :span="3">-->
+<!--        <el-select placeholder="入党阶段" clearable v-model="params.stageId">-->
+<!--          <el-option label="请选择" value="" />-->
+<!--          <el-option label="机电学院" value="机电学院" />-->
+<!--          <el-option label="汽车工程学院" value="汽车工程学院" />-->
+<!--          <el-option label="土木与建筑工程学院" value="土木与建筑工程学院" />-->
+<!--          <el-option label="计算机与通信工程学院" value="计算机与通信工程学院" />-->
+<!--          <el-option label="公益慈善管理学院o" value="公益慈善管理学院" />-->
+<!--          <el-option label="国际酒店与饮食文化学院" value="国际酒店与饮食文化学院" />-->
+<!--          <el-option label="工商税务管理学院" value="工商税务管理学院" />-->
+<!--          <el-option label="商学院" value="商学院" />-->
+<!--          <el-option label="外国语学院" value="外国语学院" />-->
+<!--          <el-option label="艺术学院" value="艺术学院" />-->
+<!--        </el-select>-->
+<!--      </el-col>-->
     </el-row>
-    <!-- 搜索 END -->
+    <!-- 高级搜索 END -->
 
     <!-- 用户列表 BEGIN -->
     <el-table :data="tableData" style="width: 100%" height="550">
@@ -90,11 +110,24 @@
       <el-table-column prop="realName" label="姓名" width="80"/>
       <el-table-column prop="college" label="学院" width="220"/>
       <el-table-column prop="clazz" label="班级" width="140"/>
-      <el-table-column prop="gender" label="性别" width="80"/>
+      <el-table-column prop="gender" label="性别" width="80">
+        <template #default="scope">
+          <el-tag v-if="scope.row.gender === 'MALE'" type="info">男</el-tag>
+          <el-tag v-if="scope.row.gender === 'FEMALE'" type="danger">女</el-tag>
+          <el-tag v-if="scope.row.gender === 'OTHER'" type="warning">其他</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column prop="age" label="年龄" width="80"/>
       <el-table-column prop="applyDate" label="申请入党时间" width="180"/>
       <el-table-column prop="stage.stage.name" label="当前阶段" width="120"/>
-      <el-table-column prop="state" label="信息状态" width="120"/>
+      <el-table-column prop="state" label="状态" width="120">
+        <template #default="scope">
+          <el-tag v-if="scope.row.state === 'UNDER_REVIEW'" type="info">待审核</el-tag>
+          <el-tag v-if="scope.row.state === 'REVIEWING'" type="warning">审核中</el-tag>
+          <el-tag v-if="scope.row.state === 'PASSED'" type="success">通过</el-tag>
+          <el-tag v-if="scope.row.state === 'FAIL'" type="danger">不通过</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column fixed="right" label="操作" width="200">
         <template #default="scope">
           <el-button size="small" @click="showEdit(scope.$index, MODE.EDIT)">编辑</el-button>
@@ -167,6 +200,7 @@ export default {
       total: 0,
       centerDialogVisible: false,
       editVisible: false,
+      advancedSearch: false,
     }); // reactive 响应式对象声明
 
     onMounted(() => {
@@ -183,6 +217,12 @@ export default {
     }
 
     const loadData = () => {
+      if (state.params.state === "") {
+        state.params.state = null
+      }
+      if (state.params.gender === "") {
+        state.params.gender = null
+      }
       fetchData(state.params).then(function (res) {
         console.log(res);
         console.log(res.data);
