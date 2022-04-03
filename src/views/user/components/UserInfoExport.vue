@@ -16,7 +16,7 @@
           </el-select>
         </el-form-item>
       </el-form>
-      <el-table :data="template" style="width: 100%" height="400">
+      <el-table :data="columns" style="width: 100%" height="400">
         <el-table-column prop="sort" label="排序" width="100"/>
         <el-table-column prop="name" label="列名" width="300"/>
         <el-table-column prop="key" label="键值" width="300" />
@@ -28,7 +28,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="()=>{close(false);}">取消</el-button>
-        <el-button type="primary">导出</el-button>
+        <el-button type="primary" @click="handleExport">导出</el-button>
       </span>
     </template>
     <!-- FOOTER END -->
@@ -40,6 +40,8 @@ import {onMounted, reactive, toRefs} from "vue";
 import {tree} from "../../../api/department";
 import {fetchList} from "../../../api/tableTemplate";
 import {ElMessage} from "element-plus";
+import {convertRes2Blob} from "../../../utils/fileUtil";
+import {userInfoExport} from "../../../api/userInfo";
 
 export default {
   name: "UserInfoExport",
@@ -62,12 +64,12 @@ export default {
       },
       departmentTree: [],
       templateList: [],
-      template: {
-        sort: null,
-        name: null,
-        key: null,
-      },
+      columns: [],
     }); // reactive 响应式对象声明
+
+    const handleExport = async () => {
+      convertRes2Blob(await userInfoExport(state.params))
+    }
 
     const close = (visible) => {
       emit("onClose", visible)
@@ -78,8 +80,8 @@ export default {
       state.params.templateId = val
       state.templateList.forEach(item => {
         console.log("handleTemplateChange::forEach" + item)
-        if (val == item.id) {
-          state.template = item
+        if (val === item.id) {
+          state.columns = item.columns
         }
       })
     }
@@ -126,6 +128,7 @@ export default {
     return {
       ...toRefs(state), //toRefs将对象中的内容转换为响应式数据
       handleTemplateChange,
+      handleExport,
       close,
     };
   },

@@ -1,4 +1,5 @@
 import request from "../utils/request";
+import requestFile from '../utils/requestFile'
 
 /**
  * 获取个人信息
@@ -69,10 +70,11 @@ export function remove(id) {
  * @param templateId
  * @returns {AxiosPromise}
  */
-export function userInfoExport(templateId) {
-    return request({
-        url: '/user/info/export/' + templateId,
+export function userInfoExport(params) {
+    return requestFile({
+        url: '/user/info/export/' + params.templateId,
         method: 'get',
+        params
     })
 }
 
