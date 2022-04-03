@@ -151,6 +151,7 @@
   </el-card>
 
   <!-- 组件 BEGIN -->
+  <UserSearch></UserSearch>
   <UserInfoEdit :visible="editVisible" :row="data" :mode="mode" @onClose="closeEdit" @onSave="handleEdit"/>
   <UserInfoExport :visible="exportVisible" @onClose="closeExport"/>
   <!-- 组件 END -->
@@ -159,6 +160,7 @@
 <script>
 import { reactive, onMounted, toRefs } from "vue";
 import { fetchData, modify, defaultUserInfo, add, remove } from "../../api/userInfo.js";
+import UserSearch from "./components/UserSearch.vue"
 import UserInfoEdit from "./components/UserInfoEdit.vue"
 import UserInfoExport from "./components/UserInfoExport.vue"
 import { ElMessage } from "element-plus";
@@ -167,6 +169,7 @@ import { InfoFilled } from '@element-plus/icons-vue'
 export default {
   name: "list",
   components: {
+    UserSearch,
     UserInfoEdit,
     UserInfoExport,
   },
