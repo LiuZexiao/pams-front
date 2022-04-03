@@ -24,7 +24,7 @@
         <el-button type="primary" style="width: 60px;"><el-icon><bottom-left /></el-icon>&nbsp;导入</el-button>
       </el-col>
       <el-col :span="2">
-        <el-button type="info" style="width: 60px;" @click="showExport"><el-icon><download /></el-icon>&nbsp;导出</el-button>
+        <el-button type="info" style="width: 60px;"  @click="showExport"><el-icon><download /></el-icon>&nbsp;导出</el-button>
       </el-col>
     </el-row>
     <!-- 搜索、添加、导入导出END -->
@@ -151,6 +151,7 @@
   </el-card>
 
   <!-- 组件 BEGIN -->
+  <UserSearch></UserSearch>
   <UserInfoEdit :visible="editVisible" :row="data" :mode="mode" @onClose="closeEdit" @onSave="handleEdit"/>
   <UserInfoExport :visible="exportVisible" @onClose="closeExport"/>
   <!-- 组件 END -->
@@ -159,6 +160,7 @@
 <script>
 import { reactive, onMounted, toRefs } from "vue";
 import { fetchData, modify, defaultUserInfo, add, remove } from "../../api/userInfo.js";
+import UserSearch from "./components/UserSearch.vue"
 import UserInfoEdit from "./components/UserInfoEdit.vue"
 import UserInfoExport from "./components/UserInfoExport.vue"
 import { ElMessage } from "element-plus";
@@ -167,6 +169,7 @@ import { InfoFilled } from '@element-plus/icons-vue'
 export default {
   name: "list",
   components: {
+    UserSearch,
     UserInfoEdit,
     UserInfoExport,
   },
