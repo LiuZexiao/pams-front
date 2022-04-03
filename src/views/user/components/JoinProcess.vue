@@ -47,7 +47,7 @@ function loadData(state){
   //  console.log(Number(state.userInfoId));
   userStage(state.userInfoId).then(function (res) {
     console.log(res);
-    state.proData = res.data;
+    // state.proData = res.data;
   });
   countStep(state)
   return state;

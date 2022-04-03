@@ -135,7 +135,7 @@
 
   </el-card>
 
-  <Edit :visible="editVisible"
+  <UserInfoEdit :visible="editVisible"
         :row="usereData"
         @onClose="closeEdit"
         @onSave="handleEdit" /> 
@@ -146,6 +146,7 @@ import { reactive, onMounted, toRefs } from "vue";
 import { informationManage } from "../..//api/information.js";
 import { myInfor } from "../..//api/user.js";
 import JoinProcess from "../user/components/JoinProcess.vue";
+import UserInfoEdit from "../user/components/UserInfoEdit.vue";
 
 function loadData(state) {
   // 我的主页获取个人信息，有数据时可解除注释
@@ -171,7 +172,7 @@ function loadData(state) {
 
 export default {
   name: "Info",
-  components: { JoinProcess },
+  components: { JoinProcess, UserInfoEdit },
   setup() {
     const state = reactive({
       editVisible: false,
