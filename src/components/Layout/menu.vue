@@ -111,7 +111,7 @@ export default {
         //菜单数据
         {
           id: "1",
-          title: "我的首页",
+          title: "仪表盘",
           path: "/dashboard", // 在组件中用不到
         },
         {

@@ -39,7 +39,8 @@ const routes = [
         path: "/dashboard",
         name: "仪表盘",
         component: () => import("../views/dashboard/Dashboard.vue"),
-      },
+      }
+      
     ],
   },
   {
