@@ -69,6 +69,7 @@ export default {
 
     const handleExport = async () => {
       convertRes2Blob(await userInfoExport(state.params))
+      close(false)
     }
 
     const close = (visible) => {
