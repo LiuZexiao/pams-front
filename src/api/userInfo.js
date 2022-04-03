@@ -64,6 +64,18 @@ export function remove(id) {
     })
 }
 
+/**
+ * 根据模板导出用户数据
+ * @param templateId
+ * @returns {AxiosPromise}
+ */
+export function userInfoExport(templateId) {
+    return request({
+        url: '/user/info/export/' + templateId,
+        method: 'get',
+    })
+}
+
 
 // userInfo
 export const defaultUserInfo = {

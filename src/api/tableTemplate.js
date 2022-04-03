@@ -1,12 +1,25 @@
 import request from '../utils/request'
 import requestFile from '../utils/requestFile'
 
+
 /**
  * 获取模板数据
  * @param data
  * @returns {AxiosPromise}
  */
-export function fetchList(data) {
+export function fetchList() {
+    return request({
+        url: '/table/template',
+        method: 'get',
+    })
+}
+
+/**
+ * 获取模板数据(分页+多条件)
+ * @param data
+ * @returns {AxiosPromise}
+ */
+export function fetchListByPage(data) {
     return request({
         url: '/table/template/page',
         method: 'post',
@@ -62,10 +75,6 @@ export function download(id) {
         url: '/table/template/' + id + "/download",
         method: 'get',
     })
-}
-
-export function getDownloadUrl(id) {
-    return import.meta.env.VITE_APP_URL + '/table/template/' + id + "/download"
 }
 
 export const defaultTemplate = {

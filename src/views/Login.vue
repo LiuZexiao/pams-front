@@ -32,7 +32,7 @@
 <script>
 import {reactive, toRefs, ref, onMounted} from "vue";
 import {ElMessage} from 'element-plus';
-import countDown from "../assets/js/countDown.js";
+import countDown from "../utils/countDown.js";
 import {logins} from '../api/user.js'
 import {smsVerCode, emailVerCode} from "../api/message";
 
