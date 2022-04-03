@@ -84,29 +84,18 @@
 
     <!-- 用户列表 BEGIN -->
     <el-table :data="tableData" style="width: 100%" height="550">
-      <el-table-column fixed prop="number" label="学号" width="120"/>
-      <el-table-column prop="realName" label="姓名" width="80"/>
-      <el-table-column prop="college" label="学院" width="220"/>
-      <el-table-column prop="clazz" label="班级" width="140"/>
-      <el-table-column prop="gender" label="性别" width="80">
+      <el-table-column prop="approver.realName" label="姓名" width="80"/>
+      <el-table-column prop="beginDate" label="申请入党时间" width="180"/>
+      <el-table-column prop="stage.name" label="当前阶段" width="120"/>
+        <el-table-column prop="status" label="状态" width="120">
         <template #default="scope">
-          <el-tag v-if="scope.row.gender === 'MALE'" type="info">男</el-tag>
-          <el-tag v-if="scope.row.gender === 'FEMALE'" type="danger">女</el-tag>
-          <el-tag v-if="scope.row.gender === 'OTHER'" type="warning">其他</el-tag>
+          <el-tag v-if="scope.row.status === 'UNDER_REVIEW'" type="info">待审核</el-tag>
+          <el-tag v-if="scope.row.status === 'REVIEWING'" type="warning">审核中</el-tag>
+          <el-tag v-if="scope.row.status === 'PASSED'" type="success">通过</el-tag>
+          <el-tag v-if="scope.row.status === 'FAIL'" type="danger">不通过</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="age" label="年龄" width="80"/>
-      <el-table-column prop="applyDate" label="申请入党时间" width="180"/>
-      <el-table-column prop="stage.stage.name" label="当前阶段" width="120"/>
-      <el-table-column prop="state" label="状态" width="120">
-        <template #default="scope">
-          <el-tag v-if="scope.row.state === 'UNDER_REVIEW'" type="info">待审核</el-tag>
-          <el-tag v-if="scope.row.state === 'REVIEWING'" type="warning">审核中</el-tag>
-          <el-tag v-if="scope.row.state === 'PASSED'" type="success">通过</el-tag>
-          <el-tag v-if="scope.row.state === 'FAIL'" type="danger">不通过</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column fixed="right" label="操作" width="200">
+      <el-table-column fixed="right" label="操作" width="250">
         <template #default="scope">
           <el-button size="small" @click="showEdit(scope.$index, MODE.EDIT)">编辑</el-button>
           <el-popconfirm confirm-button-text="确认" cancel-button-text="取消"
@@ -137,16 +126,17 @@
 
   <!-- 组件 BEGIN -->
   <!-- <UserSearch :centerDialogVisible="centerDialogVisible" @onCloseDialog="closeDialogVisivle"></UserSearch> -->
-  <!-- <Edit :visible="editVisible" :row="data" :mode="mode" @onClose="closeEdit" @onSave="handleEdit"/> -->
+  <Edit :visible="editVisible" :row="data" :mode="mode" @onClose="closeEdit" @onSave="handleEdit"/>
   <!-- 组件 END -->
 
 </template>
 
 <script>
 import { reactive, onMounted, toRefs } from "vue";
-import { fetchData, modify, defaultUserInfo, add, remove } from "../../api/userInfo.js";
+// import { fetchData, modify, defaultUserInfo, add, remove } from "../../api/userInfo.js";
+import { stageInfoAll } from "../../api/stageManage.js";
 // import UserSearch from "./components/UserSearch.vue"
-// import Edit from "./components/Edit.vue"
+import Edit from "./components/Edit.vue"
 import { ElMessage } from "element-plus";
 import { InfoFilled } from '@element-plus/icons-vue'
 export default {
@@ -162,23 +152,23 @@ export default {
     }
     const state = reactive({
       tableData: [],
-      data: defaultUserInfo,
+      // data: defaultUserInfo,
       mode: null,
       params: {
-        clazz: null,
-        college: null,
-        departmentId: null,
-        gender: null,
-        job: null,
-        number: null,
+        // clazz: null,
+        // college: null,
+        // departmentId: null,
+        // gender: null,
+        // job: null,
+        // number: null,
         page: 1, // 几页
-        realName: null,
-        search: null, // 模糊查询内容
+        // realName: null,
+        // search: null, // 模糊查询内容
         size: 10, // 每页显示几条
-        sort: null,
-        sortType: null,
-        stageId: null, // 阶段
-        state: null
+        // sort: null,
+        // sortType: null,
+        // stageId: null, // 阶段
+        // state: null
       },
       total: 0,
       centerDialogVisible: false,
@@ -206,11 +196,50 @@ export default {
       if (state.params.gender === "") {
         state.params.gender = null
       }
-      fetchData(state.params).then(function (res) {
+      stageInfoAll(state.params).then(function (res) {
         console.log(res);
         console.log(res.data);
-        const data = res.data
-        state.tableData = data.content;
+        // const data = res.data
+        // state.tableData = data.content;
+        state.tableData = [{
+          id: 1,
+          approver: {
+            id: 1,
+            realName: "马文艺"
+          },
+          status: "REVIEWING",
+          stage: {
+          id: 2,
+          name: "入党积极份子",
+         children: [
+            {
+              id: null,
+              userInfoId: 1,
+              stage: {
+                id: 1,
+                name: "党组织谈话",
+              },
+            },
+            {
+              id: null,
+              userInfoId: 1,
+              stage: {
+                id: 2,
+                name: "初级党课培训",
+              },
+            },
+            {
+              id: null,
+              userInfoId: 1,
+              stage: {
+                id: 3,
+                name: "团组织推优",
+              },
+            },
+          ]
+        },
+        }],
+
         state.total =data.totalElements
         state.params.size = data.size
         state.params.page = data.number + 1
@@ -231,7 +260,7 @@ export default {
       }
       if (res.code === 200) {
         state.mode = null
-        state.data = defaultUserInfo
+        // state.data = stageInfoAll
         state.editVisible = false
         loadData()
         ElMessage.success(res.message)
@@ -260,7 +289,7 @@ export default {
      */
     const showEdit = (index, mode) => {
       state.mode = mode
-      state.data = index != null ? state.tableData[index] : defaultUserInfo
+      // state.data = index != null ? state.tableData[index] : defaultUserInfo
       state.editVisible = true
       console.log("showEdit:" + state.data)
     }
