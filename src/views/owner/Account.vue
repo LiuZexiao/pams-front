@@ -5,7 +5,7 @@
     <el-col :span="8">
       <el-card shadow="hover"
                style="height: 110px">
-
+          <img class="header-logo" src="../../assets/dh1024.png" alt="logo" />
       </el-card>
       <!-- 导航 -->
       <el-card shadow="hover"
