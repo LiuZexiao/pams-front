@@ -131,7 +131,13 @@
       <el-table-column fixed="right" label="操作" width="200">
         <template #default="scope">
           <el-button size="small" @click="showEdit(scope.$index, MODE.EDIT)">编辑</el-button>
-          <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          <el-popconfirm confirm-button-text="确认" cancel-button-text="取消"
+                         :icon="InfoFilled" icon-color="red" title="确认删除这条数据？"
+                         @confirm="handleDelete(scope.row.id)">
+            <template #reference>
+              <el-button size="small" type="danger">删除</el-button>
+            </template>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -159,11 +165,12 @@
 
 <script>
 import { reactive, onMounted, toRefs } from "vue";
-import {fetchData, modify, defaultUserInfo, add} from "../../api/userInfo.js";
+import { fetchData, modify, defaultUserInfo, add, remove } from "../../api/userInfo.js";
 import UserSearch from "./UserSearch.vue"
 import BreadCrumb from "../BreadCrumb.vue"
 import Edit from "./components/Edit.vue"
-import {ElMessage} from "element-plus";
+import { ElMessage } from "element-plus";
+import { InfoFilled } from '@element-plus/icons-vue'
 
 export default {
   name: "list",
@@ -259,6 +266,20 @@ export default {
     }
 
     /**
+     * 处理删除事件
+     */
+    const handleDelete = (rowId) => {
+      remove(rowId).then(res => {
+        if (res.code === 200) {
+          ElMessage.success(res.message)
+          loadData()
+        } else {
+          ElMessage.error(res.message)
+        }
+      })
+    }
+
+    /**
      * 显示编辑框
      */
     const showEdit = (index, mode) => {
@@ -282,6 +303,7 @@ export default {
       userSearch,
       loadData,
       handleEdit,
+      handleDelete,
       showEdit,
       closeEdit,
       closeDialogVisivle,

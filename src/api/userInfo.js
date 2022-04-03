@@ -53,6 +53,16 @@ export function modify(data, id) {
     })
 }
 
+/**
+ * 删除用户信息
+ * @param id
+ */
+export function remove(id) {
+    return request({
+        url: '/user/info/' + id,
+        method: 'delete',
+    })
+}
 
 
 // userInfo
