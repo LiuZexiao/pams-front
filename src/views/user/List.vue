@@ -263,16 +263,6 @@ export default {
       state.editVisible = visible
     }
 
-    /* 打开导出窗口 */
-    const showExport = () => {
-      state.exportVisible = true
-    }
-
-    /* 关闭导出窗口 */
-    const closeExport = (visible) => {
-      state.exportVisible = visible
-    }
-
     /* 处理删除事件 */
     const handleDelete = (rowId) => {
       remove(rowId).then(res => {
