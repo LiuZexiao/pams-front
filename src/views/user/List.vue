@@ -21,10 +21,10 @@
         <el-button style="width: 60px;" @click="showEdit(null, MODE.ADD)"><el-icon><plus /></el-icon>&nbsp;添加</el-button>
       </el-col>
       <el-col :span="2">
-        <el-button type="primary" style="width: 60px;"><el-icon><bottom-left /></el-icon>&nbsp;导入</el-button>
+        <el-button type="primary" style="width: 60px;" @click="showImport"><el-icon><bottom-left /></el-icon>&nbsp;导入</el-button>
       </el-col>
       <el-col :span="2">
-        <el-button type="info" style="width: 60px;"  @click="showExport"><el-icon><download /></el-icon>&nbsp;导出</el-button>
+        <el-button type="info" style="width: 60px;" @click="showExport"><el-icon><download /></el-icon>&nbsp;导出</el-button>
       </el-col>
     </el-row>
     <!-- 搜索、添加、导入导出END -->
@@ -154,6 +154,7 @@
   <UserSearch></UserSearch>
   <UserInfoEdit :visible="editVisible" :row="data" :mode="mode" @onClose="closeEdit" @onSave="handleEdit"/>
   <UserInfoExport :visible="exportVisible" @onClose="closeExport"/>
+  <UserInfoImport :visible="importVisible" @onClose="closeImport" @onSuccess="importSuccess"/>
   <!-- 组件 END -->
 </template>
 
@@ -163,6 +164,7 @@ import { fetchData, modify, defaultUserInfo, add, remove } from "../../api/userI
 import UserSearch from "./components/UserSearch.vue"
 import UserInfoEdit from "./components/UserInfoEdit.vue"
 import UserInfoExport from "./components/UserInfoExport.vue"
+import UserInfoImport from "./components/UserInfoImport.vue"
 import { ElMessage } from "element-plus";
 import { InfoFilled } from '@element-plus/icons-vue'
 
@@ -172,6 +174,7 @@ export default {
     UserSearch,
     UserInfoEdit,
     UserInfoExport,
+    UserInfoImport,
   },
   setup() {
     const MODE = {
@@ -201,6 +204,7 @@ export default {
       total: 0,
       editVisible: false,
       exportVisible: false,
+      importVisible: false,
       advancedSearch: false,
     }); // reactive 响应式对象声明
 
@@ -275,6 +279,22 @@ export default {
       })
     }
 
+    /* 成功导入数据 */
+    const importSuccess = () => {
+      state.importVisible = false
+      loadData()
+    }
+
+    /* 打开导入窗口 */
+    const showImport = () => {
+      state.importVisible = true
+    }
+
+    /* 关闭导入窗口 */
+    const closeImport = (visible) => {
+      state.importVisible = visible
+    }
+
     /* 打开导出窗口 */
     const showExport = () => {
       state.exportVisible = true
@@ -292,8 +312,11 @@ export default {
       loadData,
       handleEdit,
       handleDelete,
+      importSuccess,
+      showImport,
       showExport,
       showEdit,
+      closeImport,
       closeExport,
       closeEdit,
     };

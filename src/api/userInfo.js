@@ -1,5 +1,6 @@
 import request from "../utils/request";
 import requestFile from '../utils/requestFile'
+import requestForm from '../utils/requestForm'
 
 /**
  * 获取个人信息
@@ -75,6 +76,19 @@ export function userInfoExport(params) {
         url: '/user/info/export/' + params.templateId,
         method: 'get',
         params
+    })
+}
+
+/**
+ * 根据模板导入
+ * @param templateId
+ * @returns {string}
+ */
+export function userInfoImport(data, templateId) {
+    return requestForm({
+        url: '/user/info/import/' + templateId,
+        method: 'post',
+        data
     })
 }
 
