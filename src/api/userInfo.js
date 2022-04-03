@@ -25,14 +25,14 @@ export function fetchData(data) {
 }
 
 /**
- * 修改信息
+ * 新增
  * @param data
  * @param departmentId 不传的话，默认为当前用户的部门ID
  */
 export function add(data, departmentId) {
     return request({
         url: '/user/info',
-        method: 'put',
+        method: 'post',
         data,
         params: {
             departmentId
@@ -56,7 +56,7 @@ export function modify(data, id) {
 
 
 // userInfo
-export let defaultUserInfo = {
+export const defaultUserInfo = {
     "age": null,
     "applyDate": null,
     "beActivistDate": null,

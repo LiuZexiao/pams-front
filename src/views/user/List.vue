@@ -126,7 +126,7 @@
 
 <script>
 import { reactive, onMounted, toRefs } from "vue";
-import { fetchData, modify, defaultUserInfo } from "../../api/userInfo.js";
+import {fetchData, modify, defaultUserInfo, add} from "../../api/userInfo.js";
 import UserSearch from "./UserSearch.vue"
 import BreadCrumb from "../BreadCrumb.vue"
 import Edit from "./components/Edit.vue"
@@ -199,18 +199,23 @@ export default {
     /**
      * 处理编辑事件
      */
-    const handleEdit = (row) => {
-      console.log("handleEdit:" + JSON.stringify(row))
-      modify(row, row.id).then(res => {
-        if (res.code === 200) {
-          state.mode = null
-          state.data = {}
-          state.editVisible = false
-          ElMessage.success(res.message)
-        } else {
-          ElMessage.error(res.message)
-        }
-      })
+    const handleEdit = async (row) => {
+      let res = {};
+      if (state.mode === MODE.EDIT) {
+        res = await modify(row, row.id)
+      } else {
+        res = await add(row, null)
+      }
+      if (res.code === 200) {
+        state.mode = null
+        state.data = defaultUserInfo
+        state.editVisible = false
+        loadData()
+        ElMessage.success(res.message)
+      } else {
+        loadData()
+        ElMessage.error(res.message)
+      }
     }
 
     /**
@@ -218,7 +223,7 @@ export default {
      */
     const showEdit = (index, mode) => {
       state.mode = mode
-      state.data = index ? state.tableData[index] : defaultUserInfo
+      state.data = index != null ? state.tableData[index] : defaultUserInfo
       state.editVisible = true
       console.log("showEdit:" + state.data)
     }
