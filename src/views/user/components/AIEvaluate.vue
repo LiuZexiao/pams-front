@@ -1,118 +1,118 @@
 <template>
-  <el-dialog v-model="visible" :title="row?.id ? '修改数据' : '新增数据'" width="40%" top="80px" center @close="close">
-
-    <!-- 表单 BEGIN -->
-    <el-scrollbar height="600px">
-      <el-form :model="row" label-width="160px" label-position="left" class="from">
-        <el-form-item label="模板名">
-          <el-input v-model="row.name" />
-        </el-form-item>
-      </el-form>
-      <el-button style="width: 100%" @click="handleAddColumn">添加列</el-button>
-      <el-table :data="row.columns" style="width: 100%" height="500">
-        <el-table-column prop="sort" label="排序" width="80">
-          <template #default="scope">
-            <el-input v-model="scope.row.sort" type="number" />
+  <el-dialog v-model="visible" title="AI思想状态评估" width="40%" top="80px" @close="close">
+    <el-card class="box-card" shadow="hover">
+      <template #header>
+        <div class="card-header">
+          <span>AI评估报告</span>
+          <el-tag class="ml-2" type="success">总分：5</el-tag>
+        </div>
+      </template>
+      <ElButton v-if="!report" type="success" :loading="loading" @click="handleGenerate">{{loading ? "报告评估中..." : "点击生成AI评估报告"}}</ElButton>
+      <div v-if="report">
+        <el-progress type="circle" :percentage="report.total * 20" :color="customColors">
+          <template #default="{ percentage }">
+            <div style="font-size: 30px">{{ percentage / 20.0 }}</div>
+            <el-tag v-if="percentage / 20.0 >= 4" type="success">优秀</el-tag>
+            <el-tag v-if="percentage / 20.0 >= 3.5 & percentage / 20.0 < 4" type="info">良好</el-tag>
+            <el-tag v-if="percentage / 20.0 >= 3 & percentage / 20.0 < 3.5" type="warning">及格</el-tag>
+            <el-tag v-if="percentage / 20.0 < 3" type="danger">异常</el-tag>
           </template>
-        </el-table-column>
-        <el-table-column prop="name" label="列名" width="250">
-          <template #default="scope">
-            <el-input v-model="scope.row.name" />
-          </template>
-        </el-table-column>
-        <el-table-column prop="key" label="键值" width="250">
-          <template #default="scope">
-            <el-select v-model="scope.row.key" clearable placeholder="请选择">
-              <el-option v-for="item in userInfoKey" :label="item.value" :value="item.key" />
-            </el-select>
-          </template>
-        </el-table-column>
-        <el-table-column fixed="right" label="操作" width="120">
-          <template #default="scope">
-            <el-popconfirm confirm-button-text="确认" cancel-button-text="取消"
-                           :icon="InfoFilled" icon-color="red" title="确认删除这条数据？"
-                           @confirm="handleDeleteColumn(scope.$index)">
-              <template #reference>
-                <el-button size="small" type="danger">删除</el-button>
-              </template>
-            </el-popconfirm>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-scrollbar>
-    <!-- 表单 END -->
-
-    <!-- FOOTER BEGIN -->
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="()=>{close(false);}">取消</el-button>
-        <el-button type="primary" @click="save">保存</el-button>
-      </span>
-    </template>
-    <!-- FOOTER END -->
+        </el-progress>
+        <el-descriptions :column="2" border style="margin-top: 15px">
+          <el-descriptions-item>
+            <template #label>
+              思想报告质量
+            </template>
+            <el-progress :text-inside="true" :stroke-width="15" :percentage="report.thoughtReport * 50"  :color="customColors" style="width: 100px" />
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              个人诚信度
+            </template>
+            <el-progress :text-inside="true" :stroke-width="15" :percentage="report.integrity * 100" :color="customColors" style="width: 100px" />
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              活动参与率
+            </template>
+            <el-progress :text-inside="true" :stroke-width="15" :percentage="report.positivity * 100" :color="customColors" />
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              个人绩点
+            </template>
+            <el-progress :text-inside="true" :stroke-width="15" :percentage="report.gpa * 100" :color="customColors" />
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template #label>
+              附加分
+            </template>
+            <el-progress :text-inside="true" :stroke-width="15" :percentage="report.additional * 200" :color="customColors" />
+          </el-descriptions-item>
+        </el-descriptions>
+        <el-alert title="温馨提示：AI评估数据仅供参考" type="warning" show-icon style="margin-top: 15px" />
+      </div>
+    </el-card>
   </el-dialog>
 </template>
 
 <script>
-import { remove as removeColumn } from "../../../api/tableTemplateColumn"
-import { userInfoKey} from "../../../api/userInfo"
 import {ElMessage} from "element-plus";
+import {reactive, toRefs} from "vue";
+import {evaluate} from "../../../api/userInfo";
+
 export default {
   name: "AIEvaluate",
   props: {
-    mode: String,
-    row: Object,
+    userInfo: Object,
     visible: Boolean
   },
-  emits: ["onSave", "onClose"], // 父组件传过来的事件
+  emits: ["onClose"], // 父组件传过来的事件
   setup(props, { emit }) {
+    const state = reactive({
+      score: 0,
+      report: null,
+      loading: false,
+    }); // reactive 响应式对象声明
 
-    const handleAddColumn = () => {
-      let column = {
-        id: null,
-        key: null,
-        name: null,
-        sort: null,
-        tableId: props.row.id
-      }
-      props.row.columns.push(column)
-    }
+    const customColors = [
+      { color: '#909399', percentage: 60 },
+      { color: '#e6a23c', percentage: 70 },
+      { color: '#1989fa', percentage: 80 },
+      { color: '#67c23a', percentage: 100 },
+    ]
 
-    const handleDeleteColumn = (index) => {
-      let column = props.row.columns[index]
-      if (column.id != null) {
-        removeColumn(column.id).then(res => {
-          if (res.code === 200) {
-            props.row.columns.splice(index, 1)
-            ElMessage.success(res.message)
-          } else {
-            ElMessage.error(res.message)
-          }
-        })
-      } else {
-        props.row.columns.splice(index, 1)
-      }
-    }
-
-    const save = () => {
-      emit("onSave", props.row)
+    const handleGenerate = () => {
+      state.loading = true
+      evaluate(props.userInfo.id).then(res => {
+        if (res.code === 200) {
+          state.report = res.data
+        } else {
+          ElMessage.error(res.message)
+        }
+        state.loading = false
+      })
     }
 
     const close = (visible) => {
+      state.loading = false
       emit("onClose", visible)
     }
 
     return {
-      userInfoKey,
-      handleAddColumn,
-      handleDeleteColumn,
+      ...toRefs(state),
+      customColors,
+      handleGenerate,
       close,
-      save
     };
   },
 };
 </script>
 
 <style scoped>
-
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 </style>

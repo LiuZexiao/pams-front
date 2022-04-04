@@ -133,7 +133,7 @@
 
 <script>
 import { reactive, onMounted, toRefs } from "vue";
-// import { fetchData, modify, defaultUserInfo, add, remove } from "../../api/userInfo.js";
+// import { fetchData, modify, defaultUserInfo, add, remove } from "../../api/list.js";
 import { stageInfoAll } from "../../api/stageManage.js";
 // import UserSearch from "./components/UserSearch.vue"
 import Edit from "./components/Edit.vue"

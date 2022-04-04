@@ -92,6 +92,18 @@ export function userInfoImport(data, templateId) {
     })
 }
 
+/**
+ *  AI评估思想状态
+ * @param userInfoId
+ * @returns {AxiosPromise}
+ */
+export function evaluate(userInfoId) {
+    return requestForm({
+        url: '/user/info/' + userInfoId + '/evaluate',
+        method: 'get',
+    })
+}
+
 
 // userInfo
 export const defaultUserInfo = {
