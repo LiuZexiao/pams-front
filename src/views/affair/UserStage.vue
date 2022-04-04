@@ -1,65 +1,13 @@
 <template>
   <!-- 阶段信息（用户的入党阶段、审核、个性化查询） -->
    <el-card shadow="never" class="box-card">
-    <!-- 搜索、添加、导入导出 BEGIN -->
+    <!-- 搜索 BEGIN -->
     <el-row :gutter="24" style="text-align: left;line-height: 10px;margin-bottom: 10px">
       <el-col :span="4">
         <el-input placeholder="请输入搜索内容" v-model="params.search" />
       </el-col>
-      <el-col :span="2">
-        <el-button type="primary" style="width: 60px;" @click="loadData">搜索</el-button>
-      </el-col>
-      <el-col :span="2">
-        <el-button style="width: 60px;" @click="advancedSearch = !advancedSearch">
-          更多
-          <el-icon v-if="advancedSearch"><arrow-down /></el-icon>
-          <el-icon v-if="!advancedSearch"><arrow-left /></el-icon>
-        </el-button>
-      </el-col>
-      <el-col :span="10"></el-col>
-      <el-col :span="2">
-        <el-button style="width: 60px;" @click="showEdit(null, MODE.ADD)"><el-icon><plus /></el-icon>&nbsp;添加</el-button>
-      </el-col>
-      <el-col :span="2">
-        <el-button type="primary" style="width: 60px;"><el-icon><bottom-left /></el-icon>&nbsp;导入</el-button>
-      </el-col>
-      <el-col :span="2">
-        <el-button type="info" style="width: 60px;"><el-icon><download /></el-icon>&nbsp;导出</el-button>
-      </el-col>
-    </el-row>
-    <!-- 搜索、添加、导入导出END -->
-
-    <!-- 高级搜索 BEGIN -->
-    <el-row v-show="advancedSearch" :gutter="24" style="text-align: left;line-height: 10px;">
-      <el-col :span="4">
-        <el-select v-model="params.state" clearable placeholder="请选择状态">
-          <el-option label="待审核" value="UNDER_REVIEW" />
-          <el-option label="审核中" value="REVIEWING" />
-          <el-option label="通过" value="PASSED" />
-          <el-option label="不通过" value="FAIL" />
-        </el-select>
-      </el-col>
-      <el-col :span="4">
-        <el-input placeholder="请输入班级" v-model="params.clazz"/>
-      </el-col>
-      <el-col :span="4">
-        <el-select placeholder="请选择院系" clearable v-model="params.college">
-          <el-option label="请选择" value="" />
-          <el-option label="机电学院" value="机电学院" />
-          <el-option label="汽车工程学院" value="汽车工程学院" />
-          <el-option label="土木与建筑工程学院" value="土木与建筑工程学院" />
-          <el-option label="计算机与通信工程学院" value="计算机与通信工程学院" />
-          <el-option label="公益慈善管理学院o" value="公益慈善管理学院" />
-          <el-option label="国际酒店与饮食文化学院" value="国际酒店与饮食文化学院" />
-          <el-option label="工商税务管理学院" value="工商税务管理学院" />
-          <el-option label="商学院" value="商学院" />
-          <el-option label="外国语学院" value="外国语学院" />
-          <el-option label="艺术学院" value="艺术学院" />
-        </el-select>
-      </el-col>
       <el-col :span="4">
         <el-select placeholder="选择党组织" clearable v-model="params.departmentId">
-          <el-option label="请选择" value="" />
           <el-option label="机电学院" value="机电学院" />
           <el-option label="汽车工程学院" value="汽车工程学院" />
           <el-option label="土木与建筑工程学院" value="土木与建筑工程学院" />
@@ -73,38 +21,68 @@
         </el-select>
       </el-col>
       <el-col :span="4">
-        <el-select placeholder="选择性别" clearable v-model="params.gender">
-          <el-option label="男" value="MALE" />
-          <el-option label="女" value="FEMALE" />
-          <el-option label="未知" value="OTHER" />
+        <el-select placeholder="选择阶段" clearable v-model="params.stageId">
+          <el-option label="机电学院" value="机电学院" />
+          <el-option label="汽车工程学院" value="汽车工程学院" />
+          <el-option label="土木与建筑工程学院" value="土木与建筑工程学院" />
+          <el-option label="计算机与通信工程学院" value="计算机与通信工程学院" />
+          <el-option label="公益慈善管理学院o" value="公益慈善管理学院" />
+          <el-option label="国际酒店与饮食文化学院" value="国际酒店与饮食文化学院" />
+          <el-option label="工商税务管理学院" value="工商税务管理学院" />
+          <el-option label="商学院" value="商学院" />
+          <el-option label="外国语学院" value="外国语学院" />
+          <el-option label="艺术学院" value="艺术学院" />
         </el-select>
       </el-col>
+      <el-col :span="4">
+        <el-select placeholder="选择审核人" clearable v-model="params.approverId">
+          <el-option label="机电学院" value="机电学院" />
+          <el-option label="汽车工程学院" value="汽车工程学院" />
+          <el-option label="土木与建筑工程学院" value="土木与建筑工程学院" />
+          <el-option label="计算机与通信工程学院" value="计算机与通信工程学院" />
+          <el-option label="公益慈善管理学院o" value="公益慈善管理学院" />
+          <el-option label="国际酒店与饮食文化学院" value="国际酒店与饮食文化学院" />
+          <el-option label="工商税务管理学院" value="工商税务管理学院" />
+          <el-option label="商学院" value="商学院" />
+          <el-option label="外国语学院" value="外国语学院" />
+          <el-option label="艺术学院" value="艺术学院" />
+        </el-select>
+      </el-col>
+      <el-col :span="4">
+        <AuditSelect :state="params.status" @onChange="(val) => params.status = val" />
+      </el-col>
+      <el-col :span="4">
+        <el-button type="primary" style="width: 60px;" @click="loadData">搜索</el-button>
+      </el-col>
     </el-row>
-    <!-- 高级搜索 END -->
+    <!-- 搜索 END -->
 
     <!-- 用户列表 BEGIN -->
     <el-table :data="tableData" style="width: 100%" height="550">
-      <el-table-column prop="approver.realName" label="姓名" width="80"/>
-      <el-table-column prop="beginDate" label="申请入党时间" width="180"/>
-      <el-table-column prop="stage.name" label="当前阶段" width="120"/>
-        <el-table-column prop="status" label="状态" width="120">
+      <el-table-column fixed prop="stage.name" label="阶段名称"/>
+      <el-table-column fixed prop="userInfo.realName" label="姓名"/>
+      <el-table-column prop="score" label="分数">
         <template #default="scope">
-          <el-tag v-if="scope.row.status === 'UNDER_REVIEW'" type="info">待审核</el-tag>
-          <el-tag v-if="scope.row.status === 'REVIEWING'" type="warning">审核中</el-tag>
-          <el-tag v-if="scope.row.status === 'PASSED'" type="success">通过</el-tag>
-          <el-tag v-if="scope.row.status === 'FAIL'" type="danger">不通过</el-tag>
+          <el-input type="number"
+                    v-if="scope.row.stage.needScore"
+                    v-model="scope.row.score"
+                    @change="(val) => handleScoreChange(val, scope.row.id)"
+          />
+          <span v-else>\</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="250">
+      <el-table-column prop="beginDate" label="开始时间"/>
+      <el-table-column prop="endDate" label="结束时间"/>
+      <el-table-column prop="remark" label="备注"/>
+      <el-table-column prop="status" label="状态">
         <template #default="scope">
-          <el-button size="small" @click="showEdit(scope.$index, MODE.EDIT)">编辑</el-button>
-          <el-popconfirm confirm-button-text="确认" cancel-button-text="取消"
-                         :icon="InfoFilled" icon-color="red" title="确认删除这条数据？"
-                         @confirm="handleDelete(scope.row.id)">
-            <template #reference>
-              <el-button size="small" type="danger">删除</el-button>
-            </template>
-          </el-popconfirm>
+          <AuditTag v-if="scope.row.stage.needReview" :state="scope.row.status" />
+          <span v-else>\</span>
+        </template>
+      </el-table-column>
+      <el-table-column fixed="right" label="操作">
+        <template #default="scope">
+          <el-button size="small" type="primary" :disabled="!scope.row.stage.needReview" @click="showAudit(scope.row)">审核</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -125,53 +103,45 @@
   </el-card>
 
   <!-- 组件 BEGIN -->
-  <!-- <UserSearch :centerDialogVisible="centerDialogVisible" @onCloseDialog="closeDialogVisivle"></UserSearch> -->
-  <Edit :visible="editVisible" :row="data" :mode="mode" @onClose="closeEdit" @onSave="handleEdit"/>
+  <UserStageAudit v-if="auditVisible" :row="data" :visible="auditVisible" @onClose="closeAudit" @onSave="saveAudit"/>
   <!-- 组件 END -->
-
 </template>
 
 <script>
 import { reactive, onMounted, toRefs } from "vue";
-// import { fetchData, modify, defaultUserInfo, add, remove } from "../../api/list.js";
-import { stageInfoAll } from "../../api/stageManage.js";
-// import UserSearch from "./components/UserSearch.vue"
-import Edit from "./components/Edit.vue"
+import {fetchPageData, entryScore, audit} from "../../api/stageManage.js";
 import { ElMessage } from "element-plus";
 import { InfoFilled } from '@element-plus/icons-vue'
+import AuditSelect from "../../components/AuditStatus/AuditSelect.vue";
+import AuditTag from "../../components/AuditStatus/AuditTag.vue";
+import UserStageAudit from "./components/UserStageAudit.vue";
+
 export default {
   name: "UserStage",
    components: {
-    // UserSearch,
-    // Edit,
+     AuditSelect,
+     AuditTag,
+     UserStageAudit,
   },
   setup() {
-    const MODE = {
-      EDIT: "modify",
-      ADD: "add"
-    }
     const state = reactive({
       tableData: [],
-      // data: defaultUserInfo,
-      mode: null,
+      data: null,
       params: {
-        // clazz: null,
-        // college: null,
-        // departmentId: null,
-        // gender: null,
-        // job: null,
-        // number: null,
-        page: 1, // 几页
-        // realName: null,
-        // search: null, // 模糊查询内容
-        size: 10, // 每页显示几条
-        // sort: null,
-        // sortType: null,
-        // stageId: null, // 阶段
-        // state: null
+        approverId: null,
+        beginDate: null,
+        departmentId: null,
+        endDate: null,
+        page: 1,
+        search: null,
+        size: 10,
+        sort: null,
+        sortType: null,
+        stageId: null,
+        status: null
       },
       total: 0,
-      centerDialogVisible: false,
+      auditVisible: false,
       editVisible: false,
       advancedSearch: false,
     }); // reactive 响应式对象声明
@@ -181,102 +151,42 @@ export default {
       loadData(state);
     });
 
-    const userSearch = () => {
-      state.centerDialogVisible = true;
-    }
-
-    const closeDialogVisivle = (visible) => {
-      state.centerDialogVisible = visible;
-    }
-
     const loadData = () => {
-      if (state.params.state === "") {
-        state.params.state = null
+      if (state.params.status === "") {
+        state.params.status = null
       }
-      if (state.params.gender === "") {
-        state.params.gender = null
-      }
-      stageInfoAll(state.params).then(function (res) {
+      fetchPageData(state.params).then(function (res) {
         console.log(res);
         console.log(res.data);
-        // const data = res.data
-        // state.tableData = data.content;
-        state.tableData = [{
-          id: 1,
-          approver: {
-            id: 1,
-            realName: "马文艺"
-          },
-          status: "REVIEWING",
-          stage: {
-          id: 2,
-          name: "入党积极份子",
-         children: [
-            {
-              id: null,
-              userInfoId: 1,
-              stage: {
-                id: 1,
-                name: "党组织谈话",
-              },
-            },
-            {
-              id: null,
-              userInfoId: 1,
-              stage: {
-                id: 2,
-                name: "初级党课培训",
-              },
-            },
-            {
-              id: null,
-              userInfoId: 1,
-              stage: {
-                id: 3,
-                name: "团组织推优",
-              },
-            },
-          ]
-        },
-        }],
-
+        const data = res.data
+        state.tableData = data.content;
         state.total =data.totalElements
         state.params.size = data.size
         state.params.page = data.number + 1
-        console.log(state);
       });
-      return state.tableData;
     }
 
-    /**
-     * 处理编辑事件
-     */
-    const handleEdit = async (row) => {
-      let res = {};
-      if (state.mode === MODE.EDIT) {
-        res = await modify(row, row.id)
-      } else {
-        res = await add(row, null)
-      }
-      if (res.code === 200) {
-        state.mode = null
-        // state.data = stageInfoAll
-        state.editVisible = false
-        loadData()
-        ElMessage.success(res.message)
-      } else {
-        loadData()
-        ElMessage.error(res.message)
-      }
-    }
-
-    /**
-     * 处理删除事件
-     */
-    const handleDelete = (rowId) => {
-      remove(rowId).then(res => {
+    const handleScoreChange = (score, id) => {
+      const param = {score, id}
+      entryScore(param).then(res => {
         if (res.code === 200) {
           ElMessage.success(res.message)
+        } else {
+          ElMessage.error(res.message)
+        }
+      })
+    }
+
+    const saveAudit = (row) => {
+      const param = {
+        id: row.id,
+        auditStatus: row.status,
+        remark: row.remark
+      }
+      audit(param).then(res => {
+        if (res.code === 200) {
+          ElMessage.success(res.message)
+          closeAudit(false)
           loadData()
         } else {
           ElMessage.error(res.message)
@@ -284,34 +194,25 @@ export default {
       })
     }
 
-    /**
-     * 显示编辑框
-     */
-    const showEdit = (index, mode) => {
-      state.mode = mode
-      // state.data = index != null ? state.tableData[index] : defaultUserInfo
-      state.editVisible = true
-      console.log("showEdit:" + state.data)
+    const showAudit = (row) => {
+      state.data = row
+      state.auditVisible = true
     }
 
-    /**
-     * 关闭编辑框
-     * @param visible
-     */
-    const closeEdit = (visible) => {
-      state.editVisible = visible
+    const closeAudit = (visible) => {
+      state.auditVisible = visible
+      state.data = null
     }
+
+
 
     return {
-      MODE,
       ...toRefs(state), //toRefs将对象中的内容转换为响应式数据
-      userSearch,
       loadData,
-      handleEdit,
-      handleDelete,
-      showEdit,
-      closeEdit,
-      closeDialogVisivle,
+      handleScoreChange,
+      saveAudit,
+      showAudit,
+      closeAudit,
     };
   },
 };

@@ -115,10 +115,7 @@
       <el-table-column prop="stage.stage.name" label="当前阶段" width="120"/>
       <el-table-column prop="state" label="状态" width="120">
         <template #default="scope">
-          <el-tag v-if="scope.row.state === 'UNDER_REVIEW'" type="info">待审核</el-tag>
-          <el-tag v-if="scope.row.state === 'REVIEWING'" type="warning">审核中</el-tag>
-          <el-tag v-if="scope.row.state === 'PASSED'" type="success">通过</el-tag>
-          <el-tag v-if="scope.row.state === 'FAIL'" type="danger">不通过</el-tag>
+          <AuditTag :state="scope.row.state" />
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="250">
@@ -177,6 +174,7 @@ import UserInfoEdit from "./components/UserInfoEdit.vue"
 import UserInfoExport from "./components/UserInfoExport.vue"
 import UserInfoImport from "./components/UserInfoImport.vue"
 import AIEvaluate from "./components/AIEvaluate.vue"
+import AuditTag from "../../components/AuditStatus/AuditTag.vue";
 import { ElMessage } from "element-plus";
 import { InfoFilled } from '@element-plus/icons-vue'
 
@@ -188,6 +186,7 @@ export default {
     UserInfoExport,
     UserInfoImport,
     AIEvaluate,
+    AuditTag,
   },
   setup() {
     const state = reactive({
