@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="visible" title="AI思想状态评估" width="40%" top="80px" @close="close">
+  <el-dialog v-model="visible" title="AI思想状态评估" width="60%" top="80px" @close="close">
     <el-scrollbar height="600px">
       <!-- 用户基本信息 BEGIN -->
       <el-card class="box-card" style="margin-top: 15px" shadow="hover">
@@ -128,6 +128,17 @@
       <!-- AI评估报告 END -->
 
       <!-- 用户入党流程 BEGIN -->
+      <el-card class="box-card" style="margin-top: 15px" shadow="hover">
+        <template #header>
+          <div class="card-header">
+            <span>入党进程</span>
+            <el-link href="/affair/userStage" :underline="false" >去审核</el-link>
+          </div>
+        </template>
+        <el-scrollbar>
+          <JoinProcess :user-info-id="userInfo.id" />
+        </el-scrollbar>
+      </el-card>
       <!-- 用户入党流程 END -->
     </el-scrollbar>
   </el-dialog>
@@ -136,10 +147,15 @@
 <script>
 import {ElMessage} from "element-plus";
 import {reactive, toRefs} from "vue";
+import router from '../../../router';
 import {evaluate} from "../../../api/userInfo";
+import JoinProcess from "./JoinProcess.vue";
 
 export default {
   name: "AIEvaluate",
+  components: {
+    JoinProcess,
+  },
   props: {
     userInfo: Object,
     visible: Boolean
@@ -187,6 +203,7 @@ export default {
       handleGenerate,
       handleEditUserInfo,
       close,
+      router,
     };
   },
 };
