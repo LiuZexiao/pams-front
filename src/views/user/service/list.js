@@ -56,10 +56,19 @@ export const handleDelete = (rowId, state) => {
 
 /* 显示编辑框 */
 export const showEdit = (index, mode, state) => {
+    console.log("showEdit3:" + mode)
+    console.log("showEdit3:" + index)
     state.mode = mode
     state.data = index != null ? state.tableData[index] : defaultUserInfo
+    console.log("showEdit3:" + JSON.stringify(state.data))
     state.editVisible = true
-    console.log("showEdit:" + state.data)
+    state.currentIndex = null
+}
+
+/* 编辑用户 */
+export const handleToEditUserInfo = (state) => {
+    console.log("handleToEditUserInfo2:" + state.currentIndex)
+    showEdit(state.currentIndex, MODE.EDIT, state)
 }
 
 /* 关闭编辑框 */
@@ -95,6 +104,8 @@ export const closeExport = (visible, state) => {
 
 /* 打开评估窗口 */
 export const showEvaluate = (index, state) => {
+    console.log("showEvaluate1:" + index)
+    state.currentIndex = index
     state.data = state.tableData[index]
     state.aiEvaluateVisible = true
 }
@@ -102,5 +113,4 @@ export const showEvaluate = (index, state) => {
 /* 关闭评估窗口 */
 export const closeEvaluate = (visible, state) => {
     state.aiEvaluateVisible = visible
-    state.data = defaultUserInfo
 }

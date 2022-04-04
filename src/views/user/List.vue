@@ -154,7 +154,12 @@
   <!-- 组件 BEGIN -->
   <UserSearch></UserSearch>
   <UserInfoEdit :visible="editVisible" :row="data" :mode="mode" @onClose="(v) => closeEdit(v, state)" @onSave="(row) => handleEdit(row, state)"/>
-  <AIEvaluate :visible="aiEvaluateVisible" :user-info="data" @onClose="(v) => closeEvaluate(v, state)"/>
+  <AIEvaluate :visible="aiEvaluateVisible"
+              :user-info="data"
+              :index="currentIndex"
+              @onClose="(v) => closeEvaluate(v, state)"
+              @onEditUserInfo="handleToEditUserInfo(state)"
+  />
   <UserInfoExport :visible="exportVisible" @onClose="(v) => closeExport(v, state)"/>
   <UserInfoImport :visible="importVisible" @onClose="(v) => closeImport(v, state)" @onSuccess="importSuccess(state)"/>
   <!-- 组件 END -->
@@ -164,7 +169,7 @@
 import { reactive, onMounted, toRefs } from "vue";
 import { defaultUserInfo } from "../../api/userInfo.js";
 import { loadData, MODE, importSuccess,
-  handleEdit, handleDelete,
+  handleEdit, handleDelete, handleToEditUserInfo,
   closeEdit, closeEvaluate, closeImport, closeExport,
   showEvaluate, showEdit, showExport, showImport } from "./service/list.js";
 import UserSearch from "./components/UserSearch.vue"
@@ -188,6 +193,7 @@ export default {
     const state = reactive({
       tableData: [],
       data: defaultUserInfo,
+      currentIndex: null,
       mode: null,
       params: {
         clazz: null,
@@ -225,6 +231,7 @@ export default {
       loadData,
       handleEdit,
       handleDelete,
+      handleToEditUserInfo,
       importSuccess,
       showImport,
       showExport,
