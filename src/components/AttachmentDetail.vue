@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="attachmentDetail?.requiredAttachments" style="width: 100%" height="460">
+  <el-table :data="attachmentDetail?.requiredAttachments" style="width: 100%" height="260">
     <el-table-column prop="name" label="附件名"/>
     <el-table-column prop="quantity" label="要求">
       <template #default="scope">
@@ -9,7 +9,9 @@
     <el-table-column prop="quantity" label="详情">
       <template #default="scope">
         <p v-for="submittedAttachment in scope.row?.submittedAttachments">
-          {{ submittedAttachment.name }} <el-link type="primary" :href="submittedAttachment.url" target="_blank">下载</el-link>
+          {{ submittedAttachment.name }}
+          <el-link type="primary" :href="submittedAttachment.url" target="_blank">下载</el-link>
+          <el-link v-if="scope.row.name === '思想汇报'" type="info">摘要</el-link>
         </p>
       </template>
     </el-table-column>

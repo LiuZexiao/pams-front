@@ -38,3 +38,17 @@ export function audit(params) {
         params,
     })
 }
+
+/**
+ * 获取子阶段和用户关联数据
+ * @param params {{stageId: Number, userInfoId: Number}}
+ * @returns {AxiosPromise}
+ */
+export function fetchChildren(params) {
+    return request({
+        url: '/user/info/stage/children',
+        method: 'get',
+        params,
+    })
+}
+

@@ -52,7 +52,7 @@
         <AuditSelect :state="params.status" @onChange="(val) => params.status = val" />
       </el-col>
       <el-col :span="4">
-        <el-button type="primary" style="width: 60px;" @click="loadData">搜索</el-button>
+        <el-button type="primary" style="width: 60px;" @click="loadData(state)">搜索</el-button>
       </el-col>
     </el-row>
     <!-- 搜索 END -->
@@ -92,24 +92,27 @@
         v-model:current-page="params.page"
         @size-change="(pageSize) => {
           params.size = pageSize
-          loadData()
+          loadData(state)
         }"
         @current-change="(current) => {
           params.page = current
-          loadData()
+          loadData(state)
         }"
     />
     <!-- 用户列表 END -->
   </el-card>
 
   <!-- 组件 BEGIN -->
-  <UserStageAudit v-if="auditVisible" :row="data" :visible="auditVisible" @onClose="closeAudit" @onSave="saveAudit"/>
+  <UserStageAudit v-if="auditVisible"
+                  :row="data" :visible="auditVisible"
+                  @onClose="closeAudit" @onSave="saveAudit" @onToAudit="toAudit"/>
   <!-- 组件 END -->
 </template>
 
 <script>
 import { reactive, onMounted, toRefs } from "vue";
-import {fetchPageData, entryScore, audit} from "../../api/stageManage.js";
+import {fetchPageData, entryScore, audit} from "../../api/userInfoStage.js";
+import {loadData} from "./service/userStage.js"
 import { ElMessage } from "element-plus";
 import { InfoFilled } from '@element-plus/icons-vue'
 import AuditSelect from "../../components/AuditStatus/AuditSelect.vue";
@@ -151,20 +154,20 @@ export default {
       loadData(state);
     });
 
-    const loadData = () => {
-      if (state.params.status === "") {
-        state.params.status = null
-      }
-      fetchPageData(state.params).then(function (res) {
-        console.log(res);
-        console.log(res.data);
-        const data = res.data
-        state.tableData = data.content;
-        state.total =data.totalElements
-        state.params.size = data.size
-        state.params.page = data.number + 1
-      });
-    }
+    // const loadData = () => {
+    //   if (state.params.status === "") {
+    //     state.params.status = null
+    //   }
+    //   fetchPageData(state.params).then(function (res) {
+    //     console.log(res);
+    //     console.log(res.data);
+    //     const data = res.data
+    //     state.tableData = data.content;
+    //     state.total =data.totalElements
+    //     state.params.size = data.size
+    //     state.params.page = data.number + 1
+    //   });
+    // }
 
     const handleScoreChange = (score, id) => {
       const param = {score, id}
@@ -187,7 +190,7 @@ export default {
         if (res.code === 200) {
           ElMessage.success(res.message)
           closeAudit(false)
-          loadData()
+          loadData(state)
         } else {
           ElMessage.error(res.message)
         }
@@ -204,14 +207,27 @@ export default {
       state.data = null
     }
 
+    /**
+     * 打开新的审核弹窗
+     * @param rowId
+     */
+    const toAudit = (rowId) => {
+      state.tableData.forEach(item => {
+        if (item.id === rowId) {
+          showAudit(item)
+        }
+      })
+    }
 
 
     return {
+      state,
       ...toRefs(state), //toRefs将对象中的内容转换为响应式数据
       loadData,
       handleScoreChange,
       saveAudit,
       showAudit,
+      toAudit,
       closeAudit,
     };
   },
