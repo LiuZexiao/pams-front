@@ -7,7 +7,7 @@
         <el-input placeholder="请输入搜索内容" v-model="params.search" />
       </el-col>
       <el-col :span="2">
-        <el-button type="primary" style="width: 60px;" @click="loadData">搜索</el-button>
+        <el-button type="primary" style="width: 60px;" @click="loadData(state)">搜索</el-button>
       </el-col>
       <el-col :span="2">
         <el-button style="width: 60px;" @click="advancedSearch = !advancedSearch">
@@ -111,7 +111,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="age" label="年龄" width="80"/>
-      <el-table-column prop="applyDate" label="申请入党时间" width="180"/>
+      <el-table-column prop="applyDate" label="申请入党时间" width="120"/>
       <el-table-column prop="stage.stage.name" label="当前阶段" width="120"/>
       <el-table-column prop="state" label="状态" width="120">
         <template #default="scope">
@@ -121,12 +121,13 @@
           <el-tag v-if="scope.row.state === 'FAIL'" type="danger">不通过</el-tag>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="200">
+      <el-table-column fixed="right" label="操作" width="250">
         <template #default="scope">
           <el-button size="small" @click="showEdit(scope.$index, MODE.EDIT)">编辑</el-button>
+          <el-button size="small" type="success" @click="showEdit(scope.$index, MODE.EDIT)">AI评估</el-button>
           <el-popconfirm confirm-button-text="确认" cancel-button-text="取消"
                          :icon="InfoFilled" icon-color="red" title="确认删除这条数据？"
-                         @confirm="handleDelete(scope.row.id)">
+                         @confirm="handleDelete(scope.row.id, state)">
             <template #reference>
               <el-button size="small" type="danger">删除</el-button>
             </template>
@@ -152,7 +153,7 @@
 
   <!-- 组件 BEGIN -->
   <UserSearch></UserSearch>
-  <UserInfoEdit :visible="editVisible" :row="data" :mode="mode" @onClose="closeEdit" @onSave="handleEdit"/>
+  <UserInfoEdit :visible="editVisible" :row="data" :mode="mode" @onClose="closeEdit" @onSave="(row) => handleEdit(row, state)"/>
   <UserInfoExport :visible="exportVisible" @onClose="closeExport"/>
   <UserInfoImport :visible="importVisible" @onClose="closeImport" @onSuccess="importSuccess"/>
   <!-- 组件 END -->
@@ -161,10 +162,12 @@
 <script>
 import { reactive, onMounted, toRefs } from "vue";
 import { fetchData, modify, defaultUserInfo, add, remove } from "../../api/userInfo.js";
+import { loadData, handleEdit, handleDelete } from "../../service/userInfo.js";
 import UserSearch from "./components/UserSearch.vue"
 import UserInfoEdit from "./components/UserInfoEdit.vue"
 import UserInfoExport from "./components/UserInfoExport.vue"
 import UserInfoImport from "./components/UserInfoImport.vue"
+import AIEvaluate from "./components/AIEvaluate.vue"
 import { ElMessage } from "element-plus";
 import { InfoFilled } from '@element-plus/icons-vue'
 
@@ -175,6 +178,7 @@ export default {
     UserInfoEdit,
     UserInfoExport,
     UserInfoImport,
+    AIEvaluate,
   },
   setup() {
     const MODE = {
@@ -205,6 +209,7 @@ export default {
       editVisible: false,
       exportVisible: false,
       importVisible: false,
+      aiEvaluateVisible: false,
       advancedSearch: false,
     }); // reactive 响应式对象声明
 
@@ -212,47 +217,6 @@ export default {
       // 加载页面时执行
       loadData(state);
     });
-
-    /* 加载用户列表数据 */
-    const loadData = () => {
-      if (state.params.state === "") {
-        state.params.state = null
-      }
-      if (state.params.gender === "") {
-        state.params.gender = null
-      }
-      fetchData(state.params).then(function (res) {
-        console.log(res);
-        console.log(res.data);
-        const data = res.data
-        state.tableData = data.content;
-        state.total =data.totalElements
-        state.params.size = data.size
-        state.params.page = data.number + 1
-        console.log(state);
-      });
-      return state.tableData;
-    }
-
-    /* 处理编辑事件 */
-    const handleEdit = async (row) => {
-      let res = {};
-      if (state.mode === MODE.EDIT) {
-        res = await modify(row, row.id)
-      } else {
-        res = await add(row, null)
-      }
-      if (res.code === 200) {
-        state.mode = null
-        state.data = defaultUserInfo
-        state.editVisible = false
-        loadData()
-        ElMessage.success(res.message)
-      } else {
-        loadData()
-        ElMessage.error(res.message)
-      }
-    }
 
     /* 显示编辑框 */
     const showEdit = (index, mode) => {
@@ -267,22 +231,10 @@ export default {
       state.editVisible = visible
     }
 
-    /* 处理删除事件 */
-    const handleDelete = (rowId) => {
-      remove(rowId).then(res => {
-        if (res.code === 200) {
-          ElMessage.success(res.message)
-          loadData()
-        } else {
-          ElMessage.error(res.message)
-        }
-      })
-    }
-
     /* 成功导入数据 */
     const importSuccess = () => {
       state.importVisible = false
-      loadData()
+      loadData(state)
     }
 
     /* 打开导入窗口 */
@@ -309,6 +261,7 @@ export default {
     return {
       MODE,
       ...toRefs(state), //toRefs将对象中的内容转换为响应式数据
+      state,
       loadData,
       handleEdit,
       handleDelete,
