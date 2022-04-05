@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="attachmentDetail?.requiredAttachments" style="width: 100%" height="260">
+  <el-table :data="attachmentDetail?.requiredAttachments" style="width: 100%">
     <el-table-column prop="name" label="附件名"/>
     <el-table-column prop="quantity" label="要求">
       <template #default="scope">

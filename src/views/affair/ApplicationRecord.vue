@@ -94,7 +94,6 @@ export default {
   setup() {
     const state = reactive({
       tableData: [],
-      data: null,
       params: {
         departmentId: null,
         page: 1, // 几页

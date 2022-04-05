@@ -1,6 +1,4 @@
 import request from "../utils/request";
-import requestFile from '../utils/requestFile'
-import requestForm from '../utils/requestForm'
 
 /**
  * 获取申请记录信息（多条件+分页）

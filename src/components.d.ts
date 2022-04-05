@@ -44,6 +44,7 @@ declare module 'vue' {
     ElStep: typeof import('element-plus/es')['ElStep']
     ElSteps: typeof import('element-plus/es')['ElSteps']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTag: typeof import('element-plus/es')['ElTag']
@@ -52,6 +53,8 @@ declare module 'vue' {
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     Menu: typeof import('./components/Layout/menu.vue')['default']
     Nav: typeof import('./components/Layout/compoents/nav.vue')['default']
+    Stage: typeof import('./components/Stage.vue')['default']
+    StageSelect: typeof import('./components/stage/StageSelect.vue')['default']
   }
 }
 

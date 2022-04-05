@@ -74,7 +74,7 @@
             <el-link href="/user/list" :underline="false" >用户管理</el-link>
           </div>
         </template>
-        <el-table :data="tableData" style="width: 100%" height="260">
+        <el-table :data="tableData" style="width: 100%">
           <el-table-column fixed prop="stage.name" label="阶段名称"/>
           <el-table-column fixed prop="userInfo.realName" label="姓名"/>
           <el-table-column prop="score" label="分数">
