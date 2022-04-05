@@ -155,17 +155,17 @@ export default {
           children: [
             {
               id: "41",
-              title: "阶段信息",
+              title: "用户阶段信息",
               path: "/affair/userStage",
             },
             {
               id: "42",
-              title: "记录审核",
+              title: "联系人介绍人",
               path: "/affair/applicationRecord",
             },
             {
               id: "43",
-              title: "流程管理",
+              title: "入党流程",
               path: "/affair/stage",
             },
           ],

@@ -4,6 +4,9 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AttachmentDetail: typeof import('./components/AttachmentDetail.vue')['default']
+    AuditSelect: typeof import('./components/AuditStatus/AuditSelect.vue')['default']
+    AuditTag: typeof import('./components/AuditStatus/AuditTag.vue')['default']
     BreadCrumb: typeof import('./components/BreadCrumb.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
@@ -32,6 +35,7 @@ declare module 'vue' {
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     Menu: typeof import('./components/Layout/menu.vue')['default']
     Nav: typeof import('./components/Layout/compoents/nav.vue')['default']
+    StageSelect: typeof import('./components/stage/StageSelect.vue')['default']
   }
 }
 

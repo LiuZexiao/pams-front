@@ -7,7 +7,7 @@
         <el-input placeholder="请输入搜索内容" v-model="params.search" />
       </el-col>
       <el-col :span="2">
-        <el-button type="primary" style="width: 60px;" @click="loadData">搜索</el-button>
+        <el-button type="primary" style="width: 60px;" @click="loadData(state)">搜索</el-button>
       </el-col>
       <el-col :span="2">
         <el-button style="width: 60px;" @click="advancedSearch = !advancedSearch">
@@ -18,13 +18,13 @@
       </el-col>
       <el-col :span="10"></el-col>
       <el-col :span="2">
-        <el-button style="width: 60px;" @click="showEdit(null, MODE.ADD)"><el-icon><plus /></el-icon>&nbsp;添加</el-button>
+        <el-button style="width: 60px;" @click="showEdit(null, MODE.ADD, state)"><el-icon><plus /></el-icon>&nbsp;添加</el-button>
       </el-col>
       <el-col :span="2">
-        <el-button type="primary" style="width: 60px;" @click="showImport"><el-icon><bottom-left /></el-icon>&nbsp;导入</el-button>
+        <el-button type="primary" style="width: 60px;" @click="showImport(state)"><el-icon><bottom-left /></el-icon>&nbsp;导入</el-button>
       </el-col>
       <el-col :span="2">
-        <el-button type="info" style="width: 60px;" @click="showExport"><el-icon><download /></el-icon>&nbsp;导出</el-button>
+        <el-button type="info" style="width: 60px;" @click="showExport(state)"><el-icon><download /></el-icon>&nbsp;导出</el-button>
       </el-col>
     </el-row>
     <!-- 搜索、添加、导入导出END -->
@@ -111,22 +111,20 @@
         </template>
       </el-table-column>
       <el-table-column prop="age" label="年龄" width="80"/>
-      <el-table-column prop="applyDate" label="申请入党时间" width="180"/>
+      <el-table-column prop="applyDate" label="申请入党时间" width="120"/>
       <el-table-column prop="stage.stage.name" label="当前阶段" width="120"/>
       <el-table-column prop="state" label="状态" width="120">
         <template #default="scope">
-          <el-tag v-if="scope.row.state === 'UNDER_REVIEW'" type="info">待审核</el-tag>
-          <el-tag v-if="scope.row.state === 'REVIEWING'" type="warning">审核中</el-tag>
-          <el-tag v-if="scope.row.state === 'PASSED'" type="success">通过</el-tag>
-          <el-tag v-if="scope.row.state === 'FAIL'" type="danger">不通过</el-tag>
+          <AuditTag :state="scope.row.state" />
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="200">
+      <el-table-column fixed="right" label="操作" width="250">
         <template #default="scope">
-          <el-button size="small" @click="showEdit(scope.$index, MODE.EDIT)">编辑</el-button>
+          <el-button size="small" @click="showEdit(scope.$index, MODE.EDIT, state)">编辑</el-button>
+          <el-button size="small" type="success" @click="showEvaluate(scope.$index, state)">AI评估</el-button>
           <el-popconfirm confirm-button-text="确认" cancel-button-text="取消"
                          :icon="InfoFilled" icon-color="red" title="确认删除这条数据？"
-                         @confirm="handleDelete(scope.row.id)">
+                         @confirm="handleDelete(scope.row.id, state)">
             <template #reference>
               <el-button size="small" type="danger">删除</el-button>
             </template>
@@ -140,11 +138,11 @@
         v-model:current-page="params.page"
         @size-change="(pageSize) => {
           params.size = pageSize
-          loadData()
+          loadData(state)
         }"
         @current-change="(current) => {
           params.page = current
-          loadData()
+          loadData(state)
         }"
     />
     <!-- 用户列表 END -->
@@ -152,19 +150,31 @@
 
   <!-- 组件 BEGIN -->
   <UserSearch></UserSearch>
-  <UserInfoEdit :visible="editVisible" :row="data" :mode="mode" @onClose="closeEdit" @onSave="handleEdit"/>
-  <UserInfoExport :visible="exportVisible" @onClose="closeExport"/>
-  <UserInfoImport :visible="importVisible" @onClose="closeImport" @onSuccess="importSuccess"/>
+  <UserInfoEdit :visible="editVisible" :row="data" :mode="mode" @onClose="(v) => closeEdit(v, state)" @onSave="(row) => handleEdit(row, state)"/>
+  <AIEvaluate :visible="aiEvaluateVisible"
+              :user-info="data"
+              :index="currentIndex"
+              @onClose="(v) => closeEvaluate(v, state)"
+              @onEditUserInfo="handleToEditUserInfo(state)"
+  />
+  <UserInfoExport :visible="exportVisible" @onClose="(v) => closeExport(v, state)"/>
+  <UserInfoImport :visible="importVisible" @onClose="(v) => closeImport(v, state)" @onSuccess="importSuccess(state)"/>
   <!-- 组件 END -->
 </template>
 
 <script>
 import { reactive, onMounted, toRefs } from "vue";
-import { fetchData, modify, defaultUserInfo, add, remove } from "../../api/userInfo.js";
+import { defaultUserInfo } from "../../api/userInfo.js";
+import { loadData, MODE, importSuccess,
+  handleEdit, handleDelete, handleToEditUserInfo,
+  closeEdit, closeEvaluate, closeImport, closeExport,
+  showEvaluate, showEdit, showExport, showImport } from "./service/list.js";
 import UserSearch from "./components/UserSearch.vue"
 import UserInfoEdit from "./components/UserInfoEdit.vue"
 import UserInfoExport from "./components/UserInfoExport.vue"
 import UserInfoImport from "./components/UserInfoImport.vue"
+import AIEvaluate from "./components/AIEvaluate.vue"
+import AuditTag from "../../components/AuditStatus/AuditTag.vue";
 import { ElMessage } from "element-plus";
 import { InfoFilled } from '@element-plus/icons-vue'
 
@@ -175,15 +185,14 @@ export default {
     UserInfoEdit,
     UserInfoExport,
     UserInfoImport,
+    AIEvaluate,
+    AuditTag,
   },
   setup() {
-    const MODE = {
-      EDIT: "modify",
-      ADD: "add"
-    }
     const state = reactive({
       tableData: [],
       data: defaultUserInfo,
+      currentIndex: null,
       mode: null,
       params: {
         clazz: null,
@@ -205,6 +214,7 @@ export default {
       editVisible: false,
       exportVisible: false,
       importVisible: false,
+      aiEvaluateVisible: false,
       advancedSearch: false,
     }); // reactive 响应式对象声明
 
@@ -213,112 +223,23 @@ export default {
       loadData(state);
     });
 
-    /* 加载用户列表数据 */
-    const loadData = () => {
-      if (state.params.state === "") {
-        state.params.state = null
-      }
-      if (state.params.gender === "") {
-        state.params.gender = null
-      }
-      fetchData(state.params).then(function (res) {
-        console.log(res);
-        console.log(res.data);
-        const data = res.data
-        state.tableData = data.content;
-        state.total =data.totalElements
-        state.params.size = data.size
-        state.params.page = data.number + 1
-        console.log(state);
-      });
-      return state.tableData;
-    }
-
-    /* 处理编辑事件 */
-    const handleEdit = async (row) => {
-      let res = {};
-      if (state.mode === MODE.EDIT) {
-        res = await modify(row, row.id)
-      } else {
-        res = await add(row, null)
-      }
-      if (res.code === 200) {
-        state.mode = null
-        state.data = defaultUserInfo
-        state.editVisible = false
-        loadData()
-        ElMessage.success(res.message)
-      } else {
-        loadData()
-        ElMessage.error(res.message)
-      }
-    }
-
-    /* 显示编辑框 */
-    const showEdit = (index, mode) => {
-      state.mode = mode
-      state.data = index != null ? state.tableData[index] : defaultUserInfo
-      state.editVisible = true
-      console.log("showEdit:" + state.data)
-    }
-
-    /* 关闭编辑框 */
-    const closeEdit = (visible) => {
-      state.editVisible = visible
-    }
-
-    /* 处理删除事件 */
-    const handleDelete = (rowId) => {
-      remove(rowId).then(res => {
-        if (res.code === 200) {
-          ElMessage.success(res.message)
-          loadData()
-        } else {
-          ElMessage.error(res.message)
-        }
-      })
-    }
-
-    /* 成功导入数据 */
-    const importSuccess = () => {
-      state.importVisible = false
-      loadData()
-    }
-
-    /* 打开导入窗口 */
-    const showImport = () => {
-      state.importVisible = true
-    }
-
-    /* 关闭导入窗口 */
-    const closeImport = (visible) => {
-      state.importVisible = visible
-    }
-
-    /* 打开导出窗口 */
-    const showExport = () => {
-      state.exportVisible = true
-    }
-
-    /* 关闭导出窗口 */
-    const closeExport = (visible) => {
-      state.exportVisible = visible
-    }
-
-
     return {
       MODE,
       ...toRefs(state), //toRefs将对象中的内容转换为响应式数据
+      state,
       loadData,
       handleEdit,
       handleDelete,
+      handleToEditUserInfo,
       importSuccess,
       showImport,
       showExport,
       showEdit,
+      showEvaluate,
       closeImport,
       closeExport,
       closeEdit,
+      closeEvaluate,
     };
   },
 };
