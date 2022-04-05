@@ -6,7 +6,6 @@ declare module 'vue' {
   export interface GlobalComponents {
     AttachmentDetail: typeof import('./components/AttachmentDetail.vue')['default']
     AuditSelect: typeof import('./components/AuditStatus/AuditSelect.vue')['default']
-    AuditStatus: typeof import('./components/AuditStatus/AuditStatus.vue')['default']
     AuditTag: typeof import('./components/AuditStatus/AuditTag.vue')['default']
     BreadCrumb: typeof import('./components/BreadCrumb.vue')['default']
     ElAlert: typeof import('element-plus/es')['ElAlert']

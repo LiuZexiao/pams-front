@@ -79,12 +79,7 @@
           <el-table-column fixed prop="userInfo.realName" label="姓名"/>
           <el-table-column prop="score" label="分数">
             <template #default="scope">
-              <el-input type="number"
-                        v-if="scope.row.stage.needScore"
-                        v-model="scope.row.score"
-                        @change="(val) => handleScoreChange(val, scope.row.id)"
-              />
-              <span v-else>\</span>
+              {{ scope.row.stage.needScore ? scope.row.score : '\\'}}
             </template>
           </el-table-column>
           <el-table-column prop="remark" label="备注"/>
