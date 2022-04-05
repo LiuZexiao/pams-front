@@ -21,7 +21,7 @@
                   <a href="/owner/info" target="_blank">
                     <el-dropdown-item>个人中心</el-dropdown-item>
                   </a>
-                  <a href="/owner/account" target="_blank">
+                  <a href="/owner/account/updateAccount" target="_blank">
                     <el-dropdown-item>账号中心</el-dropdown-item>
                   </a>
                   <el-dropdown-item divided>

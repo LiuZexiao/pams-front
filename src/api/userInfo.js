@@ -92,40 +92,57 @@ export function userInfoImport(data, templateId) {
     })
 }
 
+//获取个人信息
+export function myInfor(){
+    return request({
+        url: '/owner/user/info',
+        method: 'get',
+    })
+}
+
+//修改个人信息
+export function modifyUserInfo(data) {
+    return requestForm({
+        url: '/owner/user/info',
+        method: 'post',
+        data
+    })
+}
+
 
 // userInfo
 export const defaultUserInfo = {
-    "age": null,
-    "applyDate": null,
+    "age": null, // 年龄
+    "applyDate": null, //申请入党时间
     "beActivistDate": null,
     "beDevTargetDate": null,
-    "birthday": null,
-    "clazz": null,
-    "college": null,
-    "computerLevel": null,
+    "birthday": null, //出生日期
+    "clazz": null,  //班级
+    "college": null, //
+    "computerLevel": null, // 计算机水平
     "correctionDate": null,
     "devTargetTrainedDate": null,
     "education": null,
-    "email": null,
-    "englishLevel": null,
-    "gender": null,
-    "hometown": null,
+    "email": null, // 邮箱
+    "englishLevel": null, // 英语水平
+    "gender": null, //性别
+    "hometown": null, // 籍贯
     "id": null,
-    "idNumber": null,
+    "idNumber": null, // 学号
     "intermediateQualifyingDate": null,
     "job": null,
     "joinedDate": null,
-    "mobilePhone": null,
+    "mobilePhone": null, // 手机号
     "number": null,
     "primaryQualifyingDate": null,
-    "qq": null,
-    "realName": null,
+    "qq": null, // qq
+    "realName": null, // 真实姓名
     "recommendedActivistsDate": null,
     "recommendedDevTargetDate": null,
     "remark": null,
     "state": null,
     "userId": null,
-    "wx": null
+    "wx": null, // 微信号
 }
 
 export const userInfoKey = [

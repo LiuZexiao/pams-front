@@ -8,7 +8,7 @@ export function logins(data) {
         data,
     })
 }
-
+//获取个人信息
 export function myInfor(){
     return request({
         url: '/owner/user/info',
