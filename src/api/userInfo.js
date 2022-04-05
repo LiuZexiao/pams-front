@@ -92,20 +92,15 @@ export function userInfoImport(data, templateId) {
     })
 }
 
-//获取个人信息
-export function myInfor(){
-    return request({
-        url: '/owner/user/info',
-        method: 'get',
-    })
-}
-
-//修改个人信息
-export function modifyUserInfo(data) {
+/**
+ *  AI评估思想状态
+ * @param userInfoId
+ * @returns {AxiosPromise}
+ */
+export function evaluate(userInfoId) {
     return requestForm({
-        url: '/owner/user/info',
-        method: 'post',
-        data
+        url: '/user/info/' + userInfoId + '/evaluate',
+        method: 'get',
     })
 }
 
