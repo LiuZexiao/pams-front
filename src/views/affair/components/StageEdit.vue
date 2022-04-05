@@ -3,62 +3,75 @@
 
     <!-- 表单 BEGIN -->
     <el-scrollbar height="600px">
-      <el-form :model="row" label-width="160px" label-position="left" class="from">
-        <el-form-item label="父阶段">
-          <StageSelect :stage-id="row.parentId" :tree-data="treeData" @change="(val) => row.parentId = val"/>
-        </el-form-item>
-        <el-form-item label="上一个阶段">
-          <StageSelect :stage-id="row.priorId" :tree-data="treeData" @change="(val) => row.priorId = val"/>
-        </el-form-item>
-        <el-form-item label="阶段名">
-          <el-input v-model="row.name" />
-        </el-form-item>
-        <el-form-item label="下一个阶段">
-          <StageSelect :stage-id="row.nextId" :tree-data="treeData" @change="(val) => row.nextId = val"/>
-        </el-form-item>
-        <el-form-item label="需要审核">
-          <el-switch v-model="row.needReview" />
-        </el-form-item>
-        <el-form-item label="需要评分">
-          <el-switch v-model="row.needScore" />
-        </el-form-item>
-        <el-form-item label="需要附件">
-          <el-switch v-model="row.attachmentRequired" />
-        </el-form-item>
-      </el-form>
-<!--      <div v-if="row.attachmentRequired">-->
-<!--        <el-button style="width: 100%" @click="handleAddColumn">添加附件</el-button>-->
-<!--        <el-table :data="row.columns" style="width: 100%" height="500">-->
-<!--          <el-table-column prop="sort" label="排序" width="80">-->
-<!--            <template #default="scope">-->
-<!--              <el-input v-model="scope.row.sort" type="number" />-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--          <el-table-column prop="name" label="列名" width="250">-->
-<!--            <template #default="scope">-->
-<!--              <el-input v-model="scope.row.name" />-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--          <el-table-column prop="key" label="键值" width="250">-->
-<!--            <template #default="scope">-->
-<!--              <el-select v-model="scope.row.key" clearable placeholder="请选择">-->
-<!--                <el-option v-for="item in userInfoKey" :label="item.value" :value="item.key" />-->
-<!--              </el-select>-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--          <el-table-column fixed="right" label="操作" width="120">-->
-<!--            <template #default="scope">-->
-<!--              <el-popconfirm confirm-button-text="确认" cancel-button-text="取消"-->
-<!--                             :icon="InfoFilled" icon-color="red" title="确认删除这条数据？"-->
-<!--                             @confirm="handleDeleteColumn(scope.$index)">-->
-<!--                <template #reference>-->
-<!--                  <el-button size="small" type="danger">删除</el-button>-->
-<!--                </template>-->
-<!--              </el-popconfirm>-->
-<!--            </template>-->
-<!--          </el-table-column>-->
-<!--        </el-table>-->
-<!--      </div>-->
+      <el-card class="box-card" style="margin-top: 15px" shadow="hover">
+        <template #header>
+          <div class="card-header">
+            <span>阶段信息</span>
+          </div>
+        </template>
+        <el-form :model="row" label-width="160px" label-position="left" class="from">
+          <el-form-item label="父阶段">
+            <StageSelect :stage-id="row.parentId" :tree-data="treeData" @change="(val) => row.parentId = val"/>
+          </el-form-item>
+          <el-form-item label="上一个阶段">
+            <StageSelect :stage-id="row.priorId" :tree-data="treeData" @change="(val) => row.priorId = val"/>
+          </el-form-item>
+          <el-form-item label="阶段名">
+            <el-input v-model="row.name" />
+          </el-form-item>
+          <el-form-item label="下一个阶段">
+            <StageSelect :stage-id="row.nextId" :tree-data="treeData" @change="(val) => row.nextId = val"/>
+          </el-form-item>
+          <el-form-item label="需要审核">
+            <el-switch v-model="row.needReview" />
+          </el-form-item>
+          <el-form-item label="需要评分">
+            <el-switch v-model="row.needScore" />
+          </el-form-item>
+          <el-form-item label="需要附件">
+            <el-switch v-model="row.attachmentRequired" />
+          </el-form-item>
+        </el-form>
+      </el-card>
+
+      <el-card v-if="row.attachmentRequired" class="box-card" style="margin-top: 15px" shadow="hover">
+        <template #header>
+          <div class="card-header">
+            <span>所需附件管理</span>
+          </div>
+        </template>
+        <el-button style="width: 100%" @click="handleAddColumn">添加附件</el-button>
+        <el-table :data="row.attachments" style="width: 100%">
+          <el-table-column prop="sort" label="排序" width="80">
+            <template #default="scope">
+              <el-input v-model="scope.row.sort" type="number" />
+            </template>
+          </el-table-column>
+          <el-table-column prop="name" label="列名" width="250">
+            <template #default="scope">
+              <el-input v-model="scope.row.name" />
+            </template>
+          </el-table-column>
+          <el-table-column prop="key" label="键值" width="250">
+            <template #default="scope">
+              <el-select v-model="scope.row.key" clearable placeholder="请选择">
+                <el-option v-for="item in userInfoKey" :label="item.value" :value="item.key" />
+              </el-select>
+            </template>
+          </el-table-column>
+          <el-table-column fixed="right" label="操作" width="120">
+            <template #default="scope">
+              <el-popconfirm confirm-button-text="确认" cancel-button-text="取消"
+                             :icon="InfoFilled" icon-color="red" title="确认删除这条数据？"
+                             @confirm="handleDeleteColumn(scope.$index)">
+                <template #reference>
+                  <el-button size="small" type="danger">删除</el-button>
+                </template>
+              </el-popconfirm>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-card>
     </el-scrollbar>
     <!-- 表单 END -->
 

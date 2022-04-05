@@ -46,7 +46,6 @@
 import {onMounted, reactive, toRefs} from "vue";
 import {fetchTree, remove, save} from "../../api/stage";
 import {ElMessage} from "element-plus";
-const InfoFilled = require('@element-plus/icons/lib/InfoFilled');
 import StageEdit from "./components/StageEdit.vue";
 
 const MODE = {
