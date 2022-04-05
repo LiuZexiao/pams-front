@@ -10,8 +10,8 @@
       <template #default="scope">
         <p v-for="submittedAttachment in scope.row?.submittedAttachments">
           {{ submittedAttachment.name }}
-          <el-link type="primary" :href="submittedAttachment.url" target="_blank">下载</el-link>
-          <el-link v-if="scope.row.name === '思想汇报'" type="info">摘要</el-link>
+          <el-link type="primary" :href="submittedAttachment.url" target="_blank">下载</el-link> |
+          <el-link v-if="scope.row.name === '思想报告'" type="info" @click="handleSummary(submittedAttachment.id)">摘要</el-link>
         </p>
       </template>
     </el-table-column>
@@ -19,11 +19,32 @@
 </template>
 
 <script>
+import {ElMessage, ElMessageBox} from "element-plus";
+import {summary} from "../api/userInfoStageAttachment";
+import {reactive, toRefs} from "vue";
+
 export default {
   name: "AuditSelect",
   props: {
     attachmentDetail: Object
   },
+  setup() {
+    const handleSummary = (id) => {
+      summary(id).then(res => {
+        if (res.code === 200) {
+          ElMessageBox.alert(res.data, '思想报告摘要', {
+            confirmButtonText: 'OK',
+            callback: (action) => {},
+          })
+        } else {
+          ElMessage.error(res.message)
+        }
+      })
+    }
+    return {
+      handleSummary,
+    }
+  }
 }
 </script>
 
