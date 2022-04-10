@@ -123,7 +123,8 @@ export default {
        loadData(state);
     });
     const submitName = () => {
-      modifyUserInfo(state.userData).then(res => {
+      let params = state.userData
+      modifyUserInfo(params).then(res => {
         console.log()
         // if (res.code === 200) {
         //   ElMessage.success(res.message)

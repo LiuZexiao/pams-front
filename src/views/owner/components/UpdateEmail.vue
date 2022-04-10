@@ -75,7 +75,8 @@ export default {
       }
     }
     const submitName = () => {
-      bindEmail(state.userData).then((res) => {
+      let params = state.userData
+      bindEmail(params).then((res) => {
         console.log();
       if (res.code === 200) {
         ElMessage.success(res.message)

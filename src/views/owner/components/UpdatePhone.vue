@@ -76,7 +76,8 @@ export default {
       }
     }
     const submitName = () => {
-      bindPhone(state.userData).then((res) => {
+       let params = state.userData
+      bindPhone(params).then((res) => {
         console.log();
       if (res.code === 200) {
         ElMessage.success(res.message)
