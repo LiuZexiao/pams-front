@@ -48,7 +48,7 @@ const routes = [
             path: "/owner/account/updatePhone",
             name: "更新手机",
             component: () => import("../views/owner/components/UpdatePhone.vue"),
-          }
+          },
           
         ],
       },
@@ -156,11 +156,12 @@ const routes = [
       },
     ],
   },
+  
   {
     path: '/:pathMatch(.*)*', 
     name: 'NotFound', 
     component: () => import("../views/NotFound.vue"),
-  },
+  }
 ];
 
 const router = createRouter({

@@ -51,7 +51,7 @@
     <!--具体信息 -->
     <el-col :span="16">
       <el-card shadow="hover"
-               style="height: 210px">
+               style="">
         <router-view></router-view>
       </el-card>
     </el-col>

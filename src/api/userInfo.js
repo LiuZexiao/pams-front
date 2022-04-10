@@ -104,45 +104,88 @@ export function myInfor(){
 export function modifyUserInfo(data) {
     return requestForm({
         url: '/owner/user/info',
-        method: 'post',
+        method: 'put',
         data
     })
 }
 
+//修改密码
+export function modifyPassword(data) {
+    return requestForm({
+        url: '/owner/modify/password',
+        method: 'put',
+        data
+    })
+}
+
+//绑定手机号码
+export function bindPhone(data) {
+    return requestForm({
+        url: '/owner/user/bind/phone',
+        method: 'put',
+        data
+    })
+}
+
+//绑定邮箱
+export function bindEmail(data) {
+    return requestForm({
+        url: '/owner/user/bind/email',
+        method: 'put',
+        data
+    })
+}
 
 // userInfo
 export const defaultUserInfo = {
-    "age": null, // 年龄
+    "age": "18", // 年龄
     "applyDate": null, //申请入党时间
     "beActivistDate": null,
     "beDevTargetDate": null,
-    "birthday": null, //出生日期
-    "clazz": null,  //班级
+    "birthday": "1999-01-28", //出生日期
+    "clazz": "20计科",  //班级
     "college": null, //
-    "computerLevel": null, // 计算机水平
+    "computerLevel": "TWO", // 计算机水平 	可用值:ONE,TWO,THREE,FOUR,OTHER	
     "correctionDate": null,
     "devTargetTrainedDate": null,
     "education": null,
-    "email": null, // 邮箱
-    "englishLevel": null, // 英语水平
-    "gender": null, //性别
-    "hometown": null, // 籍贯
+    "email": "123456@qq.com", // 邮箱
+    "englishLevel": "CET_4", // 英语水平 可用值:CET_4,CET_6,CET_46,OTHER
+    "gender": "MALE", //性别 	可用值:MALE,FEMALE,OTHER
+    "hometown": "湖南", // 籍贯
     "id": null,
-    "idNumber": null, // 学号
+    "idNumber": "Z2020120120", // 学号
     "intermediateQualifyingDate": null,
     "job": null,
     "joinedDate": null,
-    "mobilePhone": null, // 手机号
+    "mobilePhone": "13935100000", // 手机号
     "number": null,
     "primaryQualifyingDate": null,
-    "qq": null, // qq
-    "realName": null, // 真实姓名
+    "qq": "123456", // qq
+    "realName": "刘xx", // 真实姓名
     "recommendedActivistsDate": null,
     "recommendedDevTargetDate": null,
     "remark": null,
     "state": null,
     "userId": null,
-    "wx": null, // 微信号
+    "wx": "luke01", // 微信号
+}
+
+
+// modifyUser
+export const modifyUser = {
+    "age": "18", // 年龄
+    "birthday": "1999-01-28", //出生日期
+    "clazz": "20计科",  //班级
+    "computerLevel": "TWO", // 计算机水平 	可用值:ONE,TWO,THREE,FOUR,OTHER	
+    "email": "123456@qq.com", // 邮箱
+    "englishLevel": "CET_4", // 英语水平 可用值:CET_4,CET_6,CET_46,OTHER
+    "gender": "MALE", //性别 	可用值:MALE,FEMALE,OTHER
+    "hometown": "湖南", // 籍贯
+    "mobilePhone": "13935100000", // 手机号
+    "qq": "123456", // qq
+    "realName": "刘xx", // 真实姓名
+    "wx": "luke01", // 微信号
 }
 
 export const userInfoKey = [
