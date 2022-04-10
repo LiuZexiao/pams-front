@@ -92,17 +92,14 @@ export function userInfoImport(data, templateId) {
     })
 }
 
-//获取个人信息
-export function myInfor(){
-    return request({
-        url: '/owner/user/info',
-        method: 'get',
-    })
-}
-
-//修改个人信息
-export function modifyUserInfo(data) {
+/**
+ *  AI评估思想状态
+ * @param userInfoId
+ * @returns {AxiosPromise}
+ */
+export function evaluate(userInfoId) {
     return requestForm({
+<<<<<<< HEAD
         url: '/owner/user/info',
         method: 'put',
         data
@@ -124,6 +121,10 @@ export function bindPhone(data) {
         url: '/owner/user/bind/phone',
         method: 'put',
         data
+=======
+        url: '/user/info/' + userInfoId + '/evaluate',
+        method: 'get',
+>>>>>>> 6a7080bb555779a3d6545f0ffa92e057a129cf9a
     })
 }
 
