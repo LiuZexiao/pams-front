@@ -68,6 +68,8 @@ function userLogin(loginFormRef, state) {
       const res = await logins(params);
       if (res.code === 200) {
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("phone", res.data.phone);
+        localStorage.setItem("email", res.data.email);
         window.location.href = "/user/list"
       } else {
         ElMessage.error(res.message);

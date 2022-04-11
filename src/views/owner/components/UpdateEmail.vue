@@ -8,7 +8,7 @@
            class="demo-ruleForm"
            :rules="rules">
     <el-form-item label="邮箱："
-                  prop="phone">
+                  prop="email">
       <el-input style="width: 200px"
                 v-model="userData.email"></el-input>
     </el-form-item>
@@ -27,7 +27,7 @@
 
 <script>
 import { reactive, ref, toRefs } from "vue";
-import { bindEmail } from "../../..//api/userInfo.js";
+import { bindEmail } from "../../..//api/user.js";
 import {ElMessage} from 'element-plus';
 import countDown from "../../../utils/countDown.js";
 import {smsVerCode, emailVerCode} from "../../..//api/message";
@@ -36,7 +36,7 @@ export default {
   setup() {
     const state = reactive({
       userData: {
-        email: "",
+        email: localStorage.getItem('email'),
         vrCode: "",
       },
       rules: {

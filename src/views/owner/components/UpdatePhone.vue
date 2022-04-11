@@ -27,7 +27,7 @@
 
 <script>
 import { reactive, ref, toRefs } from "vue";
-import { bindPhone } from "../../..//api/userInfo.js";
+import { bindPhone } from "../../..//api/user.js";
 import {ElMessage} from 'element-plus';
 import countDown from "../../../utils/countDown.js";
 import {smsVerCode, emailVerCode} from "../../..//api/message";
@@ -36,7 +36,7 @@ export default {
   setup() {
     const state = reactive({
       userData: {
-        phone: "",
+        phone: localStorage.getItem('phone'),
         vrCode: "",
       },
       rules: {

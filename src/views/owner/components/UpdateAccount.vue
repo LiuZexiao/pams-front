@@ -93,7 +93,7 @@
 
 <script>
 import { reactive, onMounted, ref, toRefs } from "vue";
-import { modifyUserInfo, myInfor, modifyUser } from "../../..//api/userInfo.js";
+import { modifyUserInfo, myInfor, modifyUser } from "../../..//api/user.js";
 function loadData(state){
   //  console.log(Number(state.userInfoId));
   myInfor().then(function (res) {

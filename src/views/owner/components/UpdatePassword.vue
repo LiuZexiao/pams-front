@@ -35,7 +35,7 @@
 
 <script>
 import { reactive, ref, toRefs } from "vue";
-import { modifyPassword } from "../../..//api/userInfo.js";
+import { modifyPassword } from "../../..//api/user.js";
 function validatePass2(rule, value, callback, state) {
   console.log(state.userData.newPwd)
   if (value === "") {
