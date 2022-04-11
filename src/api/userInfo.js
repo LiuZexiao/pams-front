@@ -92,6 +92,7 @@ export function userInfoImport(data, templateId) {
     })
 }
 
+
 /**
  *  AI评估思想状态
  * @param userInfoId
@@ -99,9 +100,24 @@ export function userInfoImport(data, templateId) {
  */
 export function evaluate(userInfoId) {
     return requestForm({
-<<<<<<< HEAD
+        url: '/user/info/' + userInfoId + '/evaluate',
+        method: 'get',
+    })
+}
+
+//获取个人信息
+export function myInfor(){
+    return request({
         url: '/owner/user/info',
-        method: 'put',
+        method: 'get',
+    })
+}
+
+//修改个人信息
+export function modifyUserInfo(data) {
+    return requestForm({
+        url: '/owner/user/info',
+        method: 'post',
         data
     })
 }
@@ -121,10 +137,6 @@ export function bindPhone(data) {
         url: '/owner/user/bind/phone',
         method: 'put',
         data
-=======
-        url: '/user/info/' + userInfoId + '/evaluate',
-        method: 'get',
->>>>>>> 6a7080bb555779a3d6545f0ffa92e057a129cf9a
     })
 }
 
