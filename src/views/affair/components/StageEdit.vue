@@ -42,24 +42,17 @@
         </template>
         <el-button style="width: 100%" @click="handleAddColumn">添加附件</el-button>
         <el-table :data="row.attachments" style="width: 100%">
-          <el-table-column prop="sort" label="排序" width="80">
+          <el-table-column prop="sort" label="附件名" width="400">
             <template #default="scope">
-              <el-input v-model="scope.row.sort" type="number" />
+              <el-input v-model="scope.row.name"/>
             </template>
           </el-table-column>
-          <el-table-column prop="name" label="列名" width="250">
+          <el-table-column prop="name" label="数量要求" width="100">
             <template #default="scope">
-              <el-input v-model="scope.row.name" />
+              <el-input type="number" v-model="scope.row.quantity" />
             </template>
           </el-table-column>
-          <el-table-column prop="key" label="键值" width="250">
-            <template #default="scope">
-              <el-select v-model="scope.row.key" clearable placeholder="请选择">
-                <el-option v-for="item in userInfoKey" :label="item.value" :value="item.key" />
-              </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column fixed="right" label="操作" width="120">
+          <el-table-column fixed="right" label="操作" width="150">
             <template #default="scope">
               <el-popconfirm confirm-button-text="确认" cancel-button-text="取消"
                              :icon="InfoFilled" icon-color="red" title="确认删除这条数据？"
@@ -87,7 +80,7 @@
 </template>
 
 <script>
-import { remove as removeColumn } from "../../../api/tableTemplateColumn"
+import { remove as removeAttachment } from "../../../api/stageAttachment"
 import { userInfoKey} from "../../../api/userInfo"
 import {ElMessage} from "element-plus";
 import StageSelect from "../../../components/stage/StageSelect.vue";
@@ -145,28 +138,27 @@ export default {
 
     const handleAddColumn = () => {
       let column = {
-        id: null,
-        key: null,
+        stageId: props.row.id,
         name: null,
+        quantity: 0,
         sort: null,
-        tableId: props.row.id
       }
-      props.row.columns.push(column)
+      props.row.attachments.push(column)
     }
 
     const handleDeleteColumn = (index) => {
-      let column = props.row.columns[index]
+      let column = props.row.attachments[index]
       if (column.id != null) {
-        removeColumn(column.id).then(res => {
+        removeAttachment(column.id).then(res => {
           if (res.code === 200) {
-            props.row.columns.splice(index, 1)
+            props.row.attachments.splice(index, 1)
             ElMessage.success(res.message)
           } else {
             ElMessage.error(res.message)
           }
         })
       } else {
-        props.row.columns.splice(index, 1)
+        props.row.attachments.splice(index, 1)
       }
     }
 
