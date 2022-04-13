@@ -1,4 +1,4 @@
-import {fetchByPage, modify, add, remove} from "../../../api/information";
+import {fetchByPage, modify, add, remove} from "../../../api/event";
 import {ElMessage} from "element-plus";
 
 export const MODE = {
@@ -7,14 +7,21 @@ export const MODE = {
 }
 
 export const loadData = (state) => {
-    if (state.params.type === "") {
-        state.params.type = null
-    }
     if (state.params.creatorId === "") {
         state.params.creatorId = null
     }
     if (state.params.departmentId === "") {
         state.params.departmentId = null
+    }
+
+    if (state.params.recorderId === "") {
+        state.params.recorderId = null
+    }
+    if (state.params.signWay === "") {
+        state.params.signWay = null
+    }
+    if (state.params.type === "") {
+        state.params.type = null
     }
     fetchByPage(state.params).then(function (res) {
         const data = res.data

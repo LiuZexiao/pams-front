@@ -4,36 +4,63 @@
     <!-- 表单 BEGIN -->
     <el-scrollbar height="600px">
       <el-form :model="row" label-width="160px" label-position="left" class="from">
-        <el-form-item label="标题">
-          <el-input v-model="row.title" />
+        <el-form-item label="活动">
+          <el-input v-model="row.name" />
         </el-form-item>
         <el-form-item label="类型">
-          <el-select v-model="row.type" clearable placeholder="请选择">
-            <el-option label="通知公告" value="NOTICE" />
-            <el-option label="党群工作" value="WORK" />
-            <el-option label="资源" value="RESOURCE" />
+          <el-select v-model="row.type" clearable placeholder="请选择类型">
+            <el-option label="活动" value="ACTIVITY" />
+            <el-option label="会议" value="MEETING" />
             <el-option label="其他" value="OTHER" />
           </el-select>
         </el-form-item>
-        <el-form-item label="内容">
-<!--          <el-input v-model="row.contentHTML" />-->
-        </el-form-item>
-        <QuillEditor contentType="html"
-                     v-model:content="row.contentHTML"
-                     theme="snow"
-                     style="height: 300px;"/>
-        <el-form-item label=""/>
-        <el-form-item label="发布时间">
-          <el-date-picker v-model="row.releaseTime"
+        <el-form-item label="开始时间">
+          <el-date-picker v-model="row.beginTime"
                           type="datetime"
                           placeholder="选择日期"
                           format="YYYY-MM-DD HH:mm:ss"
                           value-format="YYYY-MM-DD HH:mm:ss"
                           style="width: 100%" />
         </el-form-item>
-        <el-form-item label="是否公开">
-          <el-switch v-model="row.publishing" />
+        <el-form-item label="结束时间">
+          <el-date-picker v-model="row.endTime"
+                          type="datetime"
+                          placeholder="选择日期"
+                          format="YYYY-MM-DD HH:mm:ss"
+                          value-format="YYYY-MM-DD HH:mm:ss"
+                          style="width: 100%" />
         </el-form-item>
+        <el-form-item label="签到方式">
+          <el-select v-model="row.signWay" clearable placeholder="请选择签到方式">
+            <el-option label="签到" value="SIGN_IN" />
+            <el-option label="签到-签退" value="SIGN_OUT" />
+            <el-option label="无操作" value="OTHER" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="活动地址">
+          <el-input v-model="row.address" />
+        </el-form-item>
+        <el-form-item label="活动描述">
+          <!--          <el-input v-model="row.contentHTML" />-->
+        </el-form-item>
+        <QuillEditor contentType="html"
+                     v-model:content="row.descHTML"
+                     theme="snow"
+                     style="height: 300px;"/>
+        <el-form-item label=""/>
+<!--        <el-form-item label="记录员">-->
+<!--          <el-select v-model="row.recorder.id" clearable placeholder="请选择记录员">-->
+<!--            <el-option label="默认" value="1" />-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
+        <el-form-item label="活动记录">
+          <!--          <el-input v-model="row.contentHTML" />-->
+        </el-form-item>
+        <QuillEditor contentType="html"
+                     v-model:content="row.remarkHTML"
+                     theme="snow"
+                     style="height: 300px;"/>
+        <el-form-item label=""/>
 <!--        <el-form-item label="所属组织">-->
 <!--          <el-select placeholder="选择党组织" clearable v-model="row.department.id">-->
 <!--            <el-option label="机电学院" value="机电学院" />-->
