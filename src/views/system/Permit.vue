@@ -8,7 +8,7 @@
             <span>权限列表</span>
           </div>
         </template>
-        <el-tree :data="tree" :props="defaultProps" @node-click="handleNodeClick" default-expand-all/>
+        <el-tree :data="tree" :props="defaultProps" @node-click="handleNodeClick" default-expand-all :expand-on-click-node="false"/>
       </el-card>
       <!-- 树形列表 END -->
     </el-col>
@@ -23,8 +23,8 @@
         </template>
         <div style="display: flex; justify-content: center;">
           <el-form :model="permit" label-width="160px" label-position="left" class="from">
-            <el-form-item label="父角色">
-              <PermitSelect :role-id="permit.parentId" :tree-data="selectTree" @change="(val) => permit.parentId = val"/>
+            <el-form-item label="父权限">
+              <PermitSelect :permit-id="permit.parentId" :tree-data="selectTree" @change="(val) => permit.parentId = val"/>
             </el-form-item>
             <el-form-item label="权限类型">
               <el-select v-model="permit.type" clearable placeholder="请选择">
