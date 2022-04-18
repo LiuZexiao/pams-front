@@ -26,7 +26,7 @@ export const loadData = (state) => {
     fetchByPage(state.params).then(function (res) {
         const data = res.data
         state.tableData = data.content;
-        state.total =data.totalElements
+        state.total = data.totalElements
         state.params.size = data.size
         state.params.page = data.number + 1
     });
@@ -43,7 +43,7 @@ export const handleEdit = async (row, state) => {
     }
     if (res.code === 200) {
         state.mode = null
-        state.data = {department:{}}
+        state.data = {id: null, department: {id: null}}
         state.editVisible = false
         loadData(state)
         ElMessage.success(res.message)
@@ -68,7 +68,7 @@ export const handleDelete = (rowId, state) => {
 /* 显示编辑框 */
 export const showEdit = (index, mode, state) => {
     state.mode = mode
-    state.data = index != null ? state.tableData[index] : {}
+    state.data = index != null ? state.tableData[index] : {id: null, department: {id: null}}
     state.editVisible = true
     state.currentIndex = null
 }

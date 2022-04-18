@@ -1,5 +1,5 @@
 <template>
-  <el-tree-select v-model="departmentId" clearable check-strictly placeholder="请选择"
+  <el-tree-select v-model="departmentId" clearable check-strictly placeholder="请选择党组织"
                   :data="treeData || tree"
                   @change="(val) => emit('onChange', val)" />
 </template>

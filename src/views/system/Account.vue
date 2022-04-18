@@ -35,19 +35,7 @@
         <el-input placeholder="请输入用户手机号" v-model="params.phone" />
       </el-col>
       <el-col :span="4">
-        <el-select placeholder="选择党组织" clearable v-model="params.departmentId">
-          <el-option label="请选择" value="" />
-          <el-option label="机电学院" value="机电学院" />
-          <el-option label="汽车工程学院" value="汽车工程学院" />
-          <el-option label="土木与建筑工程学院" value="土木与建筑工程学院" />
-          <el-option label="计算机与通信工程学院" value="计算机与通信工程学院" />
-          <el-option label="公益慈善管理学院o" value="公益慈善管理学院" />
-          <el-option label="国际酒店与饮食文化学院" value="国际酒店与饮食文化学院" />
-          <el-option label="工商税务管理学院" value="工商税务管理学院" />
-          <el-option label="商学院" value="商学院" />
-          <el-option label="外国语学院" value="外国语学院" />
-          <el-option label="艺术学院" value="艺术学院" />
-        </el-select>
+        <DepartmentSelect :department-id="params.departmentId" @change="(val) => params.departmentId = val"/>
       </el-col>
     </el-row>
     <!-- 高级搜索 END -->
@@ -104,17 +92,19 @@ import { loadData, MODE,
   showEdit } from "./service/account.js";
 import UserSearch from "./components/UserSearch.vue"
 import AccountEdit from "./components/AccountEdit.vue"
+import DepartmentSelect from "../../components/department/DepartmentSelect.vue";
 
 export default {
   name: "Account",
   components: {
     UserSearch,
     AccountEdit,
+    DepartmentSelect,
   },
   setup() {
     const state = reactive({
       tableData: [],
-      data: defaultUserInfo,
+      data: {id: null, department:{id: null}},
       currentIndex: null,
       mode: null,
       params: {
