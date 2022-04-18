@@ -1,5 +1,4 @@
 <template>
-  <!-- 用户列表（导入、导出、添加、删除、修改、个性化查询、入党流程图） -->
   <el-card shadow="never" class="box-card">
     <!-- 搜索、添加、导入导出 BEGIN -->
     <el-row :gutter="24" style="text-align: left;line-height: 10px;margin-bottom: 10px">
@@ -68,7 +67,7 @@
 
     <!-- 列表 BEGIN -->
     <el-table :data="tableData" style="width: 100%" height="550">
-      <el-table-column fixed prop="type" label="类型" width="120">
+      <el-table-column fixed prop="type" label="类型" width="150">
         <template #default="scope">
           <el-tag v-if="scope.row.type === 'NOTICE'" type="info">通知公告</el-tag>
           <el-tag v-if="scope.row.type === 'WORK'" type="warning">党群工作</el-tag>

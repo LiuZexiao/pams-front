@@ -9,13 +9,7 @@ export function logins(data) {
         data,
     })
 }
-//获取个人信息
-export function myInfor(){
-    return request({
-        url: '/owner/user/info',
-        method: 'get',
-    })
-}
+
 
 // 查询用户入党流程信息
 export function userStage(data){
