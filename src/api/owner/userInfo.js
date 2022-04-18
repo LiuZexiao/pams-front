@@ -42,4 +42,24 @@ export function removeApplyRecord(id) {
     })
 }
 
+/**
+ * 申请联系人或介绍人
+ * @param targetId
+ * @param type
+ * @returns {AxiosPromise}
+ */
+export function addApplyRecord(targetId, type) {
+    return request({
+        url: '/owner/user/info/apply/' + targetId,
+        method: 'put',
+    })
+}
+
+export const ApplicationType = [
+    {lable: "第一培养联系人", type: "FIRST_CONTACT"},
+    {lable: "第二培养联系人", type: "SECOND_CONTACT"},
+    {lable: "第一入党介绍人", type: "FIRST_INTRODUCER"},
+    {lable: "第二入党介绍人", type: "SECOND_INTRODUCER"},
+]
+
 
