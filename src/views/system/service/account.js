@@ -1,4 +1,4 @@
-import {fetchByPage, modify, add, remove} from "../../../api/event";
+import {fetchByPage, modify, add, remove} from "../../../api/user";
 import {ElMessage} from "element-plus";
 
 export const MODE = {

@@ -26,56 +26,13 @@
     <!-- 高级搜索 BEGIN -->
     <el-row v-show="advancedSearch" :gutter="24" style="text-align: left;line-height: 10px;">
       <el-col :span="4">
-        <el-input placeholder="请输入活动名" v-model="params.name" />
+        <el-input placeholder="请输入账户名" v-model="params.username" />
       </el-col>
       <el-col :span="4">
-        <el-input placeholder="请输入活动会议地址" v-model="params.address" />
+        <el-input placeholder="请输入用户邮箱" v-model="params.email" />
       </el-col>
       <el-col :span="4">
-        <el-select v-model="params.type" clearable placeholder="请选择类型">
-          <el-option label="活动" value="ACTIVITY" />
-          <el-option label="会议" value="MEETING" />
-          <el-option label="其他" value="OTHER" />
-        </el-select>
-      </el-col>
-      <el-col :span="4">
-        <el-select v-model="params.type" clearable placeholder="请选择签到方式">
-          <el-option label="签到" value="SIGN_IN" />
-          <el-option label="签到-签退" value="SIGN_OUT" />
-          <el-option label="无操作" value="OTHER" />
-        </el-select>
-      </el-col>
-    </el-row>
-    <el-row v-show="advancedSearch" :gutter="24" style="margin-top: 10px;text-align: left;line-height: 10px;">
-      <el-col :span="4">
-        <el-select placeholder="选择活动会议记录人" clearable v-model="params.recorderId">
-          <el-option label="请选择" value="" />
-          <el-option label="机电学院" value="机电学院" />
-          <el-option label="汽车工程学院" value="汽车工程学院" />
-          <el-option label="土木与建筑工程学院" value="土木与建筑工程学院" />
-          <el-option label="计算机与通信工程学院" value="计算机与通信工程学院" />
-          <el-option label="公益慈善管理学院o" value="公益慈善管理学院" />
-          <el-option label="国际酒店与饮食文化学院" value="国际酒店与饮食文化学院" />
-          <el-option label="工商税务管理学院" value="工商税务管理学院" />
-          <el-option label="商学院" value="商学院" />
-          <el-option label="外国语学院" value="外国语学院" />
-          <el-option label="艺术学院" value="艺术学院" />
-        </el-select>
-      </el-col>
-      <el-col :span="4">
-        <el-select placeholder="选择创建人" clearable v-model="params.creatorId">
-          <el-option label="请选择" value="" />
-          <el-option label="机电学院" value="机电学院" />
-          <el-option label="汽车工程学院" value="汽车工程学院" />
-          <el-option label="土木与建筑工程学院" value="土木与建筑工程学院" />
-          <el-option label="计算机与通信工程学院" value="计算机与通信工程学院" />
-          <el-option label="公益慈善管理学院o" value="公益慈善管理学院" />
-          <el-option label="国际酒店与饮食文化学院" value="国际酒店与饮食文化学院" />
-          <el-option label="工商税务管理学院" value="工商税务管理学院" />
-          <el-option label="商学院" value="商学院" />
-          <el-option label="外国语学院" value="外国语学院" />
-          <el-option label="艺术学院" value="艺术学院" />
-        </el-select>
+        <el-input placeholder="请输入用户手机号" v-model="params.phone" />
       </el-col>
       <el-col :span="4">
         <el-select placeholder="选择党组织" clearable v-model="params.departmentId">
@@ -97,33 +54,12 @@
 
     <!-- 列表 BEGIN -->
     <el-table :data="tableData" style="width: 100%" height="550">
-      <el-table-column fixed prop="type" label="类型" width="80">
-        <template #default="scope">
-          <el-tag v-if="scope.row.type === 'ACTIVITY'" type="info">活动</el-tag>
-          <el-tag v-if="scope.row.type === 'MEETING'" type="warning">会议</el-tag>
-          <el-tag v-if="scope.row.type === 'OTHER'" type="success">其他</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column fixed prop="name" label="活动" width="250"/>
-      <el-table-column prop="beginTime" label="开始时间" width="220"/>
-      <el-table-column prop="endTime" label="结束时间" width="220"/>
-      <el-table-column prop="signWay" label="签到方式" width="120">
-        <template #default="scope">
-          <el-tag v-if="scope.row.type === 'SIGN_IN'" type="info">签到</el-tag>
-          <el-tag v-if="scope.row.type === 'SIGN_OUT'" type="warning">签到-签退</el-tag>
-          <el-tag v-if="scope.row.type === 'OTHER'" type="success">无操作</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="address" label="活动地址" width="120"/>
-      <el-table-column prop="creator.realName" label="创建者" width="120"/>
-      <el-table-column prop="recorder.realName" label="记录人" width="120"/>
-      <el-table-column prop="department.name" label="部门" width="80">
-        <template #default="scope">
-          <el-tag v-if="scope.row.gender === 'MALE'" type="info">男</el-tag>
-          <el-tag v-if="scope.row.gender === 'FEMALE'" type="danger">女</el-tag>
-          <el-tag v-if="scope.row.gender === 'OTHER'" type="warning">其他</el-tag>
-        </template>
-      </el-table-column>
+      <el-table-column fixed prop="department.name" label="党组织" />
+      <el-table-column fixed prop="username" label="账号" />
+      <el-table-column prop="email" label="邮箱" />
+      <el-table-column prop="phone" label="手机号" />
+      <el-table-column prop="updated" label="更新时间" />
+      <el-table-column prop="created" label="创建时间" />
       <el-table-column fixed="right" label="操作" width="200">
         <template #default="scope">
           <el-button size="small" @click="showEdit(scope.$index, MODE.EDIT, state)">编辑</el-button>
@@ -182,18 +118,15 @@ export default {
       currentIndex: null,
       mode: null,
       params: {
-        address: null,
-        creatorId: null,
-        recorderId: null,
         departmentId: null,
-        signWay: null,
-        name: null,
+        email: null,
+        phone: null,
         page: 1, // 几页
         search: null, // 模糊查询内容
         size: 10, // 每页显示几条
         sort: null,
         sortType: null,
-        type: null
+        username: null
       },
       total: 0,
       editVisible: false,

@@ -61,7 +61,6 @@
 
 <script>
 import { reactive, onMounted, toRefs } from "vue";
-import { myInfor } from "../..//api/userInfo.js";
 function loadData(state) {
   // 我的主页获取个人信息，有数据时可解除注释
   //  myInfor().then(function (res) {
