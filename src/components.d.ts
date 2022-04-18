@@ -48,6 +48,7 @@ declare module 'vue' {
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     Menu: typeof import('./components/Layout/menu.vue')['default']
     Nav: typeof import('./components/Layout/compoents/nav.vue')['default']
+    PermitSelect: typeof import('./components/permit/PermitSelect.vue')['default']
     RoleSelect: typeof import('./components/role/RoleSelect.vue')['default']
     StageSelect: typeof import('./components/stage/StageSelect.vue')['default']
   }
