@@ -116,14 +116,6 @@ export function userStage(data){
     })
 }
 
-//获取个人信息
-export function myInfor(){
-    return request({
-        url: '/owner/user/info',
-        method: 'get',
-    })
-}
-
 // userInfo
 export const defaultUserInfo = {
     "age": "18", // 年龄

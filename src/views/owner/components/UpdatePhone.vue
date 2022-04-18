@@ -27,10 +27,10 @@
 
 <script>
 import { reactive, ref, toRefs } from "vue";
-import { bindPhone } from "../../..//api/user.js";
+import { bindPhone } from "../../../api/owner/user.js";
 import {ElMessage} from 'element-plus';
 import countDown from "../../../utils/countDown.js";
-import {smsVerCode, emailVerCode} from "../../..//api/message";
+import {smsVerCode, emailVerCode} from "../../../api/message";
 export default {
  name: "phone",
   setup() {

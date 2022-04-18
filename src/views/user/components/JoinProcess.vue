@@ -42,7 +42,7 @@
 
 <script>
 import { reactive, onMounted, toRefs } from "vue";
-import { userStage } from "../../../api/user.js";
+import { userStage } from "../../../api/userInfo.js";
 function loadData(state){
   //  console.log(Number(state.userInfoId));
   userStage(state.userInfoId).then(function (res) {

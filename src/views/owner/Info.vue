@@ -143,8 +143,6 @@
 
 <script>
 import { reactive, onMounted, toRefs } from "vue";
-import { informationManage } from "../..//api/information.js";
-import { myInfor } from "../..//api/user.js";
 import JoinProcess from "../user/components/JoinProcess.vue";
 import UserInfoEdit from "../user/components/UserInfoEdit.vue";
 
