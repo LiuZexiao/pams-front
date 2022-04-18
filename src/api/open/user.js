@@ -1,4 +1,4 @@
-import request from '../utils/request'
+import request from '../../utils/request'
 
 // 暴露出我们的接口请求,export导出
 export function logins(data) {

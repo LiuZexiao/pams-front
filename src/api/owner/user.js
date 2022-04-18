@@ -1,9 +1,9 @@
-import request from '../utils/request'
+import request from '../../utils/request'
 import requestForm from "../../utils/requestForm";
 
 //修改密码
 export function modifyPassword(data) {
-    return requestForm({
+    return request({
         url: '/owner/modify/password',
         method: 'put',
         data
@@ -12,7 +12,7 @@ export function modifyPassword(data) {
 
 //绑定手机号码
 export function bindPhone(params) {
-    return requestForm({
+    return request({
         url: '/owner/user/bind/phone',
         method: 'put',
         params
@@ -21,7 +21,7 @@ export function bindPhone(params) {
 
 //绑定邮箱
 export function bindEmail(params) {
-    return requestForm({
+    return request({
         url: '/owner/user/bind/email',
         method: 'put',
         params

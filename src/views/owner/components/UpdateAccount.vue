@@ -94,10 +94,10 @@
 <script>
 import { reactive, onMounted, ref, toRefs } from "vue";
 import { modifyUser } from "../../../api/owner/user.js";
-import { modifyUserInfo, myInfor } from "../../../api/owner/userInfo.js";
+import { modifyUserInfo, currentUserInfo } from "../../../api/owner/userInfo.js";
 function loadData(state){
   //  console.log(Number(state.userInfoId));
-  myInfor().then(function (res) {
+  currentUserInfo().then(function (res) {
     console.log(res);
     state.userData.realName = res.data.realName;
     state.userData.clazz = res.data.clazz;
