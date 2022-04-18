@@ -42,11 +42,13 @@ declare module 'vue' {
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
+    ElTree: typeof import('element-plus/es')['ElTree']
     ElTreeSelect: typeof import('element-plus/es')['ElTreeSelect']
     Header: typeof import('./components/Layout/header.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     Menu: typeof import('./components/Layout/menu.vue')['default']
     Nav: typeof import('./components/Layout/compoents/nav.vue')['default']
+    RoleSelect: typeof import('./components/role/RoleSelect.vue')['default']
     StageSelect: typeof import('./components/stage/StageSelect.vue')['default']
   }
 }
