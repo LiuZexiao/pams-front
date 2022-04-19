@@ -23,3 +23,15 @@ export function apply(params) {
         params
     })
 }
+
+/**
+ * 申请进入下一阶段
+ * @param approverId
+ * @returns {AxiosPromise}
+ */
+export function applyToNext(approverId) {
+    return request({
+        url: '/owner/user/info/stage?approverId=' + approverId,
+        method: 'post',
+    })
+}

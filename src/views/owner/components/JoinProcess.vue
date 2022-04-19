@@ -5,7 +5,7 @@
              :status="item.status === 'PASSED'
              ? 'success' : item.status === 'REVIEWING'
              ? 'process' : item.status === 'FAIL'
-             ? 'error' : 'wait'" >
+             ? 'error' : 'wait'">
       <template v-slot:description>
         <table width="180px" border="0" cellspacing="0" cellpadding="0" class="processing_content">
           <tr v-for="(child, index) in item.children" :key="index">
@@ -13,10 +13,9 @@
               <div class="processing_content_detail" style="float:left;width:100%">
                 <span style="display:block;text-align:left;">
                   {{ index + 1 }}.  {{ child.stage.name }}
-<!--                  <el-link target="_blank"></el-link>-->
                   <div style="float: right;">
-                    <el-icon v-if="child.status !== 'PASSED'" style="color: #909399"><circle-check-filled /></el-icon>
-                    <el-icon v-if="child.status === 'PASSED'" style="color: #67c23a"><circle-check-filled /></el-icon>
+                    <el-icon v-if="child.status !== 'PASSED'" style="color: #909399"><circle-check-filled/></el-icon>
+                    <el-icon v-if="child.status === 'PASSED'" style="color: #67c23a"><circle-check-filled/></el-icon>
                   </div>
                 </span>
               </div>
@@ -26,6 +25,7 @@
       </template>
     </el-step>
   </el-steps>
+
 </template>
 
 <script>
@@ -41,6 +41,7 @@ export default {
     const state = reactive({
       activeStage: 0,
       userInfoId: props.userInfoId,
+      detailVisible: false,
     });
 
     onMounted(() => {
