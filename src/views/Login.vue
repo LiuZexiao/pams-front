@@ -135,6 +135,7 @@ export default {
         return
       }
       if (res.code === 200) {
+        startTimeout()
         ElMessage.success("验证码已发送")
       } else {
         ElMessage.error(res.message)
