@@ -134,8 +134,8 @@ export default {
         ElMessage.error("请输入邮箱或验证码")
         return
       }
+      startTimeout()
       if (res.code === 200) {
-        startTimeout()
         ElMessage.success("验证码已发送")
       } else {
         ElMessage.error(res.message)
