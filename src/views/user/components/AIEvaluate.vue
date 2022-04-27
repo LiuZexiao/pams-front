@@ -95,25 +95,25 @@
               <template #label>
                 思想报告质量
               </template>
-              <el-progress :text-inside="true" :stroke-width="15" :percentage="report.thoughtReport * 50"  :color="customColors" style="width: 100px" />
+              <el-progress :text-inside="true" :stroke-width="15" :percentage="report.thoughtReport * 50"  :color="customColors" style="width: 250px" />
             </el-descriptions-item>
             <el-descriptions-item>
               <template #label>
                 个人诚信度
               </template>
-              <el-progress :text-inside="true" :stroke-width="15" :percentage="report.integrity * 100" :color="customColors" style="width: 100px" />
+              <el-progress :text-inside="true" :stroke-width="15" :percentage="report.integrity * 100" :color="customColors" style="width: 250px" />
             </el-descriptions-item>
             <el-descriptions-item>
               <template #label>
                 活动参与率
               </template>
-              <el-progress :text-inside="true" :stroke-width="15" :percentage="report.positivity * 100" :color="customColors" />
+              <el-progress :text-inside="true" :stroke-width="15" :percentage="report.positivity * 100" :color="customColors" style="width: 250px" />
             </el-descriptions-item>
             <el-descriptions-item>
               <template #label>
                 个人绩点
               </template>
-              <el-progress :text-inside="true" :stroke-width="15" :percentage="report.gpa * 100" :color="customColors" />
+              <el-progress :text-inside="true" :stroke-width="15" :percentage="report.gpa * 100" :color="customColors" style="width: 250px" />
             </el-descriptions-item>
             <el-descriptions-item>
               <template #label>
