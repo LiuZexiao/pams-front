@@ -11,6 +11,10 @@
                    style="margin-bottom:5px;"
                    :src="account.avatar ? account.avatar : 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'" />
         <div class="name-title">{{ account.username }}</div>
+        <span v-for="role in userRoles">
+          <el-tag type="info">{{ role.name }}</el-tag>&nbsp;
+        </span>
+
       </el-card>
       <!-- 导航 -->
       <el-card shadow="hover"
@@ -68,11 +72,13 @@ export default {
     const state = reactive({
       editVisible: false,
       account: {},
+      userRoles: []
     });
 
     onMounted(() => {
       // 加载页面时执行
       state.account = JSON.parse(localStorage.getItem("account"))
+      state.userRoles = JSON.parse(localStorage.getItem("userRoles"))
     });
 
     // 保存链接的激活状态
@@ -123,6 +129,7 @@ export default {
   font-size: 18px;
   font-weight: 600;
   margin-top: 6px;
+  margin-bottom: 6px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

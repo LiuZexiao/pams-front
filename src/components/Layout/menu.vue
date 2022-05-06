@@ -221,6 +221,7 @@ export default {
       userRoles().then(res => {
         if (res.code === 200) {
           state.rolesData = res.data
+          localStorage.setItem("userRoles", JSON.stringify(res.data))
         }
       })
     }
