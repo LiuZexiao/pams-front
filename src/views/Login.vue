@@ -71,6 +71,7 @@ function userLogin(loginFormRef, state) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("phone", res.data.phone);
         localStorage.setItem("email", res.data.email);
+        localStorage.setItem("account", JSON.stringify(res.data));
         // 获取个人信息
         currentUserInfo().then(res => {
           if (res.code === 200) {

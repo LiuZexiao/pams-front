@@ -137,26 +137,6 @@ export default {
         name: "账号中心",
         url: "/owner/account/updateAccount"
       })
-      state.quickEntryList.push({
-        name: "账号中心",
-        url: "/owner/account/updateAccount"
-      })
-      state.quickEntryList.push({
-        name: "账号中心",
-        url: "/owner/account/updateAccount"
-      })
-      state.quickEntryList.push({
-        name: "账号中心",
-        url: "/owner/account/updateAccount"
-      })
-      state.quickEntryList.push({
-        name: "账号中心",
-        url: "/owner/account/updateAccount"
-      })
-      state.quickEntryList.push({
-        name: "账号中心",
-        url: "/owner/account/updateAccount"
-      })
       userRoutes.forEach(route => {
         route.children.forEach(child => {
           state.quickEntryList.push({

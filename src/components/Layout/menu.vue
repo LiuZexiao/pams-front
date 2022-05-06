@@ -10,7 +10,7 @@
             <a href="/owner/info"
                target="_blank">
               <el-avatar :size="80" style="margin-bottom:5px;"
-                         src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+                         :src="account.avatar ? account.avatar : 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'" />
             </a>
           </span>
             <div class="user_role">
@@ -108,6 +108,7 @@ export default {
   setup() {
     const state = reactive({
       userInfo: {},
+      account: {},
       menusData: [
         //菜单数据
         {
@@ -212,6 +213,7 @@ export default {
     function loadData() {
       // state.activePath = localStorage.getItem("activePath");
       state.activePath = useRouter().currentRoute.value.path
+      state.account = JSON.parse(localStorage.getItem("account"))
       state.userInfo = JSON.parse(localStorage.getItem("userInfo"))
     }
 

@@ -9,8 +9,8 @@
         <el-avatar class="logo"
                    :size="90"
                    style="margin-bottom:5px;"
-                   src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
-        <div class="name-title">{{usereData.realName}}</div>
+                   :src="account.avatar ? account.avatar : 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'" />
+        <div class="name-title">{{ account.username }}</div>
       </el-card>
       <!-- 导航 -->
       <el-card shadow="hover"
@@ -61,36 +61,20 @@
 
 <script>
 import { reactive, onMounted, toRefs } from "vue";
-function loadData(state) {
-  // 我的主页获取个人信息，有数据时可解除注释
-  //  myInfor().then(function (res) {
-  //      state.usereData = res.data;
-  //      console.log(res);
-  //   });
-  return state;
-}
+
 export default {
   name: "Account",
   setup() {
     const state = reactive({
       editVisible: false,
-      usereData: {
-        realName: "liu",
-        clazz: "20计科专本01班",
-        number: "Z2020120100",
-        phone: "13900000000",
-        beActivistDate: "2022-02-06", //成为积极分子的时间
-        stage: {
-          userInfoId: 1,
-        },
-        activePath: "",// 存储当前点击的菜单路径
-        
-      },
+      account: {},
     });
+
     onMounted(() => {
       // 加载页面时执行
-      loadData(state);
+      state.account = JSON.parse(localStorage.getItem("account"))
     });
+
     // 保存链接的激活状态
     function saveNavPath(activePath) {
       localStorage.setItem("activePath", activePath);

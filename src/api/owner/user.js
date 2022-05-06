@@ -29,6 +29,19 @@ export function bindEmail(params) {
 }
 
 /**
+ * 保存用户账号信息
+ * @param data
+ * @returns {AxiosPromise}
+ */
+export function save(data) {
+    return request({
+        url: '/owner/user',
+        method: 'put',
+        data
+    })
+}
+
+/**
  * 根据类型获取用户权限 API 或 ROUTE
  * @param type
  * @returns {AxiosPromise}

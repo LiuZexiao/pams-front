@@ -13,7 +13,7 @@
             <el-dropdown>
               <span class="el-dropdown-link">
                 <a href="/owner/info" target="_blank">
-                  <el-avatar :size="50" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+                  <el-avatar :size="50" :src="account.avatar ? account.avatar : 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'" />
                 </a>
               </span>
               <template #dropdown>
@@ -41,15 +41,28 @@
 </template>
 
 <script>
+import {onMounted, reactive, toRefs} from "vue";
+
 export default {
   name: "nav",
   setup() {
+
+    const state = reactive({
+      account: {},
+    });
+
+    onMounted(() => {
+      // 加载页面时执行
+      state.account = JSON.parse(localStorage.getItem("account"))
+    });
+
     const logout = () => {
       localStorage.clear()
       window.location.href = "/login"
     }
 
     return {
+      ...toRefs(state), //toRefs将对象中的内容转换为响应式数据
       logout,
     };
   },
