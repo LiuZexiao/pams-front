@@ -13,15 +13,14 @@
                          src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
             </a>
           </span>
-            <div style="  -webkit-text-size-adjust: 100%;
-                        -webkit-tap-highlight-color: rgba(0,0,0,0);
-                        font-size: 14px;
-                        line-height: 1.42857143;
-                        font-family: Helvetica Neue,Helvetica,microsoft yahei,arial,STHeiTi,sans-serif;
-                        -webkit-box-direction: normal;
-                        box-sizing: border-box;
-                        font-weight: 700;
-                        color: white;">{{ realName }}</div>
+            <div class="user_role">
+              {{ userInfo.realName }}
+              <el-carousel height="30px" indicator-position="none" arrow="never">
+                <el-carousel-item v-for="(role, index) in rolesData" :key="index">
+                  <el-tag type="success"> {{ role.name }}</el-tag>
+                </el-carousel-item>
+              </el-carousel>
+            </div>
           </div>
         </div>
         <el-menu :default-active="activePath"
@@ -86,6 +85,7 @@ import router from "../../router";
 import { userInfo } from "../../api/userInfo.js";
 import Nav from "./compoents/nav.vue";
 import BreadCrumb from "../BreadCrumb.vue"
+import {userRoles} from "../../api/owner/user";
 
 function useLoadMenuData(state) {
   axios.get("/menus").then((res) => {
@@ -107,7 +107,7 @@ export default {
   },
   setup() {
     const state = reactive({
-      realName: "liu",
+      userInfo: {},
       menusData: [
         //菜单数据
         {
@@ -199,15 +199,29 @@ export default {
           ],
         },
       ],
+      rolesData: [],
       activePath: "", // 存储当前点击的菜单路径
     });
 
     onMounted(() => {
-      state.activePath = useRouter().currentRoute.value.path
-      userName(state) // 获取当前姓名
-      loadMenu() //读取菜单
-      // state.activePath = localStorage.getItem("activePath");
+      loadData() // 初始化数据
+      loadMenu() // 读取菜单
+      loadRole() // 读取用户当前角色
     });
+
+    function loadData() {
+      // state.activePath = localStorage.getItem("activePath");
+      state.activePath = useRouter().currentRoute.value.path
+      state.userInfo = JSON.parse(localStorage.getItem("userInfo"))
+    }
+
+    function loadRole() {
+      userRoles().then(res => {
+        if (res.code === 200) {
+          state.rolesData = res.data
+        }
+      })
+    }
 
     function loadMenu() {
       let userRoutes = JSON.parse(localStorage.getItem("userRoutes"))
@@ -349,5 +363,17 @@ body > .el-container {
 a {
   text-decoration: none;
   color: #e9eef3;
+}
+
+.user_role {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  font-size: 14px;
+  line-height: 1.42857143;
+  font-family: Helvetica Neue,Helvetica,microsoft yahei,arial,STHeiTi,sans-serif;
+  -webkit-box-direction: normal;
+  box-sizing: border-box;
+  font-weight: 700;
+  color: white;
 }
 </style>

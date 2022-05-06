@@ -43,6 +43,18 @@ export function userPermits(type) {
     })
 }
 
+/**
+ * 获取用户角色
+ * @returns {AxiosPromise}
+ */
+export function userRoles() {
+    return request({
+        url: '/owner/user/roles',
+        method: 'get',
+    })
+}
+
+
 // modifyUser
 export const modifyUser = {
     "age": "18", // 年龄

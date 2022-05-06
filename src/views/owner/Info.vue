@@ -59,39 +59,9 @@
             </div>
           </el-card>
         </el-col>
-        <!-- 新闻公告 -->
+        <!-- 新闻资讯 -->
         <el-col :span="10">
-          <el-card shadow="hover" style="height: 210px">
-            <template #header>
-              <el-row :gutter="24" style="text-align: left;line-height: 0px;">
-                <el-col :span="20">
-                  <div class="card-header" style="text-align: left;line-height: 0px;">
-                    <el-icon>
-                      <chat-line-square/>
-                    </el-icon>
-                    新闻公告
-                  </div>
-                </el-col>
-                <el-col :span="4">
-                  <router-link to="/"
-                               style="display:block; text-align: right;font-size: 13px;line-height: 13px; color: #a48888;">
-                    更多
-                  </router-link>
-                </el-col>
-              </el-row>
-
-            </template>
-            <!-- <div>新闻公告</div> -->
-            <el-table class="infotable " :show-header="false" :data="informationData">
-              <el-table-column prop="title" label="标题" width="280">
-                <template v-slot="scope">
-                  <a :href="scope.row.resource" target="_blank"
-                     style="text-decoration:none; color: #333;">{{ scope.row.title }}</a>
-                </template>
-              </el-table-column>
-              <el-table-column prop="release_time" label="时间" width="130"/>
-            </el-table>
-          </el-card>
+          <NewsAdvisory />
         </el-col>
       </el-row>
       <el-tabs v-model="activeName" tab-position="top" style="margin-top: 15px" class="demo-tabs">
@@ -129,6 +99,7 @@ import UserInfoStage from "./components/UserInfoStage.vue";
 import UserInfoApplyRecord from "./components/UserInfoApplyRecord.vue";
 import UserInfoEvent from "./components/UserInfoEvent.vue";
 import UserInfoAward from "./components/UserInfoAward.vue";
+import NewsAdvisory from "../../components/NewsAdvisory.vue";
 import {currentUserInfo, modifyUserInfo} from "../../api/owner/userInfo";
 import {ElMessage} from "element-plus";
 
@@ -142,29 +113,13 @@ export default {
     UserInfoApplyRecord,
     UserInfoEvent,
     UserInfoAward,
+    NewsAdvisory,
   },
   setup() {
     const state = reactive({
       userInfoEditVisible: false,
       userInfo: {},
       activeName: 'first',
-      informationData: [
-        {
-          title: "0401测试",
-          release_time: "2022-04-01",
-          resource: "www.baidu.com", //跳转链接
-        },
-        {
-          title: "0401测试",
-          release_time: "2022-04-01",
-          resource: "www.baidu.com", //跳转链接
-        },
-        {
-          title: "0401测试",
-          release_time: "2022-04-01",
-          resource: "www.baidu.com", //跳转链接
-        },
-      ],
     });
 
     onMounted(() => {

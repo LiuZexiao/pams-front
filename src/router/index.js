@@ -19,7 +19,7 @@ import Department from "~/views/system/Department.vue";
 import Role from "~/views/system/Role.vue";
 import Permit from "~/views/system/Permit.vue";
 
-import { userPermits } from "~/api/owner/user";
+import { userPermits } from "../api/owner/user";
 
 // 公开的路由
 const publicRoutes = [
