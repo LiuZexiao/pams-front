@@ -1,5 +1,5 @@
 <template>
-  
+  <iframe src="../../home/Home.html" frameborder="0" style="width: 100%;height: 943px"/>
 </template>
 
 <script>
@@ -11,12 +11,11 @@ export default {
   setup() {
     onMounted(() => {
       // 加载页面时执行
-      load();
+      // load();
     });
   }
 }
 </script>
 
 <style>
-
 </style>
