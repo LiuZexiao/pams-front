@@ -19,7 +19,7 @@
     </template>
     <!-- <div>新闻咨询</div> -->
     <el-scrollbar height="120px">
-      <el-table class="infotable " :show-header="false" :data="informationData">
+      <el-table class="infotable " v-loading="informationLoading" :show-header="false" :data="informationData">
         <el-table-column prop="title" label="标题">
           <template v-slot="scope">
             <a :href="scope.row.url" target="_blank"
@@ -54,6 +54,7 @@ export default {
           url: "www.baidu.com", //跳转链接
         },
       ],
+      informationLoading: false,
     });
 
     onMounted(() =>　{
@@ -66,10 +67,12 @@ export default {
     }
 
     const loadInformation = () => {
+      state.informationLoading = true
       reptile().then(res => {
         if (res.code === 200) {
           state.informationData = res.data
         }
+        state.informationLoading = false
       })
     }
 

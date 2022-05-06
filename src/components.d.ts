@@ -58,6 +58,7 @@ declare module 'vue' {
     ElUpload: typeof import('element-plus/es')['ElUpload']
     Header: typeof import('./components/Layout/header.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
+    Loading: typeof import('element-plus/es')['ElLoadingDirective']
     Menu: typeof import('./components/Layout/menu.vue')['default']
     Nav: typeof import('./components/Layout/compoents/nav.vue')['default']
     NewsAdvisory: typeof import('./components/NewsAdvisory.vue')['default']

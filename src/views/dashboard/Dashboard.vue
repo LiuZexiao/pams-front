@@ -61,6 +61,28 @@
     </el-col>
   </el-row>
 
+  <!-- 快捷入口 -->
+  <el-card shadow="hover" class="box-card " style="margin-top: 15px">
+    <template #header>
+      <div class="card-header">
+        <el-icon><position/></el-icon>&nbsp;快捷入口
+      </div>
+    </template>
+    <div class="cricle">
+      <div class="container">
+        <div class="box" v-for="entry in quickEntryList">
+          <el-button plain @click="() => {
+            $router.push(entry.url)
+          }"><el-icon><location /></el-icon>&nbsp;{{ entry.name }} </el-button>
+<!--            <div class="img">-->
+<!--              <img src="../../assets/icos/浏览器.png"/>-->
+<!--            </div>-->
+<!--            <p v-if="sets.showTitle">{{ entry.name }}</p>-->
+        </div>
+      </div>
+    </div>
+  </el-card>
+
   <el-card shadow="hover" class="box-card " style="margin-top: 15px">
     <template #header>
       <div class="card-header">
@@ -82,18 +104,22 @@ import JoinProcess from "../user/components/JoinProcess.vue";
 import UserSearch from "../user/components/UserSearch.vue";
 import NewsAdvisory from "../../components/NewsAdvisory.vue";
 import {onMounted, reactive, ref, toRefs} from "vue";
-import {reptile} from "../../api/open/information";
 
 export default {
   name: "Dashbroad",
   components: {
     JoinProcess,
     UserSearch,
-    NewsAdvisory
+    NewsAdvisory,
   },
   setup() {
     const state = reactive({
       userInfo: {},
+      sets: {
+        showTitle: true,
+        type: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      },
+      quickEntryList: []
     });
 
     onMounted(() =>　{
@@ -102,6 +128,43 @@ export default {
 
     const loadData = () => {
       state.userInfo = JSON.parse(localStorage.getItem("userInfo"))
+      let userRoutes = JSON.parse(localStorage.getItem("userRoutes"))
+      state.quickEntryList.push({
+        name: "个人中心",
+        url: "/owner/info"
+      })
+      state.quickEntryList.push({
+        name: "账号中心",
+        url: "/owner/account/updateAccount"
+      })
+      state.quickEntryList.push({
+        name: "账号中心",
+        url: "/owner/account/updateAccount"
+      })
+      state.quickEntryList.push({
+        name: "账号中心",
+        url: "/owner/account/updateAccount"
+      })
+      state.quickEntryList.push({
+        name: "账号中心",
+        url: "/owner/account/updateAccount"
+      })
+      state.quickEntryList.push({
+        name: "账号中心",
+        url: "/owner/account/updateAccount"
+      })
+      state.quickEntryList.push({
+        name: "账号中心",
+        url: "/owner/account/updateAccount"
+      })
+      userRoutes.forEach(route => {
+        route.children.forEach(child => {
+          state.quickEntryList.push({
+            name: child.name,
+            url: child.url
+          })
+        })
+      })
     }
 
     return {
@@ -205,5 +268,59 @@ export default {
   padding: 0;
   /* height: 28px; */
   margin: 0 auto;
+}
+
+.cricle{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.container .box{
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  width: 174px;
+  margin: 10px;
+}
+.container .box .img{
+  width: 60px;
+  height: 80px;
+  box-shadow: 18px 18px 30px rgba(0, 0, 0, 0.1),
+  -18px -18px 30px rgba(255, 255, 255, 1);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #efeeee;
+  transition: box-shadow .2s ease-out;
+  position: relative;
+}
+.container .box .img  img{
+  width: 30px;
+  transition: width 0.2s ease-out;
+}
+.container .box p{
+  color: slategrey;
+}
+.container .box .img:hover{
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2),
+  0px 0px 0px rgba(255, 255, 255, 0.8),
+  inset 18px 18px 30px rgba(0, 0, 0, 0.1),
+  inset -18px -18px 30px rgba(255, 255, 255, 1);
+  transition: box-shadow .2s ease-out;
+}
+.container .box .img:hover img{
+  width: 42px;
+  transition: width 0.2s ease-out;
 }
 </style>
