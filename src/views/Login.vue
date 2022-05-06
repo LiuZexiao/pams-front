@@ -35,6 +35,7 @@ import {ElMessage} from 'element-plus';
 import countDown from "../utils/countDown.js";
 import {logins} from '../api/open/user.js'
 import {smsVerCode, emailVerCode} from "../api/message";
+import {currentUserInfo} from "../api/owner/userInfo";
 
 const loginWay = {
   VC: "vc",
@@ -70,7 +71,15 @@ function userLogin(loginFormRef, state) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("phone", res.data.phone);
         localStorage.setItem("email", res.data.email);
-        window.location.href = "/user/list"
+        // 获取个人信息
+        currentUserInfo().then(res => {
+          if (res.code === 200) {
+            localStorage.setItem("userInfo", JSON.stringify(res.data))
+            window.location.href = "/dashboard"
+          } else {
+            ElMessage.error(res.message);
+          }
+        })
       } else {
         ElMessage.error(res.message);
       }

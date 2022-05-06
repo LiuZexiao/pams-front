@@ -28,6 +28,21 @@ export function bindEmail(params) {
     })
 }
 
+/**
+ * 根据类型获取用户权限 API 或 ROUTE
+ * @param type
+ * @returns {AxiosPromise}
+ */
+export function userPermits(type) {
+    return request({
+        url: '/owner/user/permits',
+        method: 'get',
+        params: {
+            type
+        }
+    })
+}
+
 // modifyUser
 export const modifyUser = {
     "age": "18", // 年龄

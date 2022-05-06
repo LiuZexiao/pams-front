@@ -169,17 +169,8 @@ export default {
 
     onMounted(() => {
       // 加载页面时执行
-      loadData(state);
+      state.userInfo = JSON.parse(localStorage.getItem("userInfo"))
     });
-
-    const loadData = () => {
-      currentUserInfo().then(res => {
-        if (res.code === 200) {
-          localStorage.setItem("userInfo", JSON.stringify(res.data))
-          state.userInfo = res.data
-        }
-      })
-    }
 
     /**
      * 处理编辑事件

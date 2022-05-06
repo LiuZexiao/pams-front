@@ -1,7 +1,7 @@
 import request from '../utils/request'
 
 /**
- * 获取树形的部门数据
+ * 获取树形的数据
  * @param data
  * @returns {AxiosPromise}
  */
