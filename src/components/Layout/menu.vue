@@ -80,6 +80,7 @@
 
 <script>
 import { onMounted, reactive, toRefs } from "vue";
+import { useRouter } from "vue-router"
 import axios from "axios";
 import router from "../../router";
 import { userInfo } from "../../api/userInfo.js";
@@ -200,15 +201,50 @@ export default {
       ],
       activePath: "", // 存储当前点击的菜单路径
     });
+
     onMounted(() => {
-      // useLoadMenuData(state); //读取菜单
-      userName(state); // 获取当前姓名
-      state.activePath = localStorage.getItem("activePath");
+      state.activePath = useRouter().currentRoute.value.path
+      userName(state) // 获取当前姓名
+      loadMenu() //读取菜单
+      // state.activePath = localStorage.getItem("activePath");
     });
+
+    function loadMenu() {
+      let userRoutes = JSON.parse(localStorage.getItem("userRoutes"))
+      state.menusData = [
+        {
+          id: "-1",
+          title: "仪表盘",
+          path: "/dashboard", // 在组件中用不到
+        },
+      ]
+      userRoutes.forEach((route, index) => {
+        state.menusData.push(buildMenu(route, index))
+      })
+    }
+
+    function buildMenu(route, index) {
+      return {
+        id: index,
+        title: route.name,
+        path: route.parentId ? route.url : "",
+        children: buildMenuChildren(route)
+      }
+    }
+
+    function buildMenuChildren(parent) {
+      let children = []
+      parent.children.forEach((child, index) => {
+        children.push(buildMenu(child, index))
+      })
+      return children
+    }
+
+
 
     // 保存链接的激活状态
     function saveNavPath(activePath) {
-      localStorage.setItem("activePath", activePath);
+      // localStorage.setItem("activePath", activePath);
       state.activePath = activePath;
     }
 

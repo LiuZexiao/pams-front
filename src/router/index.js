@@ -269,24 +269,32 @@ router.beforeEach((to, from, next) => {
       router.addRoute(item)
       addChildrenRoute(item, item.children)
     })
-    // 获取动态路由
-    let navigationList = JSON.parse(localStorage.getItem("userRoutes"))
-    if (!navigationList) {
-      navigationList = []
-      userPermits('ROUTE').then(res => {
-        if (res.code === 200) {
-          navigationList = res.data
-          localStorage.setItem("userRoutes", JSON.stringify(navigationList))
-          buildRoutes(navigationList)
-          console.log(router.getRoutes(), '动态路由第一次获取')
-          next({ ...to, replace: true})
-          // next()
-        }
-      })
+    // 是否拼接过路由
+    let asyncRoutesMark = localStorage.getItem("asyncRoutesMark")
+    if (asyncRoutesMark !== 'yes') {
+      localStorage.setItem("asyncRoutesMark", 'yes')
+      // 获取动态路由
+      let navigationList = JSON.parse(localStorage.getItem("userRoutes"))
+      if (!navigationList) {
+        navigationList = []
+        userPermits('ROUTE').then(res => {
+          if (res.code === 200) {
+            navigationList = res.data
+            localStorage.setItem("userRoutes", JSON.stringify(navigationList))
+            buildRoutes(navigationList)
+            console.log(router.getRoutes(), '动态路由第一次获取')
+            next({ ...to, replace: true})
+            // next()
+          }
+        })
+      } else {
+        buildRoutes(navigationList)
+        next({ ...to, replace: true})
+      }
     } else {
       // buildRoutes(navigationList)
       console.log(router.getRoutes(), '动态路由已经存在')
-      localStorage.setItem("userRoutes", null)
+      localStorage.setItem("asyncRoutesMark", 'no')
       // next({ ...to, replace: true})
       next()
     }
@@ -301,9 +309,15 @@ const buildRoutes = (navList) => {
   navList.forEach(nav => {
     buildRoute(null, nav)
   })
+  router.addRoute({
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: () => import("../views/NotFound.vue"),
+  })
 }
 
 const buildRoute = (parent, nav) => {
+  // console.log(nav.url)
   let route = {
     path: nav.url,
     name: nav.name,
