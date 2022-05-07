@@ -2,7 +2,7 @@
 <!--  流程管理（入党流程、流程对应的附件》 需要最高权限！！！！）-->
   <el-card shadow="never" class="box-card">
     <el-button style="width: 100%" @click="showEdit({}, MODE.ADD)">添加阶段</el-button>-->
-    <el-table :data="tableData" style="width: 100%; margin-bottom: 20px" row-key="id" border default-expand-all>
+    <el-table :data="tableData" v-loading="tableDataLoading" style="width: 100%; margin-bottom: 20px" row-key="id" border default-expand-all>
         <el-table-column prop="name" label="阶段名" />
         <el-table-column prop="needReview" label="需要审核">
           <template #default="scope">
@@ -64,6 +64,7 @@ export default {
       data: null,
       mode: null,
       editVisible: false,
+      tableDataLoading: true,
     }); // reactive 响应式对象声明
 
     onMounted(() => {
@@ -71,12 +72,14 @@ export default {
     })
 
     const loadData = () => {
+      state.tableDataLoading = true
       fetchTree().then(res => {
         if (res.code === 200) {
           state.tableData = res.data
         } else {
           ElMessage.error(res.message)
         }
+        state.tableDataLoading = false
       })
     }
 
@@ -120,7 +123,7 @@ export default {
       handleRemove,
       showEdit,
       closeEdit,
-    };
+    }
   }
 }
 </script>

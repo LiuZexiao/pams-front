@@ -40,7 +40,7 @@
     <!-- 搜索、添加、导入导出END -->
 
     <!-- 用户列表 BEGIN -->
-    <el-table :data="tableData" style="width: 100%" height="550">
+    <el-table :data="tableData" v-loading="tableDataLoading" style="width: 100%" height="550">
       <el-table-column fixed prop="department.name" label="党组织"/>
       <el-table-column fixed prop="applicant.realName" label="申请人"/>
       <el-table-column fixed prop="target.realName" label="目标对象"/>
@@ -105,6 +105,7 @@ export default {
         type: null
       },
       total: 0,
+      tableDataLoading: true
     }); // reactive 响应式对象声明
 
     onMounted(() => {

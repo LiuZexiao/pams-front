@@ -58,7 +58,7 @@
     <!-- 搜索 END -->
 
     <!-- 用户列表 BEGIN -->
-    <el-table :data="tableData" style="width: 100%" height="550">
+    <el-table :data="tableData" v-loading="tableDataLoading" style="width: 100%" height="550">
       <el-table-column fixed prop="stage.name" label="阶段名称"/>
       <el-table-column fixed prop="userInfo.realName" label="姓名"/>
       <el-table-column prop="score" label="分数">
@@ -147,6 +147,7 @@ export default {
       auditVisible: false,
       editVisible: false,
       advancedSearch: false,
+      tableDataLoading: true,
     }); // reactive 响应式对象声明
 
     onMounted(() => {

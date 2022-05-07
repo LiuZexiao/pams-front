@@ -54,7 +54,7 @@ export default {
           url: "www.baidu.com", //跳转链接
         },
       ],
-      informationLoading: false,
+      informationLoading: true,
     });
 
     onMounted(() =>　{

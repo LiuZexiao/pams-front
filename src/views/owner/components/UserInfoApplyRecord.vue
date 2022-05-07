@@ -12,7 +12,7 @@
         </el-select>
       </div>
     </template>
-    <el-table :data="applyRecordList" style="width: 100%">
+    <el-table :data="applyRecordList" v-loading="applyRecordListLoading" style="width: 100%">
       <el-table-column fixed prop="applicant.realName" label="申请人" />
       <el-table-column fixed prop="target.realName" label="目标" />
       <el-table-column prop="type" label="类型" >
@@ -58,6 +58,7 @@ export default {
       userInfo: {},
       status: "ALL",
       applyRecordList: [],
+      applyRecordListLoading: true,
     });
 
     onMounted(() => {
@@ -66,6 +67,7 @@ export default {
     })
 
     const loadData = () => {
+      state.applyRecordListLoading = true
       if (state.status === "") {
         state.status = null
       }
@@ -73,6 +75,7 @@ export default {
         if (res.code === 200) {
           state.applyRecordList = res.data
         }
+        state.applyRecordListLoading = false
       })
     }
 

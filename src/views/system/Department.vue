@@ -1,7 +1,7 @@
 <template>
   <el-card shadow="never" class="box-card">
     <el-button style="width: 100%" @click="showEdit({}, MODE.ADD)">添加党组织</el-button>-->
-    <el-table :data="tableData" style="width: 100%; margin-bottom: 20px" row-key="id" border default-expand-all>
+    <el-table :data="tableData" v-loading="tableDataLoading" style="width: 100%; margin-bottom: 20px" row-key="id" border default-expand-all>
       <!-- 部门等级 党支部[3-50) 党总支[50-100） 党委[100+) -->
       <el-table-column prop="level" label="级别" />
       <el-table-column prop="name" label="党组织名" />
@@ -49,6 +49,7 @@ export default {
       data: null,
       mode: null,
       editVisible: false,
+      tableDataLoading: true,
     }); // reactive 响应式对象声明
 
     onMounted(() => {
@@ -56,12 +57,14 @@ export default {
     })
 
     const loadData = () => {
+      state.tableDataLoading = true
       tree().then(res => {
         if (res.code === 200) {
           state.tableData = res.data.children
         } else {
           ElMessage.error(res.message)
         }
+        state.tableDataLoading = false
       })
     }
 

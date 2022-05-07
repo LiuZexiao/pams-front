@@ -95,7 +95,7 @@
     <!-- 高级搜索 END -->
 
     <!-- 列表 BEGIN -->
-    <el-table :data="tableData" style="width: 100%" height="550">
+    <el-table :data="tableData" v-loading="tableDataLoading" style="width: 100%" height="550">
       <el-table-column fixed prop="type" label="类型" width="80">
         <template #default="scope">
           <el-tag v-if="scope.row.type === 'ACTIVITY'" type="info">活动</el-tag>
@@ -197,6 +197,7 @@ export default {
       total: 0,
       editVisible: false,
       advancedSearch: false,
+      tableDataLoading: true,
     }); // reactive 响应式对象声明
 
     onMounted(() => {

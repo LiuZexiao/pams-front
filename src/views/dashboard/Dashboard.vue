@@ -129,14 +129,14 @@ export default {
     const loadData = () => {
       state.userInfo = JSON.parse(localStorage.getItem("userInfo"))
       let userRoutes = JSON.parse(localStorage.getItem("userRoutes"))
-      state.quickEntryList.push({
-        name: "个人中心",
-        url: "/owner/info"
-      })
-      state.quickEntryList.push({
-        name: "账号中心",
-        url: "/owner/account/updateAccount"
-      })
+      // state.quickEntryList.push({
+      //   name: "个人中心",
+      //   url: "/owner/info"
+      // })
+      // state.quickEntryList.push({
+      //   name: "账号中心",
+      //   url: "/owner/account/updateAccount"
+      // })
       userRoutes.forEach(route => {
         route.children.forEach(child => {
           state.quickEntryList.push({

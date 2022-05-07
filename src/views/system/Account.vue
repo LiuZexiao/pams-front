@@ -41,12 +41,11 @@
     <!-- 高级搜索 END -->
 
     <!-- 列表 BEGIN -->
-    <el-table :data="tableData" style="width: 100%" height="550">
+    <el-table :data="tableData" v-loading="tableDataLoading" style="width: 100%" height="550">
       <el-table-column fixed prop="department.name" label="党组织" />
       <el-table-column fixed prop="username" label="账号" />
       <el-table-column prop="email" label="邮箱" />
       <el-table-column prop="phone" label="手机号" />
-      <el-table-column prop="updated" label="更新时间" />
       <el-table-column prop="created" label="创建时间" />
       <el-table-column fixed="right" label="操作" width="200">
         <template #default="scope">
@@ -121,6 +120,7 @@ export default {
       total: 0,
       editVisible: false,
       advancedSearch: false,
+      tableDataLoading: true,
     }); // reactive 响应式对象声明
 
     onMounted(() => {

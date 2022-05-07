@@ -31,7 +31,7 @@
 
     </div>
   </el-card>
-  <el-card v-if="userInfo.stage" shadow="hover" class="box-card " style="margin-top: 15px">
+  <el-card v-if="userInfo.stage" v-loading="userInfoStagesLoading" shadow="hover" class="box-card " style="margin-top: 15px">
     <template #header>
       <div class="card-header" style="display: flex; justify-content: space-between">
         <div>
@@ -71,6 +71,7 @@ export default {
     const state = reactive({
       userInfo: {},
       userInfoStages: [],
+      userInfoStagesLoading: false,
       userInfoStage: {},
       applyData: {
         applyDate: null,
@@ -85,6 +86,7 @@ export default {
     })
 
     const loadData = () => {
+      state.userInfoStagesLoading = true
       currentUserInfoStage().then(res => {
         if (res.code === 200) {
           state.userInfoStages = res.data
@@ -102,6 +104,7 @@ export default {
         } else {
           ElMessage.error(res.message)
         }
+        state.userInfoStagesLoading = false
       })
     }
 

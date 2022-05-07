@@ -8,7 +8,7 @@
             <span>角色列表</span>
           </div>
         </template>
-        <el-tree :data="roleTree" :props="defaultProps" @node-click="handleNodeClick" default-expand-all :expand-on-click-node="false"/>
+        <el-tree :data="roleTree" v-loading="tableDataLoading" :props="defaultProps" @node-click="handleNodeClick" default-expand-all :expand-on-click-node="false"/>
       </el-card>
       <!-- 树形列表 END -->
     </el-col>
@@ -131,6 +131,7 @@ export default {
       rolePermits: [],
       rolePermit: { permit: {id: null}},
       rolePermitEditVisible: false,
+      tableDataLoading: true,
     }); // reactive 响应式对象声明
 
     onMounted(() => {
@@ -138,6 +139,7 @@ export default {
     })
 
     const loadData = () => {
+      state.tableDataLoading = true
       tree().then(res => {
         if (res.code === 200) {
           state.roleTree = res.data
@@ -153,6 +155,7 @@ export default {
         } else {
           ElMessage.error(res.message)
         }
+        state.tableDataLoading = false
       })
     }
 

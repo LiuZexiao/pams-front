@@ -68,7 +68,7 @@ export default {
 
     onMounted(() => {
       // 获取当前阶段的子阶段与用户关联的数据
-      loadChildren()
+      // loadChildren() TODO ??
     });
 
     const loadChildren = () => {

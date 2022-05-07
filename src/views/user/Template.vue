@@ -61,7 +61,7 @@
     <!-- 高级搜索 END -->
 
     <!-- 数据列表 BEGIN -->
-    <el-table :data="tableData" style="width: 100%" height="550">
+    <el-table :data="tableData" v-loading="tableDataLoading" style="width: 100%" height="550">
       <el-table-column fixed prop="id" label="编号" width="80"/>
       <el-table-column fixed prop="name" label="模板" width="280"/>
       <el-table-column prop="department.name" label="部门" width="150"/>
@@ -138,6 +138,7 @@ export default {
       total: 0,
       editVisible: false,
       advancedSearch: false,
+      tableDataLoading: true,
     }); // reactive 响应式对象声明
 
     onMounted(() => {
@@ -149,12 +150,14 @@ export default {
      * 加载数据
      */
     const loadData = () => {
+      state.tableDataLoading = true
       fetchListByPage(state.params).then(res => {
         const data = res.data
         state.tableData = data.content;
         state.total =data.totalElements
         state.params.size = data.size
         state.params.page = data.number + 1
+        state.tableDataLoading = false
       })
     }
 

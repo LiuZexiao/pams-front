@@ -7,6 +7,7 @@ export const MODE = {
 }
 
 export const loadData = (state) => {
+    state.tableDataLoading = true
     if (state.params.state === "") {
         state.params.state = null
     }
@@ -19,6 +20,7 @@ export const loadData = (state) => {
         state.total =data.totalElements
         state.params.size = data.size
         state.params.page = data.number + 1
+        state.tableDataLoading = false
     });
 }
 

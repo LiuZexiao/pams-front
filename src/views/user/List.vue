@@ -98,7 +98,7 @@
     <!-- 高级搜索 END -->
 
     <!-- 用户列表 BEGIN -->
-    <el-table :data="tableData" style="width: 100%" height="550">
+    <el-table :data="tableData" v-loading="tableDataLoading" style="width: 100%" height="550">
       <el-table-column fixed prop="number" label="学号" width="120"/>
       <el-table-column prop="realName" label="姓名" width="80"/>
       <el-table-column prop="college" label="学院" width="220"/>
@@ -216,6 +216,7 @@ export default {
       importVisible: false,
       aiEvaluateVisible: false,
       advancedSearch: false,
+      tableDataLoading: true,
     }); // reactive 响应式对象声明
 
     onMounted(() => {
