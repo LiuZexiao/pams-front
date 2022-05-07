@@ -38,7 +38,7 @@
         </el-select>
       </el-col>
       <el-col :span="4">
-        <el-select v-model="params.type" clearable placeholder="请选择签到方式">
+        <el-select v-model="params.signWay" clearable placeholder="请选择签到方式">
           <el-option label="签到" value="SIGN_IN" />
           <el-option label="签到-签退" value="SIGN_OUT" />
           <el-option label="无操作" value="OTHER" />

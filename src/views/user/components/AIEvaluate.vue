@@ -128,17 +128,17 @@
       <!-- AI评估报告 END -->
 
       <!-- 用户入党流程 BEGIN -->
-      <el-card class="box-card" style="margin-top: 15px" shadow="hover">
-        <template #header>
-          <div class="card-header">
-            <span>入党进程</span>
-            <el-link href="/affair/userStage" :underline="false" >去审核</el-link>
-          </div>
-        </template>
-        <el-scrollbar>
-          <JoinProcess :user-info-id="userInfo.id" />
-        </el-scrollbar>
-      </el-card>
+<!--      <el-card class="box-card" style="margin-top: 15px" shadow="hover">-->
+<!--        <template #header>-->
+<!--          <div class="card-header">-->
+<!--            <span>入党进程</span>-->
+<!--            <el-link href="/affair/userStage" :underline="false" >去审核</el-link>-->
+<!--          </div>-->
+<!--        </template>-->
+<!--        <el-scrollbar>-->
+<!--          <JoinProcess :user-info-id="userInfo.id" />-->
+<!--        </el-scrollbar>-->
+<!--      </el-card>-->
       <!-- 用户入党流程 END -->
     </el-scrollbar>
   </el-dialog>
